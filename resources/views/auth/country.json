@@ -1,0 +1,31 @@
+{
+    "AF": {
+      "country": "Afghanistan",
+      "dial_code": "93"
+    },
+    "LS": {
+      "country": "Lesotho",
+      "dial_code": "266"
+    },
+    "BW": {
+      "country": "Botswana",
+      "dial_code": "267"
+    },
+    "ZW": {
+      "country": "Zimbabwe",
+      "dial_code": "263"
+    },
+    "ZA": {
+      "country": "South Africa",
+      "dial_code": "27"
+    },
+    "MZ": {
+      "country": "Mozambique",
+      "dial_code": "258"
+    },
+    "NG": {
+      "country": "Nigeria",
+      "dial_code": "234"
+    }
+  }
+  
