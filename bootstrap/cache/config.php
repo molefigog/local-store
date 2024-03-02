@@ -278,6 +278,14 @@
     'max_age' => 0,
     'supports_credentials' => false,
   ),
+  'cpay' => 
+  array (
+    'cpay_apikey' => '+XNlXIMznuRgV4I9oqic/uNgPMo9SArAnXXkbzTKoEg=',
+    'cpay_secret' => 'kV00lm',
+    'cpay_code' => 'LEHOLA_SP',
+    'mpesa_sc' => '51909',
+    'merchant_name' => 'GW ENT',
+  ),
   'database' => 
   array (
     'default' => 'mysql',
@@ -581,7 +589,7 @@
         'port' => '587',
         'encryption' => 'tls',
         'username' => 'apikey',
-        'password' => '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',
+        'password' => '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',
         'timeout' => NULL,
         'local_domain' => NULL,
       ),
