@@ -549,20 +549,19 @@ class MusicController extends Controller
         return view('search_results', ['results' => $results]);
     }
 
-    public function downloadDemo($musicId)
+    public function downloadMp3($musicId)
     {
         $music = Music::find($musicId);
-
         if (!$music) {
             return redirect()->back()->with('error', 'Music track not found.');
         }
-
-        $musicFilePath = $music->demo;
-
+        $musicFilePath = $music->file;
+        $music->md++;
+        $music->downloads++;
+        $music->save();
         if (!Storage::exists($musicFilePath)) {
             return redirect()->back()->with('error', 'Music file not found.');
         }
-
-        return Storage::download($musicFilePath, $music->title . '.mp3');
+        return Storage::download($musicFilePath, $music->artist . '-' . $music->title . '.mp3');
     }
 }

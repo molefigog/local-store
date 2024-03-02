@@ -48,7 +48,123 @@ if ($data && isset($data['rates'][$targetCurrency])) {
                     Genre <span
                         class="text-success">{{ $beat->genre ? $beat->genre->title : '-' }}</span>
                 </p>
-                <div class="mb-3">
+                <nav class="text-center">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
+                            aria-controls="nav-home" aria-selected="true"><img src="{{ asset('assets/vcl1.png') }}" alt=""
+                                style="width: 24px; height: 24px;"> M-Pesa</a>
+                        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
+                            aria-controls="nav-profile" aria-selected="false"><i class="icon-account_balance_wallet"></i>
+                            Wallet</a>
+    
+                        <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
+                            aria-controls="nav-contact" aria-selected="false"><i class="icon-paypal"></i> Paypal</a>
+                    </div>
+                </nav>
+    
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="justify-content-center">
+                            <hr>
+                            <div id="wrap">
+                                <form id="paymentForm" class="text-center" action="{{ route('beat.pay') }}" method="post">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">M-pesa</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"> <img src="{{ asset('assets/vcl1.png') }}"
+                                                        alt="" style="width: 24px; height: 24px;"> </i></div>
+                                            </div>
+                                            <input type="number" class="form-control col-6" name="mobileNumber" value=""
+                                                placeholder="mpesa number" maxlength="8">
+                                            <input type="hidden" name="amount" value="{{ $beat->amount }}">
+                                            {{-- <input type="hidden" name="amount" value="{{ $music->amount }}"> --}}
+                                            <input type="hidden" name="client_reference"
+                                                value="{{ $beat->id }} {{ $beat->title ?? '-' }}">
+                                            <input type="hidden" name="beatId"value="{{ $beat->id }}">
+    
+                                            &nbsp; <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <span class="circle2"><img src="{{ asset('assets/vcl1.png') }}" alt=""
+                                                        style="width: 24px; height: 24px;"> </i></span>
+                                                <span class="title2 gee">Pay M{{ $beat->amount }}</span>
+    
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <br>
+                        <div class="text-center">
+                            @if ($beat->used == 1)
+                            <div id="wrap">
+                                <form action="" method="post">
+                                    @csrf
+                                    <input type="hidden" name="music_id" value="{{ $beat->id }}">
+                                    <button type="button" disabled class="btn buy-button2">
+                                        <span class="circle2"><i class="icon-download"></i></span>
+                                        <span class="title2 gee">SOLD</span>
+    
+                                    </button>
+                                </form>
+                            </div>
+                            @else
+                            <div id="wrap"> 
+                                <div class="text-center"><a href="#information" id="showAlert">INSTRUCTIONS</a></div>
+                                <form id="complete-order" action="{{ route('beat-order') }}" method="post">
+                                    @csrf
+                                    <div class="text-center">
+                                        <div class="info"></div>
+                                        <div class="message"></div>
+                                    </div>
+                                    <input type="hidden" name="beat_id" value="{{ $beat->id }}">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP"
+                                            aria-label="Enter OTP" aria-describedby="button-addon2" required>
+                                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buy R{{
+                                            $beat->amount }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+    
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="text-center">
+                            <h6 class="text-center"></h6>
+                            @if ($beat->used == 1)
+                            <p> </p>
+                            @else
+                            <div id="wrap">
+                                <form id="buyNowForm" action="{{ $Paypal }}" method="post">
+                                    <input type="hidden" name="cmd" value="_xclick">
+                                    <input type="hidden" name="amount" value="{{ $amount }}">
+                                    <input type="hidden" name="currency_code" value="{{ $currency }}">
+                                    <input type="hidden" name="business" value="{{ $PAYPAL_ID }}">
+    
+                                    <input type="hidden" name="custom" value="{{ $userId }}">
+    
+                                    <input type="hidden" name="item_name" value="{{ $beat->title }}">
+                                    <input type="hidden" name="item_number" value="{{ $beat->id }}">
+                                    <input type="hidden" name="return" value="{{ route('success') }}">
+                                    <input type="hidden" name="cancel_return" value="{{ url('cancel') }}">
+                                    <input type="hidden" name="notify_url" value="{{ url('ipn') }}">
+    
+                                    <button type="submit" class="btn buy-button2"
+                                        title="secure online payment with paypal"><i class="icon-paypal"></i> Buy
+                                        ${{ $amount }}</button>
+                                </form>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="mb-3">
                     @if ($beat->used == 1)
                         <div id="wrap">
                             <button type="submit" class="btn buy-button2" onclick="showSoldOutNotification()">
@@ -93,7 +209,7 @@ if ($data && isset($data['rates'][$targetCurrency])) {
                             </form>
                         </div>
                     @endif
-                </div>
+                </div> --}}
                 <div id="wrapper">
                     <audio preload="auto" controls>
                         <source src="{{ \Storage::url($beat->demo) }}">
@@ -184,89 +300,130 @@ if ($data && isset($data['rates'][$targetCurrency])) {
         });
     </script>
 @endpush
-
-{{-- @push('pal')
-<script src="https://www.paypal.com/sdk/js?client-id=AeRSIFbaU4PkzhnTfU5FqhzAc6itH1ZbVAq7ODXTc_FXyELjk7ZGWyJcjYk1TJPOpMIlSSJK-nyWPbjz"></script>
+@push('mpesa')
 <script>
-    async function convertZARtoUSD(amount) {
-        // Replace 'YOUR_API_KEY' with your actual Open Exchange Rates API key
-        const apiKey = '863c6f17965b59a056305e51';
-        const apiUrl = `https://open.er-api.com/v6/latest/ZAR?apikey=${apiKey}`;
+    $(document).ready(function () {
+        $('#paymentForm').submit(function (e) {
+            e.preventDefault();
 
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+            Swal.fire({
+                title: 'Processing',
+                html: 'Please wait...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('beat.pay') }}',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    Swal.close();
 
-            const exchangeRate = data.rates.USD;
-            const convertedAmount = (amount * exchangeRate).toFixed(2);
-
-            return convertedAmount;
-        } catch (error) {
-            console.error('Error fetching conversion data:', error);
-            return null;
-        }
-    }
-
-    paypal.Buttons({
-    createOrder: function (data, actions) {
-        // Convert the amount from ZAR to USD
-        return convertZARtoUSD('{{ $beat->amount }}').then(function (convertedAmount) {
-            if (convertedAmount !== null) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: convertedAmount
-                        }
-                    }]
-                });
-            } else {
-                // Handle conversion error
-                alert('Error converting amount');
-                throw new Error('Error converting amount');
-            }
-        });
-    },
-    onApprove: (function (data, actions) {
-        // Additional data you want to pass
-        const additionalData = {
-            beat_id: '{{ $beat->id }}',
-           
-            // Add more parameters as needed
-        };
-
-        // Returning the actual onApprove function
-        return function () {
-            return actions.order.capture().then(function (details) {
-                // Merge additional data with details
-                const requestData = { ...additionalData, orderID: data.orderID };
-
-                // Example AJAX call
-                fetch('{{ url("paypal-success") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify(requestData)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle the response from your server (success or error)
-                        if (data.success) {
-                            // Redirect or show a success message
-                            window.location.href = '{{ route("purchased-beats") }}';
-                        } else {
-                            // Show an error message
-                            alert('Error processing payment');
+                    Swal.fire({
+                        icon: response.status,
+                        title: response.status.charAt(0).toUpperCase() + response.status.slice(1),
+                        text: response.message,
+                    }).then(function () {
+                        if (response.status === 'success') {
+                            window.location.href = response.download_url;
                         }
                     });
+                },
+                error: function (xhr, status, error) {
+                    Swal.close();
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to make the API request',
+                    });
+                },
             });
-        };
-    })()
-}).render('#paypal-button-container');
-
+        });
+    });
 </script>
-@endpush --}}
-
-
+<script>
+    // Add an event listener to the link
+    document.getElementById('showAlert').addEventListener('click', function() {
+      // Display SweetAlert2 when the link is clicked
+      Swal.fire({
+        title: 'INSTRUCTIONS',
+        text: 'Send payment via M-Pesa to 59073443. You\'ll receive an OTP on your phone; use it to finalize the download payment.',
+        icon: 'info',
+        confirmButtonText: 'Dismiss'
+      });
+    });
+  </script>
+    {{-- <script>
+        $(document).ready(function() {
+            var delayTimer;
+    
+            $('#otp').on('input', function() {
+                var otp = $(this).val();
+    
+                clearTimeout(delayTimer);
+    
+                delayTimer = setTimeout(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('check-otp') }}',
+                        data: {
+                            _token: $('input[name="_token"]').val(),
+                            otp: otp
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('.info').html('Received Amount: ' + response.receivedAmount +
+                                    '<br>From Number: ' + response.fromNumber);
+                            } else {
+                                $('.info').html('Invalid OTP');
+                            }
+                        },
+                        error: function() {
+                            $('.info').html('Error checking OTP');
+                        }
+                    });
+                }, 500);
+            });
+        });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            var delayTimer;
+    
+            $('#otp').on('input', function() {
+                var otp = $(this).val();
+    
+                clearTimeout(delayTimer);
+    
+                delayTimer = setTimeout(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('check-otp') }}',
+                        data: {
+                            _token: $('input[name="_token"]').val(),
+                            otp: otp
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('.info').html('Received Amount: ' + response.receivedAmount +
+                                    '<br>From Number: ' + response.fromNumber);
+                            } else {
+                                $('.info').html('Invalid OTP');
+                            }
+                        },
+                        error: function() {
+                            $('.info').html('Error checking OTP');
+                        }
+                    });
+                }, 500);
+            });
+        });
+    </script>
+@endpush
 

@@ -36,7 +36,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" id="cssTheme" href="<?php echo e(asset('frontend/css/bootstrap.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('frontend/css/style.css')); ?>">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+   
     <?php echo $__env->yieldPushContent('tellcss'); ?>
     <?php echo $__env->yieldPushContent('aplayer'); ?>
 

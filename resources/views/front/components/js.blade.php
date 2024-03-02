@@ -68,7 +68,7 @@
 @stack('upload_status')
 
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @stack('upload_status')
 @if (session()->has('success'))
     <script>
@@ -120,12 +120,13 @@
                 y: 'top',
             },
             dismissible: true,
-            duration: 7000, // 7 seconds in milliseconds
+            duration: 7000,
         });
 
         notyf.error('This item is already sold out.');
     }
 </script>
+@stack('mpesa')
 
 </body>
 

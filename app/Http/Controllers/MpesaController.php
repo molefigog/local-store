@@ -7,65 +7,26 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Session;
+use App\Models\Music;
+use App\Models\Mpesa;
+use App\Models\Beat;
+use Illuminate\Support\Facades\View;
+use App\Http\Controllers\MusicController;
+use Illuminate\Support\Facades\Storage;
 
 class MpesaController extends Controller
 {
-    // public function pay(Request $request)
-    // {
-    //     Log::info('Form Input Data: ' . json_encode($request->all()));
-    //     $amount = $request->input('amount');
-    //     $mobileNumber = $request->input('mobileNumber');
-    //     $client_reference = $request->input('client_reference');
-    //     $baseUrl = 'https://staging.paylesotho.co.ls';
-    //     $merchantid = '90151';
-    //     $merchantname = 'GW ENT';
-    //     $client = new Client();
-    //     try {
-    //         $response = $client->post($baseUrl . '/api/v1/vcl/payment', [
-    //             'json' => [
-    //                 'merchantid' => $merchantid,
-    //                 'amount' => $amount,
-    //                 'mobileNumber' => $mobileNumber,
-    //                 'merchantname' => $merchantname,
-    //                 'client_reference' => $client_reference,
-    //             ],
-    //         ]);
-    //         Log::info('API Response: ' . $response->getBody());
-
-    //         $responseData = json_decode($response->getBody(), true);
-    //         $payRef = $responseData['reference'];
-    //         $verificationResponse = $this->confirm($payRef);
-    //         error_log('Verification Response: ' . $verificationResponse);
-    //         $verificationData = json_decode($verificationResponse, true);
-    //         if ($verificationData['status_code'] === 'INS-0') {
-    //             $status = 'Success';
-    //             $message = $verificationData['message'];
-    //         } else {
-    //             $status = 'Failed';
-    //             $message = 'Transaction verification failed';
-    //         }
-    //         Session::put('payment_status', $status);
-    //         Session::put('payment_message', $message);
-    //         return redirect()->route('mpesa.success');
-    //     } catch (\Exception $e) {
-    //         Log::error('Guzzle Request Error: ' . $e->getMessage());
-    //         Session::put('payment_error', 'Failed to make the API request');
-    //         return redirect()->route('mpesa.error');
-    //     }
-    // }
-    public function pay(Request $request)
+    public function beatPay(Request $request)
     {
         try {
-            Log::info('Form Input Data: ' . json_encode($request->all()));
-
+            // Log::info('Form Input Data: ' . json_encode($request->all()));
             $amount = $request->input('amount');
             $mobileNumber = $request->input('mobileNumber');
             $client_reference = $request->input('client_reference');
             $baseUrl = 'https://staging.paylesotho.co.ls';
-            $merchantid = '90151';
-            $merchantname = 'GW ENT';
+            $merchantid = config('cpay.mpesa_sc');
+            $merchantname = config('cpay.merchant_name');
             $client = new Client();
-
             $paymentApiUrl = $baseUrl . '/api/v1/vcl/payment';
             $paymentApiData = [
                 'merchantid' => $merchantid,
@@ -83,34 +44,196 @@ class MpesaController extends Controller
                 'json' => $paymentApiData,
             ]);
             Log::info('Payment API Response: ' . $response->getBody());
-
-            $logMessage = 'Payment API Response: ' . $response->getBody();
-                
-            // Log SMS sending attempt
-            Log::info('Attempting to send SMS: ' . $logMessage);
-
-            $this->sendSMS2($logMessage, $mobileNumber);
-
             $responseData = json_decode($response->getBody(), true);
             $payRef = $responseData['reference'];
             $verificationResponse = $this->confirm($payRef);
-
-            error_log('Verification Response: ' . $verificationResponse);
             $verificationData = json_decode($verificationResponse, true);
+            error_log('Verification Response: ' . $verificationResponse);
             if ($verificationData['status_code'] === 'INS-0') {
-                $status = 'Success';
+                $status = 'success';
                 $message = $verificationData['message'];
+
+               
+                $beatId = $request->input('beatId');
+                Log::info('Attempting to read beatid: ' . $beatId);
+                $downloadUrl = route('beat.download', ['beat' => $beatId]);
+
+                $responseData = [
+                    'status' => $status,
+                    'message' => $message,
+                    'download_url' => $downloadUrl,
+                ];
+                return response()->json($responseData);
             } else {
-                $status = 'Failed';
-                $message = 'Transaction verification failed';
+                $status = 'error';
+                $message = 'Transaction verification failed Error 400';
+
+                $responseData = [
+                    'status' => $status,
+                    'message' => $message,
+                ];
+                return response()->json($responseData);
             }
-            Session::put('payment_status', $status);
-            Session::put('payment_message', $message);
-            return redirect()->route('mpesa.success');
         } catch (\Exception $e) {
             Log::error('Guzzle Request Error: ' . $e->getMessage());
-            Session::put('payment_error', 'Failed to make the API request');
-            return redirect()->route('mpesa.error');
+            $responseData = [
+                'status' => 'error',
+                'message' => 'Failed to make the API request',
+            ];
+            return response()->json($responseData);
+        }
+    }
+    public function downloadBeat($beatId)
+    {
+        Log::info('Beat ID: ' . $beatId);
+        $beat = Beat::find($beatId);
+
+        if (!$beat) {
+            Log::error('Beat track not found for ID: ' . $beatId);
+            return redirect()->back()->with('error', 'Beat track not found.');
+        }
+        $beatFilePath = $beat->file;
+        $beat->used += 1;
+        $beat->save();
+        if (!Storage::exists($beatFilePath)) {
+            Log::error('Beat file not found in storage: ' . $beatFilePath);
+            return redirect()->back()->with('error', 'Beat file not found.');
+        }
+        $response = Storage::download($beatFilePath, $beat->artist . '-'. $beat->title .'.mp3');
+        Log::info('Download Response: ' . $response);
+
+        return $response;
+    }
+
+    public function uploadStatus(Request $request)
+    {
+        try {
+            // Log::info('Form Input Data: ' . json_encode($request->all()));
+            $amount = $request->input('amount');
+            $mobileNumber = $request->input('mobileNumber');
+            $client_reference = $request->input('client_reference');
+            $baseUrl = 'https://staging.paylesotho.co.ls';
+            $merchantid = config('cpay.mpesa_sc');
+            $merchantname = config('cpay.merchant_name');
+            $client = new Client();
+            $paymentApiUrl = $baseUrl . '/api/v1/vcl/payment';
+            $paymentApiData = [
+                'merchantid' => $merchantid,
+                'amount' => $amount,
+                'mobileNumber' => $mobileNumber,
+                'merchantname' => $merchantname,
+                'client_reference' => $client_reference,
+            ];
+            Log::info('Payment API Request: ' . json_encode([
+                'url' => $paymentApiUrl,
+                'data' => $paymentApiData,
+            ]));
+
+            $response = $client->post($paymentApiUrl, [
+                'json' => $paymentApiData,
+            ]);
+            Log::info('Payment API Response: ' . $response->getBody());
+            $responseData = json_decode($response->getBody(), true);
+            $payRef = $responseData['reference'];
+            $verificationResponse = $this->confirm($payRef);
+            $verificationData = json_decode($verificationResponse, true);
+            error_log('Verification Response: ' . $verificationResponse);
+            if ($verificationData['status_code'] === 'INS-0') {
+                $status = 'success';
+                $message = $verificationData['message'];
+
+                $responseData = [
+                    'status' => $status,
+                    'message' => $message,
+                   
+                ];
+                return response()->json($responseData);
+            } else {
+                $status = 'error';
+                $message = 'Transaction verification failed Error 400';
+
+                $responseData = [
+                    'status' => $status,
+                    'message' => $message,
+                ];
+                return response()->json($responseData);
+            }
+        } catch (\Exception $e) {
+            Log::error('Guzzle Request Error: ' . $e->getMessage());
+            $responseData = [
+                'status' => 'error',
+                'message' => 'Failed to make the API request',
+            ];
+            return response()->json($responseData);
+        }
+    }
+    public function pay(Request $request)
+    {
+        try {
+            // Log::info('Form Input Data: ' . json_encode($request->all()));
+            $amount = $request->input('amount');
+            $mobileNumber = $request->input('mobileNumber');
+            $client_reference = $request->input('client_reference');
+            $baseUrl = 'https://staging.paylesotho.co.ls';
+            $merchantid = config('cpay.mpesa_sc');
+            $merchantname = config('cpay.merchant_name');
+            $client = new Client();
+            $paymentApiUrl = $baseUrl . '/api/v1/vcl/payment';
+            $paymentApiData = [
+                'merchantid' => $merchantid,
+                'amount' => $amount,
+                'mobileNumber' => $mobileNumber,
+                'merchantname' => $merchantname,
+                'client_reference' => $client_reference,
+            ];
+            Log::info('Payment API Request: ' . json_encode([
+                'url' => $paymentApiUrl,
+                'data' => $paymentApiData,
+            ]));
+
+            $response = $client->post($paymentApiUrl, [
+                'json' => $paymentApiData,
+            ]);
+            Log::info('Payment API Response: ' . $response->getBody());
+            // $logMessage = 'Payment API Response: ' . $response->getBody();
+            // Log::info('Attempting to send SMS: ' . $logMessage);
+            // $this->sendSMS2($logMessage, $mobileNumber);
+            $responseData = json_decode($response->getBody(), true);
+            $payRef = $responseData['reference'];
+            $verificationResponse = $this->confirm($payRef);
+            $this->mpesaTransaction($payRef, $mobileNumber, $amount);
+            $verificationData = json_decode($verificationResponse, true);
+            error_log('Verification Response: ' . $verificationResponse);
+            if ($verificationData['status_code'] === 'INS-0') {
+                $status = 'success';
+                $message = $verificationData['message'];
+
+                $musicId = $request->input('musicId');
+                $downloadUrl = route('music.download', ['music' => $musicId]);
+
+                $responseData = [
+                    'status' => $status,
+                    'message' => $message,
+                    'download_url' => $downloadUrl,
+                ];
+                return response()->json($responseData);
+            } else {
+                $status = 'error';
+                $message = 'Transaction verification failed Error 400';
+
+                $responseData = [
+                    'status' => $status,
+                    'message' => $message,
+                ];
+                return response()->json($responseData);
+            }
+        } catch (\Exception $e) {
+            Log::error('Guzzle Request Error: ' . $e->getMessage());
+            $responseData = [
+                'status' => 'error',
+                'message' => 'Failed to make the API request',
+            ];
+            return response()->json($responseData);
         }
     }
 
@@ -129,25 +252,11 @@ class MpesaController extends Controller
         }
     }
 
-    public function showSuccessPage()
-    {
-        $status = Session::get('payment_status');
-        $message = Session::get('payment_message');
-        Session::forget(['payment_status', 'payment_message']);
-        return view('mpesa.success', compact('status', 'message'));
-    }
-    public function showErrorPage()
-    {
-        $error = Session::get('payment_error');
-        Session::forget('payment_error');
-        return view('mpesa.error', compact('error'));
-    }
-
     public function sendSMS2($message, $mobileNumber)
     {
         $apiKey = config('sms.api_key');
         $apiSecret = config('sms.api_secret');
-        $to = '+266'.$mobileNumber;
+        $to = '+266' . $mobileNumber;
 
         $accountApiCredentials = $apiKey . ':' . $apiSecret;
         $base64Credentials = base64_encode($accountApiCredentials);
@@ -196,4 +305,50 @@ class MpesaController extends Controller
             return response()->json(['message' => 'SMS sending exception'], 500);
         }
     }
+
+    public function mpesaTransaction($payRef, $mobileNumber, $amount)
+{
+
+    $net_income = $amount - ($amount * 0.01);
+    $pay_lesotho = $amount * 0.01;
+
+    $transaction = new Mpesa([
+        'number' => $mobileNumber,
+        'ref' => $payRef,
+        'gross_income' =>  $amount,
+        'net_income' => $net_income,
+        'pay_lesotho' => $pay_lesotho
+    ]);
+
+    $transaction->save();
+}
+
+    public function downloadSong($musicId)
+    {
+        Log::info('Music ID: ' . $musicId);
+        $music = Music::find($musicId);
+
+        if (!$music) {
+            Log::error('Music track not found for ID: ' . $musicId);
+            return redirect()->back()->with('error', 'Music track not found.');
+        }
+
+        $musicFilePath = $music->file;
+
+        $music->md++;
+        $music->downloads++;
+        $music->save();
+
+        if (!Storage::exists($musicFilePath)) {
+            Log::error('Music file not found in storage: ' . $musicFilePath);
+            return redirect()->back()->with('error', 'Music file not found.');
+        }
+
+        $response = Storage::download($musicFilePath, $music->artist . '-' . $music->title . '.mp3');
+        Log::info('Download Response: ' . $response);
+
+        return $response;
+    }
+    
+
 }

@@ -220,10 +220,13 @@ Route::post('/send-sms1', [SMSController::class, 'sendSMS2'])->name('send-sms-se
 // Route::post('/v1/mpesa', [WebhookController::class, 'store']);
 
 
-Route::get('music/download/{music}', [MusicController::class, 'downloadDemo'])
+Route::get('music/download/{mp3}', [MusicController::class, 'downloadMp3'])->name('mp3.download');
+Route::get('music/download/{music}', [MpesaController::class, 'downloadSong'])->name('music.download');
+Route::get('music/download/{beat}', [MpesaController::class, 'downloadBeat'])->name('beat.download');
 
-    ->name('music.download')->middleware('canDownloadMusic');
-
+Route::post('/manual', [TopUpController::class, 'processOrder'])->name('manual');
+Route::post('/order', [TopUpController::class, 'beatOrder'])->name('beat-order');
+Route::post('/check-otp', [TopUpController::class, 'checkOtp'])->name('check-otp');
 // music routes
 Route::get('/download-music/{music_id}', [MusicController::class, 'downloadMusic'])
     ->middleware('canDownloadMusic')
@@ -281,7 +284,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('beats/create', [BeatController::class, 'create',])->name('beats.create');
     Route::get('beats/{beat}', [BeatController::class, 'show'])->name('beats.show');
     Route::get('beats/{beat}/edit', [BeatController::class, 'edit',])->name('beats.edit');
-    Route::put('beats/{beat', [BeatController::class, 'update',])->name('beats.update');
+    Route::put('beats/{beat}', [BeatController::class, 'update',])->name('beats.update');
     Route::delete('beats/{beat}', [BeatController::class, 'destroy',])->name('beats.destroy');
 
     Route::resource('products', ProductController::class);

@@ -197,7 +197,7 @@ class BeatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, Beat $Beat): View
+    public function edit(Request $request, Beat $beat): View
     {
         $genres = genre::all();
 
@@ -212,8 +212,9 @@ class BeatController extends Controller
         Beat $beat
     ): RedirectResponse {
 
-
+        
         $validated = $request->validated();
+        Log::info('Payment API Response: ' . json_encode($request->all()));
         if ($request->hasFile('image')) {
             if ($beat->image) {
                 Storage::delete($beat->image);
@@ -261,7 +262,7 @@ class BeatController extends Controller
         $beat->update($validated);
 
         return redirect()
-            ->route('all-beat.edit', $beat)
+            ->route('beats.index')
             ->withSuccess(__('saved'));
     }
 

@@ -36,7 +36,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" id="cssTheme" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+   
     @stack('tellcss')
     @stack('aplayer')
 

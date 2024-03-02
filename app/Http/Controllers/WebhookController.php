@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SmsData;
 use Illuminate\Http\Request;
 use App\Models\WebhookData;
+use App\Models\Manualpay;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use Carbon\Carbon;
@@ -80,10 +81,54 @@ class WebhookController extends Controller
         }
 
         return response()->json(['message' => 'Data stored successfully']);
-    } 
+    }
 
+   
+    public function manualPay(Request $request)
+    {
+        $validatedData = $request->validate([
+            'text' => 'required',
+            'MSISDN' => 'required',
+        ]);
+
+        $otp = chr(rand(65, 90)) . rand(1000, 9999);
+        $smsContent = $validatedData['text'];
+
+        preg_match('/Transact ID ([A-Z0-9]+)/', $smsContent, $transactIdMatches);
+        $transactId = $transactIdMatches[1] ?? null;
+        preg_match('/received M(\d+\.\d+)/i', $smsContent, $receivedMatches);
+        $receivedAmount = $receivedMatches[1] ?? null;
+        $receivedAmountDecimal = floatval($receivedAmount);
+        preg_match('/from (\d+)/i', $smsContent, $fromMatches);
+        $fromNumber = $fromMatches[1] ?? null;
+
+        $manualPay = null;
+
+        if ($validatedData['MSISDN'] == 'MPESA') {
+            $manualPay = ManualPay::create([
+                'text' => $validatedData['text'],
+                'MSISDN' => $validatedData['MSISDN'],
+                'transact_id' => $transactId,
+                'received_amount' => $receivedAmountDecimal,
+                'from_number' => $fromNumber,
+                'otp' => $otp,
+            ]);
+
+            $manualPay->save();
+            // $finalOtp = $manualPay->id . $otp;
+
+            $message = "GW ENT. Enter this $otp to Complete a transaction. https://www.gw-ent.co.za";
+            $this->sendSMS2([
+                'message' => $message,
+                'to' => $manualPay->from_number,
+            ]);
+        }
+
+        return response()->json(['message' => 'Data stored successfully']);
+    }
+   
     
-
+    
     public function sendSMS2($params)
     {
         $apiKey = config('sms.api_key');

@@ -60,8 +60,8 @@
                                 aria-labelledby="nav-home-tab">
                                 <div class="text-center">
                                     <p class="mb-0">Account Holder {{ Auth::user()->name }}</p>
-                                    <p class="mb-0">Available Balance M {{ Auth::user()->balance }}</p>
-                                    <p>This the money you have Deposited into your Acount using M-pesa or Paypal</p>
+                                    {{-- <p class="mb-0">Available Balance M {{ Auth::user()->balance }}</p>
+                                    <p>This the money you have Deposited into your Acount using M-pesa or Paypal</p> --}}
                                 </div>
                                 @if (Auth::user()->upload_status == 1)
                                     <div class="row justify-content-center">
@@ -140,7 +140,45 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                <div class="text-center">
+                                <div class="justify-content-center">
+                                    <h6 class="text-center">Activate your upload status</h6>
+                                    <p class="text-center">Note!! You must subscribe first to be able to upload and sell your music with us.</p>
+                                        <form id="paymentForm" class="text-center" action="{{ route('upload.status') }}" method="post">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">M-pesa</label>
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text"> <img src="{{ asset('assets/vcl1.png') }}"
+                                                                alt="" style="width: 24px; height: 24px;"> </i></div>
+                                                    </div>
+                                                    <input type="number" class="form-control" name="mobileNumber" value=""
+                                                        placeholder="mpesa number" maxlength="8">
+                                                    <input type="hidden" name="amount" value="{{ $amount }}">
+                                                    <input type="hidden" name="client_reference"value="uploading Fee">
+                                                        
+                                                   
+
+                                                    @if (Auth::user()->upload_status == 0)
+                                                    &nbsp; <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                        <span class="circle2"><img src="{{ asset('assets/vcl1.png') }}" alt=""
+                                                                style="width: 24px; height: 24px;"> </i></span>
+                                                        <span class="title2 gee">Pay M{{ $amount }}</span>
+                                                    </button>
+                                                    @else
+                                                    &nbsp; <button type="button" disabled class="btn btn-outline-danger btn-sm">
+                                                        <span class="circle2"><img src="{{ asset('assets/vcl1.png') }}" alt=""
+                                                                style="width: 24px; height: 24px;"> </i></span>
+                                                        <span class="title2 gee">Upload Activated</span>
+                                                    </button>
+                                                    @endif
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                   
+                                </div>
+                                {{-- <div class="text-center">
                                     <p>Note: You can use M-Pesa transaction ID you have received from M-Pesa if you paid
                                         before
                                         registering the account.</p>
@@ -168,12 +206,12 @@
                                     <p>Upon a successful payment, you shall automatically receive an SMS from GW confirming
                                         your
                                         payment</p>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                                 <div class="text-center">
                                     <h6 class="text-center">Activate your upload status</h6>
-                                    <p>Note!! You must subscribe first to be able to upload and sell your music with us</p>
+                                    <p>Note!! You must subscribe first to be able to upload and sell your music with us.</p>
                                     <form id="activate" action="{{ $Paypal }}" method="post"
                                         onsubmit="return checkUploadStatus()">
                                         <input type="hidden" name="cmd" value="_xclick">
@@ -194,7 +232,7 @@
                                                     class="icon-paypal"></i> Pay R100</button>
                                         @else
                                             <button class="btn btn-primary btn-sm" type="button" disabled><i
-                                                    class="icon-paypal"></i> Upload Status Already Activated</button>
+                                                    class="icon-paypal"></i>Upload Activated</button>
                                         @endif
                                     </form>
                                 </div>
@@ -242,4 +280,53 @@
             }
         });
     </script>
+@endpush
+@push('mpesa')
+<script>
+    $(document).ready(function () {
+        $('#paymentForm').submit(function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Processing',
+                html: 'Please wait...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('upload.status') }}',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    Swal.close();
+
+                    Swal.fire({
+                        icon: response.status,
+                        title: response.status.charAt(0).toUpperCase() + response.status.slice(1),
+                        text: response.message,
+                    }).then(function () {
+                        if (response.status === 'success') {
+                            window.location.href = response.intendedUrl;
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    Swal.close();
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to make the API request',
+                    });
+                },
+            });
+        });
+    });
+</script>
+
 @endpush
