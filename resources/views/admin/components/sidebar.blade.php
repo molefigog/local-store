@@ -105,12 +105,12 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ route('products') }}" class="menu-link" >
+          <a href="{{ url('products') }}" class="menu-link" >
             <div data-i18n="Basic">Pages</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ route('products.create') }}" class="menu-link" >
+          <a href="{{ url('products.create') }}" class="menu-link" >
             <div data-i18n="Basic">Add Page</div>
           </a>
         </li>
@@ -163,7 +163,7 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ route('products.create') }}" class="menu-link" >
+          <a href="{{ url('products.create') }}" class="menu-link" >
             <div data-i18n="Basic">Add Page</div>
           </a>
         </li>

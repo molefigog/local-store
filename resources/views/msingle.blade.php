@@ -83,14 +83,15 @@ $amount = 'Failed to retrieve exchange rate data.';
                             <form id="paymentForm" class="text-center" action="{{ route('m-pesa') }}" method="post">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">M-pesa</label>
+                                    <label for="email" class="form-label">Enter M-pesa Number</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"> <img src="{{ asset('assets/vcl1.png') }}"
                                                     alt="" style="width: 24px; height: 24px;"> </i></div>
                                         </div>
-                                        <input type="number" class="form-control col-6" name="mobileNumber" value=""
-                                            placeholder="mpesa number" maxlength="8">
+                                        <input type="text" class="form-control col-6" name="mobileNumber" value=""
+                                            placeholder="Enter mpesa number" pattern="5\d{7}"
+                                            title="Please enter 8 digits starting with 5" maxlength="8" required>
 
                                         <input type="hidden" name="amount" value="{{ $music->amount }}">
                                         {{-- <input type="hidden" name="amount" value="{{ $music->amount }}"> --}}
@@ -160,53 +161,53 @@ $amount = 'Failed to retrieve exchange rate data.';
                     </div>
 
                 </div>
-            
 
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                <div class="text-center">
-                    <h6 class="text-center"></h6>
-                    @if ($music->amount == 0)
-                    <p> </p>
-                    @else
-                    <div id="wrap">
-                        <form id="buyNowForm" action="{{ $Paypal }}" method="post">
-                            <input type="hidden" name="cmd" value="_xclick">
-                            <input type="hidden" name="amount" value="{{ $amount }}">
-                            <input type="hidden" name="currency_code" value="{{ $currency }}">
-                            <input type="hidden" name="business" value="{{ $PAYPAL_ID }}">
 
-                            <input type="hidden" name="custom" value="{{ $userId }}">
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <div class="text-center">
+                        <h6 class="text-center"></h6>
+                        @if ($music->amount == 0)
+                        <p> </p>
+                        @else
+                        <div id="wrap">
+                            <form id="buyNowForm" action="{{ $Paypal }}" method="post">
+                                <input type="hidden" name="cmd" value="_xclick">
+                                <input type="hidden" name="amount" value="{{ $amount }}">
+                                <input type="hidden" name="currency_code" value="{{ $currency }}">
+                                <input type="hidden" name="business" value="{{ $PAYPAL_ID }}">
 
-                            <input type="hidden" name="item_name" value="{{ $music->title }}">
-                            <input type="hidden" name="item_number" value="{{ $music->id }}">
-                            <input type="hidden" name="return" value="{{ route('success') }}">
-                            <input type="hidden" name="cancel_return" value="{{ url('cancel') }}">
-                            <input type="hidden" name="notify_url" value="{{ url('ipn') }}">
+                                <input type="hidden" name="custom" value="{{ $userId }}">
 
-                            <button type="submit" class="btn buy-button2" title="secure online payment with paypal"><i
-                                    class="icon-paypal"></i> Buy
-                                ${{ $amount }}</button>
-                        </form>
+                                <input type="hidden" name="item_name" value="{{ $music->title }}">
+                                <input type="hidden" name="item_number" value="{{ $music->id }}">
+                                <input type="hidden" name="return" value="{{ route('success') }}">
+                                <input type="hidden" name="cancel_return" value="{{ url('cancel') }}">
+                                <input type="hidden" name="notify_url" value="{{ url('ipn') }}">
+
+                                <button type="submit" class="btn buy-button2"
+                                    title="secure online payment with paypal"><i class="icon-paypal"></i> Buy
+                                    ${{ $amount }}</button>
+                            </form>
+                        </div>
+                        @endif
                     </div>
-                    @endif
                 </div>
             </div>
-        </div>
-        @endif
-        <div id="wrapper">
-            <audio preload="auto" controls>
-                <source src="{{ \Storage::url($music->demo) }}">
-            </audio>
+            @endif
+            <div id="wrapper">
+                <audio preload="auto" controls>
+                    <source src="{{ \Storage::url($music->demo) }}">
+                </audio>
 
-        </div>
+            </div>
 
-        <div>
-            <h5>share to <i class="icon-share2"></i></h5>
-            {!! $shareButtons !!}
+            <div>
+                <h5>share to <i class="icon-share2"></i></h5>
+                {!! $shareButtons !!}
+            </div>
+            <hr>
         </div>
-        <hr>
     </div>
-</div>
 
 </div>
 <br>

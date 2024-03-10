@@ -17,9 +17,9 @@
                         <label for="email" class="form-label">Email address</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">@</div>
+                                <div class="input-group-text"><i class="icon-mail_outline"></i></div>
                             </div>
-                            <input id="login" type="text" placeholder="Email/Mobile Number"
+                            <input id="login" type="text" placeholder="Enter Email"
                                 class="form-control <?php $__errorArgs = ['login'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -50,10 +50,12 @@ unset($__errorArgs, $__bag); ?>
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">@</div>
+                                <div class="input-group-text">
+                                    <i id="togglePassword" class="icon-lock_outline"></i>
+                                </div>
                             </div>
                             <input type="password" id="password" placeholder="Enter Password"
-                                class="form-control  <?php $__errorArgs = ['password'];
+                                   class="form-control <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -61,8 +63,7 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="password" required
-                                autocomplete="new-password">
-
+                                   autocomplete="new-password">
                             <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -76,7 +77,6 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-
                     </div>
 
                     <!-- Remember Me checkbox -->
@@ -111,4 +111,19 @@ unset($__errorArgs, $__bag); ?>
 </div>
 
 
-<?php /**PATH /home/gw-ent.co.za/public_html/resources/views/layouts/modal.blade.php ENDPATH**/ ?>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordInput = document.getElementById('password');
+        var icon = document.getElementById('togglePassword');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('icon-lock_outline');
+            icon.classList.add('icon-lock_open');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('icon-lock_open');
+            icon.classList.add('icon-lock_outline');
+        }
+    });
+</script><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/layouts/modal.blade.php ENDPATH**/ ?>

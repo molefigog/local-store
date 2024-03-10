@@ -191,9 +191,6 @@ class BeatController extends Controller
 
         return view('beat', compact('beat', 'metaTags',  'shareButtons', 'userId', 'Paypal', 'PAYPAL_ID', 'currency'));
     }
-
-
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -203,7 +200,6 @@ class BeatController extends Controller
 
         return view('beats.edit', compact('beat', 'genres'));
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -211,87 +207,66 @@ class BeatController extends Controller
         BeatUpdateRequest $request,
         Beat $beat
     ): RedirectResponse {
-
-        
+      
         $validated = $request->validated();
         Log::info('Payment API Response: ' . json_encode($request->all()));
         if ($request->hasFile('image')) {
             if ($beat->image) {
                 Storage::delete($beat->image);
             }
-
-
             $imageFile = $request->file('image');
             $imageName = $imageFile->getClientOriginalName();
             $validated['image'] = $imageFile->storeAs('public', $imageName);
         }
-
         if ($request->hasFile('demo')) {
             if ($beat->demo) {
                 Storage::delete($beat->demo);
             }
-
             $demoFile = $request->file('demo');
             $demoName = $demoFile->getClientOriginalName();
             $validated['demo'] = $demoFile->storeAs('public', $demoName);
         }
-
         if ($request->hasFile('file')) {
             if ($beat->file) {
                 Storage::delete($beat->file);
             }
-
             $beatFile = $request->file('file');
             $beatName = $beatFile->getClientOriginalName();
             $validated['file'] = $beatFile->storeAs('public', $beatName);
-
             $getID3 = new getID3();
             $beatInfo = $getID3->analyze($beatFile->getPathname());
             $duration = $beatInfo['playtime_string'];
             $sizeInBytes = $beatInfo['filesize'];
-
             // Convert file size to megabytes
             $sizeInMB = round($sizeInBytes / (1024 * 1024), 2);
-
             // Add duration and size to the validated data
             $validated['duration'] = $duration;
             $validated['size'] = $sizeInMB;
         }
-
-
         $beat->update($validated);
-
         return redirect()
             ->route('beats.index')
             ->withSuccess(__('saved'));
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, Beat $beat): RedirectResponse
     {
-
-
         if ($beat->image) {
             Storage::delete($beat->image);
         }
-
         if ($beat->demo) {
             Storage::delete($beat->demo);
         }
-
         if ($beat->file) {
             Storage::delete($beat->file);
         }
-
         $beat->delete();
-
         return redirect()
             ->route('all-beat.index')
             ->withSuccess(__('removed'));
     }
-
     public function songsByGenre($genreName)
     {
         $genre = Genre::where('title', $genreName)->firstOrFail();
@@ -336,26 +311,15 @@ class BeatController extends Controller
         ];
         return view('songs_by_genre', compact('beatCollection', 'genre', 'recentlyAddedSongs', 'metaTags', 'recipeData', 'siteData'));
     }
-
-
-
     public function genre(Request $request): View
     {
         $search = $request->get('search', '');
-
-        // Fetch all beat with search filter
         $beat = Beat::search($search)->latest()->paginate(4)->withQueryString();
-
-        // Fetch recently added songs
         $recentlyAddedSongs = Beat::latest()->take(10)->get();
-
-        // Fetch genres with beat counts
         $genres = Genre::withCount('beat')
             ->latest()
-            ->paginate(10) // You might want to adjust the pagination as needed
+            ->paginate(10)
             ->withQueryString();
-
-        // Assuming you want to display meta information based on the first genre
         $firstGenre = $genres->first();
 
         $metaTags = [

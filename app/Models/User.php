@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Beat;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Music;
 use App\Models\Items;
 use App\Models\Scopes\Searchable;
@@ -15,7 +15,6 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -76,23 +75,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Music::class);
     }
     // User.php (User model)
-    public function beat()
-    {
-        return $this->belongsToMany(Beat::class);
-    }
+
 
     public function purchasedMusic()
     {
         return $this->belongsToMany(Music::class, 'items', 'user_id', 'music_id')->withTimestamps();
     }
 
-    public function purchasedBeat()
-    {
-        return $this->belongsToMany(Beat::class, 'beatz', 'user_id', 'beat_id')->withTimestamps();
-    }
     public function items()
-{
-    return $this->hasMany(Items::class);
-}
-
+    {
+        return $this->hasMany(Items::class);
+    }
 }

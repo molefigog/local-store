@@ -57,10 +57,10 @@
                                   
                                       @if(Auth::user()->upload_status == 1)
                                        <li><a class="nav-link" href="{{ url('/all-music/create') }}"><i class="icon-upload"></i> Upload</a></li>
-                                       <li><a class="nav-link" href="{{ url('/sales') }}"><i class="icon-account_balance_wallet"></i> Wallet</a></li>
+                                       {{-- <li><a class="nav-link" href="{{ url('/sales') }}"><i class="icon-account_balance_wallet"></i> Wallet</a></li> --}}
                                        @endif
                                        <li><a class="nav-link" href="{{ url('/purchased-musics') }}"><i class="icon-download"></i> Downloads</a></li>
-                                       <li><a class="nav-link" href="{{ url('/top-up') }}"><i class="fa fa-cart-plus"></i> Deposit</a></li>
+                                       <li><a class="nav-link" href="{{ url('/top-up') }}"><i class="fa fa-cart-plus"></i> Account <span class="badge bg-danger">!</span></a></li>
   
                                        <li><a class="nav-link" href="{{ url('edit-profile') }}"><i class="icon-user"></i> Profile</a></li>
                                        <li><a class="nav-link" href="{{ route('log') }}"><i class="icon-paypal"></i> Paypal History</a></li>
@@ -99,7 +99,7 @@
                                         class="icon-facebook"></span></a></li>
                             <li class="social"><a href="https://twitter.com/Molefi18186414" target="_blank" class="nav-link"><span
                                         class="icon-twitter"></span></a></li>
-                            <li class="social"><a href="mailto:admin@gw-ent.com" target="_blank" class="nav-link"><span
+                            <li class="social"><a href="mailto:molefigw@gmail.com" target="_blank" class="nav-link"><span
                                         class="icon-mail_outline"></span></a></li>
                         </ul>
                     </nav>
@@ -116,17 +116,15 @@
     </header>
     <div class="hero">
         <div class="search text-center">
+            <a class="btn btn-secondary" href="#notice" id="infoIcon"><i class="icon-info-circle"></i></a>
             <form action="">
                 <div class="input-group">
-
-
                     <input type="text" id="indexSearch" name="search" value="{{ $search ?? '' }}" class="form-control" placeholder="Search">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="submit">
                             <i class="icon-search"></i>
                         </button>
                     </div>
-
                 </div>
             </form>
         </div>

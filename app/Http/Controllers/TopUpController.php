@@ -21,14 +21,11 @@ class TopUpController extends Controller
         $Paypal = config('paypal.paypal_url');
         $PAYPAL_ID = config('paypal.paypal_id');
         $currency = config('paypal.paypal_currency');
-
+        $upload_fee = '100';
         // $userId = Auth::user()->id;
-
         $user = auth()->user();
-
-        // Retrieve songs for the authenticated user
         $songs = $user->music;
-        return view('top-up', compact('songs', 'Paypal', 'PAYPAL_ID', 'currency'));
+        return view('top-up', compact('songs', 'Paypal', 'PAYPAL_ID', 'currency', 'upload_fee'));
     }
 
     public function processTopUp(Request $request)
@@ -48,68 +45,67 @@ class TopUpController extends Controller
         }
     }
     public function processOrder(Request $request)
-{
-    $otp = $request->input('otp');
-    $manualPay = Manualpay::where('otp', $otp)->where('used', false)->first();
+    {
+        $otp = $request->input('otp');
+        $manualPay = Manualpay::where('otp', $otp)->where('used', false)->first();
 
-    if ($manualPay) {
-        $musicId = $request->input('music_id');
-        $music = Music::find($musicId);
-        $downloadUrl = route('music.download', ['music' => $musicId]);
+        if ($manualPay) {
+            $musicId = $request->input('music_id');
+            $music = Music::find($musicId);
+            $downloadUrl = route('music.download', ['music' => $musicId]);
 
-        if (!$music) {
-            Log::error('Music track not found for ID: ' . $musicId);
-            return redirect()->back()->with('error', 'Music track not found.');
-        }
-        if ($manualPay->received_amount >= $music->amount) {
-            $manualPay->received_amount -= $music->amount;
-            $manualPay->save();
-            return redirect($downloadUrl);
-        } elseif ($manualPay->received_amount == $music->amount) {
-            $manualPay->markAsUsed();
-            return redirect($downloadUrl);
+            if (!$music) {
+                Log::error('Music track not found for ID: ' . $musicId);
+                return redirect()->back()->with('error', 'Music track not found.');
+            }
+            if ($manualPay->received_amount >= $music->amount) {
+                $manualPay->received_amount -= $music->amount;
+                $manualPay->save();
+                return redirect($downloadUrl);
+            } elseif ($manualPay->received_amount == $music->amount) {
+                $manualPay->markAsUsed();
+                return redirect($downloadUrl);
+            } else {
+                return redirect()->back()->with('error', 'Insufficient funds. Please try again with the correct amount.');
+            }
         } else {
-            return redirect()->back()->with('error', 'Insufficient funds. Please try again with the correct amount.');
+            return redirect()->back()->with('error', 'Invalid OTP or order already used.');
         }
-    } else {
-        return redirect()->back()->with('error', 'Invalid OTP or order already used.');
     }
-}
 
-public function beatOrder(Request $request)
-{
-    $otp = $request->input('otp');
-    $manualPay = Manualpay::where('otp', $otp)->where('used', false)->first();
+    public function beatOrder(Request $request)
+    {
+        $otp = $request->input('otp');
+        $manualPay = Manualpay::where('otp', $otp)->where('used', false)->first();
 
-    if ($manualPay) {
-        $beatId = $request->input('beat_id');
-        $beat = Beat::find($beatId);
-        $downloadUrl = route('beat.download', ['beat' => $beatId]);
+        if ($manualPay) {
+            $beatId = $request->input('beat_id');
+            $beat = Beat::find($beatId);
+            $downloadUrl = route('beat.download', ['beat' => $beatId]);
 
-        if (!$beat) {
-            Log::error('Beat track not found for ID: ' . $beatId);
-            return redirect()->back()->with('error', 'Beat track not found.');
-        }
-        if ($manualPay->received_amount >= $beat->amount) {
-            $manualPay->received_amount -= $beat->amount;
-            $manualPay->save();
-            return redirect($downloadUrl);
-        } elseif ($manualPay->received_amount == $beat->amount) {
-            $manualPay->markAsUsed();
-            return redirect($downloadUrl);
+            if (!$beat) {
+                Log::error('Beat track not found for ID: ' . $beatId);
+                return redirect()->back()->with('error', 'Beat track not found.');
+            }
+            if ($manualPay->received_amount >= $beat->amount) {
+                $manualPay->received_amount -= $beat->amount;
+                $manualPay->save();
+                return redirect($downloadUrl);
+            } elseif ($manualPay->received_amount == $beat->amount) {
+                $manualPay->markAsUsed();
+                return redirect($downloadUrl);
+            } else {
+                return redirect()->back()->with('error', 'Insufficient funds. Please try again with the correct amount.');
+            }
         } else {
-            return redirect()->back()->with('error', 'Insufficient funds. Please try again with the correct amount.');
+            return redirect()->back()->with('error', 'Invalid OTP or order already used.');
         }
-    } else {
-        return redirect()->back()->with('error', 'Invalid OTP or order already used.');
     }
-}
-    
+
     public function downloadSong($musicId)
     {
         Log::info('Music ID: ' . $musicId);
         $music = Music::find($musicId);
-
         if (!$music) {
             Log::error('Music track not found for ID: ' . $musicId);
             return redirect()->back()->with('error', 'Music track not found.');
@@ -130,8 +126,7 @@ public function beatOrder(Request $request)
     public function downloadbeat($beatId)
     {
         Log::info('Music ID: ' . $beatId);
-        $beat= Music::find($beatId);
-
+        $beat = Music::find($beatId);
         if (!$beat) {
             Log::error('Music track not found for ID: ' . $beatId);
             return redirect()->back()->with('error', 'Music track not found.');

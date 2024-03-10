@@ -12,21 +12,14 @@
             </h4>
             @if(Auth::user()->upload_status == 1)
             <x-form
-                action="" id="music-form"
-                has-files
-                class="mt-4"
-            >
+                action="" id="music-form" has-files class="mt-4">
                 @include('all_music.form-inputs')
-
                 <div class="mt-4 text-center">
                     <a
-                        href="{{ route('all-music.index') }}"
-                        class="btn btn-light text-center"
-                    >
+                        href="{{ route('all-music.index') }}" class="btn btn-light text-center">
                         <i class="icon-arrow-left"></i>
                         @lang('back')
                     </a>
-
                     <button type="submit" class="btn btn-primary text-center" form="music-form">
                         <i class="fa fa-save"></i>
                         @lang('create')
@@ -34,7 +27,11 @@
                 </div>
             </x-form>
             @else
-            <p>pay R100 to upload 8 song </p>
+            <p> </p>
+            <div class="alert alert-danger justify-content-center" role="alert">
+                <p class="text-center" id="text">pay R100 to upload up to 12 songs! </p>
+                <a class="btn btn-success btn-sm text-center" href="{{route('top-up')}}">click here to activate</a>
+            </div>
             @endif
         </div>
     </div>

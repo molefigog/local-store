@@ -81,17 +81,16 @@ class MusicController extends Controller
 
             if ($request->hasFile('image')) {
                 $imageFile = $request->file('image');
-                $imageName = $imageFile->getClientOriginalName();
+                $imageName = rand(100, 9999) . $imageFile->getClientOriginalName();
                 $validated['image'] = $imageFile->storeAs('public', $imageName);
             }
 
             $inputFile = $request->file('file');
             $inputFilePath = $inputFile->store('mp3');
 
-            // Trim the MP3 and save it to a temporary file
             $trimmedFilePath = tempnam(sys_get_temp_dir(), 'trimmed_mp3_');
             MpegAudio::fromFile(Storage::path($inputFilePath))
-                ->trim(13, 30)
+                ->trim(13, 29)
                 ->saveFile($trimmedFilePath);
 
             if ($request->hasFile('file')) {
@@ -99,12 +98,11 @@ class MusicController extends Controller
                 $musicName = $musicFile->getClientOriginalName();
                 $validated['file'] = $musicFile->storeAs('public', $musicName);
 
-                $getID3 = new GetId3(); // Create an instance of GetId3
+                $getID3 = new GetId3();
                 $musicInfo = $getID3->analyze($musicFile->getPathname());
                 $duration = $musicInfo['playtime_string'];
                 $sizeInBytes = $musicInfo['filesize'];
 
-                // Convert file size to megabytes
                 $sizeInMB = round($sizeInBytes / (1024 * 1024), 2);
 
                 // Add duration and size to the validated data
@@ -349,7 +347,53 @@ class MusicController extends Controller
         ];
         return view('songs_by_genre', compact('musicCollection', 'genre', 'recentlyAddedSongs', 'metaTags', 'recipeData', 'siteData'));
     }
+    public function songsByArtist($artistName)
+    {
+        $artist = User::where('name', $artistName)->firstOrFail();
 
+        $musicCollection = DB::table('music_user')
+            ->where('user_id', $artist->id)
+            ->join('music', 'music_user.music_id', '=', 'music.id')
+            ->latest('music.created_at')
+            ->paginate(10);
+        $recentlyAddedSongs = Music::latest()->take(10)->get();
+        $setting = Setting::firstOrFail();
+        $appName = config('app.name');
+        $url = config('app.url');
+
+        $title = $setting ? $setting->site : $appName;
+        $image = asset('storage/og-tag.jpg');
+        $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
+
+        $metaTags = [
+            'title' => $setting->site,
+            'description' => $setting->description,
+            'image' =>  $image,
+            'keywords' => $keywords,
+            'url' =>  $url,
+        ];
+
+        $recipeData = [
+            "@context" => "https://schema.org/",
+            "@type" => "Recipe",
+            "name" => "Mseja Local Music",
+            "author" => [
+                "@type" => "Person",
+                "name" => "Elliot Gog"
+            ],
+            "datePublished" => "2021-05-01",
+            "description" => "Best way to sell digital Items with M-Pesa.",
+            "prepTime" => "PT20M"
+        ];
+        $siteData = [
+            "@context" => "https://schema.org",
+            "@type" => "WebSite",
+            "name" => "Genius Works Ent",
+            "alternateName" => "GW-ENT",
+            "url" => "https://gw-ent.co.za/"
+        ];
+        return view('songs_by_artist', compact('musicCollection', 'artist', 'recentlyAddedSongs', 'metaTags', 'recipeData', 'siteData'));
+    }
 
 
     public function genre(Request $request): View
@@ -506,8 +550,8 @@ class MusicController extends Controller
             ->orderByDesc('created_at')
             ->paginate(10);
 
-        $metaTags = $this->generateMetaTags($purchasedMusics->first()); // Assuming you want metadata for the first purchased music
-        return view('purchased-musics', compact('purchasedMusics', 'metaTags', 'user', 'search'));
+        //$metaTags = $this->generateMetaTags($purchasedMusics->first());  Assuming you want metadata for the first purchased music
+        return view('purchased-musics', compact('purchasedMusics','user', 'search'));
     }
 
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\MusicController;
 use App\Http\Controllers\BeatController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use App\Models\Beat;
 use App\Models\Music;
@@ -39,7 +40,7 @@ Route::get('/cancel', function () {
 Route::get('/mpesa/success', [MpesaController::class, 'showSuccessPage'])->name('mpesa.success');
 
 Route::get('mpesa/error', [MpesaController::class, 'showErrorPage'])->name('mpesa.error');
-Route::get('/success2', [PaypalController::class, 'returnUrl'])->name('success2');
+Route::get('/success2', [PaypalController::class, 'returnUrl'])->name('success2'); 
 
 Route::get('/success', [PaypalController::class, 'handleSuccess'])->name('success');
 Route::post('/ipn', [PaypalController::class, 'handleIPN']);
@@ -93,55 +94,8 @@ Route::get('songs', function (Request $request) {
     ));
 });
 
-
-Route::get('/', function (Request $request) {
-    $search = $request->get('search', '');
-    $allMusic = Music::search($search)->latest()->paginate(15)->withQueryString();
-    $products = Product::search($search)->latest()->paginate(10)->withQueryString();
-    $recentlyAddedSongs = Music::latest()->take(10)->get();
-    $downloads = Music::where('downloads', '>', 0)
-        ->orderBy('downloads', 'desc')
-        ->take(10)
-        ->get();
-    $setting = Setting::firstOrFail();
-    $appName = config('app.name');
-    $url = config('app.url');
-
-    $title = $setting ? $setting->site : $appName;
-    $image = asset('storage/og-tag.jpg');
-    $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
-
-    $metaTags = [
-        'title' => $setting->site,
-        'description' => $setting->description,
-        'image' =>  $image,
-        'keywords' => $keywords,
-        'url' =>  $url,
-    ];
-
-    $recipeData = [
-        "@context" => "https://schema.org/",
-        "@type" => "Recipe",
-        "name" => "Mseja Local Music",
-        "author" => [
-            "@type" => "Person",
-            "name" => "Elliot Gog"
-        ],
-        "datePublished" => "2021-05-01",
-        "description" => "Best way to sell digital Items with M-Pesa.",
-        "prepTime" => "PT20M"
-    ];
-    $siteData = [
-        "@context" => "https://schema.org",
-        "@type" => "WebSite",
-        "name" => "Genius Works Ent",
-        "alternateName" => "GW-ENT",
-        "url" => "https://gw-ent.co.za/"
-    ];
-
-    return view('music', compact('allMusic', 'products', 'downloads', 'metaTags', 'recipeData', 'siteData', 'search',));
-})->name('home');
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/sitemap', [HomeController::class, 'sitemap'])->name('sitemap');
 Route::get('beatz', function (Request $request) {
     $search = $request->get('search', '');
     $beats = Beat::search($search)->latest()->paginate(15)->withQueryString();
@@ -222,7 +176,7 @@ Route::post('/send-sms1', [SMSController::class, 'sendSMS2'])->name('send-sms-se
 
 Route::get('music/download/{mp3}', [MusicController::class, 'downloadMp3'])->name('mp3.download');
 Route::get('music/download/{music}', [MpesaController::class, 'downloadSong'])->name('music.download');
-Route::get('music/download/{beat}', [MpesaController::class, 'downloadBeat'])->name('beat.download');
+Route::get('download/{beat}', [MpesaController::class, 'downloadBeat'])->name('beat.download');
 
 Route::post('/manual', [TopUpController::class, 'processOrder'])->name('manual');
 Route::post('/order', [TopUpController::class, 'beatOrder'])->name('beat-order');
@@ -241,6 +195,7 @@ Route::post('/buy-music', [MusicController::class, 'buyMusic'])->name('buy-music
 Route::post('/pay', [MusicController::class, 'pay'])->name('pay');
 Route::get('about', [ProductController::class, 'about'])->name('about');
 Route::get('/songs/genre/{genre}', [MusicController::class, 'songsByGenre'])->name('songs-by-genre');
+Route::get('/songs/{artist}', [MusicController::class, 'songsByArtist'])->name('songs-by-artist');
 /*
 |--------------------------------------------------------------------------|
 | Admin Routes                                                             |

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Music;
 use App\Models\Mpesa;
@@ -19,7 +21,7 @@ class MpesaController extends Controller
     public function beatPay(Request $request)
     {
         try {
-            // Log::info('Form Input Data: ' . json_encode($request->all()));
+            Log::info('Form Input Data: ' . json_encode($request->all()));
             $amount = $request->input('amount');
             $mobileNumber = $request->input('mobileNumber');
             $client_reference = $request->input('client_reference');
@@ -83,32 +85,56 @@ class MpesaController extends Controller
             return response()->json($responseData);
         }
     }
+    // public function downloadBeat($beatId)
+    // {
+    //     Log::info('Beat ID: ' . $beatId);
+    //     $beat = Beat::find($beatId);
+
+    //     if (!$beat) {
+    //         Log::error('Beat track not found for ID: ' . $beatId);
+    //         return redirect()->back()->with('error', 'Beat track not found.');
+    //     }
+    //     $beatFilePath = $beat->file;
+    //     $beat->used += 1;
+    //     $beat->save();
+    //     if (!Storage::exists($beatFilePath)) {
+    //         Log::error('Beat file not found in storage: ' . $beatFilePath);
+    //         return redirect()->back()->with('error', 'Beat file not found.');
+    //     }
+    //     $response = Storage::download($beatFilePath, $beat->artist . '-'. $beat->title .'.mp3');
+    //     Log::info('Download Response: ' . $response);
+
+    //     return $response;
+    // }
     public function downloadBeat($beatId)
     {
         Log::info('Beat ID: ' . $beatId);
-        $beat = Beat::find($beatId);
-
+        $beat = Beat::where('id', $beatId)->where('used', false)->first();
+    
         if (!$beat) {
             Log::error('Beat track not found for ID: ' . $beatId);
             return redirect()->back()->with('error', 'Beat track not found.');
         }
+    
         $beatFilePath = $beat->file;
-        $beat->used += 1;
-        $beat->save();
+        $beat->markAsUsed();
+        
         if (!Storage::exists($beatFilePath)) {
             Log::error('Beat file not found in storage: ' . $beatFilePath);
             return redirect()->back()->with('error', 'Beat file not found.');
         }
+    
         $response = Storage::download($beatFilePath, $beat->artist . '-'. $beat->title .'.mp3');
         Log::info('Download Response: ' . $response);
-
+    
         return $response;
     }
-
+    
     public function uploadStatus(Request $request)
     {
         try {
             // Log::info('Form Input Data: ' . json_encode($request->all()));
+            $userId = $request->input('userId');
             $amount = $request->input('amount');
             $mobileNumber = $request->input('mobileNumber');
             $client_reference = $request->input('client_reference');
@@ -136,22 +162,27 @@ class MpesaController extends Controller
             $responseData = json_decode($response->getBody(), true);
             $payRef = $responseData['reference'];
             $verificationResponse = $this->confirm($payRef);
+            $this->mpesaTransaction($payRef, $mobileNumber, $amount);
             $verificationData = json_decode($verificationResponse, true);
             error_log('Verification Response: ' . $verificationResponse);
             if ($verificationData['status_code'] === 'INS-0') {
                 $status = 'success';
                 $message = $verificationData['message'];
-
+            
+                    $user = User::find($userId);
+                    $user->upload_status += 1;
+                    $user->save();
+                    // $uploadUrl = route('all-music.create');
                 $responseData = [
                     'status' => $status,
                     'message' => $message,
-                   
+                    // 'upload_url' => $uploadUrl,
                 ];
                 return response()->json($responseData);
             } else {
                 $status = 'error';
                 $message = 'Transaction verification failed Error 400';
-
+            
                 $responseData = [
                     'status' => $status,
                     'message' => $message,

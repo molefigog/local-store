@@ -3,9 +3,9 @@
 
 <head>
     <?php
-        $setting = App\Models\Setting::orderBy('created_at', 'desc')
-            ->select('site', 'image', 'logo', 'favicon', 'description')
-            ->first();
+    $setting = App\Models\Setting::orderBy('created_at', 'desc')
+    ->select('site', 'image', 'logo', 'favicon', 'description')
+    ->first();
     ?>
 
     <meta charset="utf-8">
@@ -15,10 +15,17 @@
     <meta name="MobileOptimized" content="320">
     <meta property="og:site_name" content="gw-ent" />
     <?php echo $__env->yieldContent('head'); ?>
-
-    <?php echo $__env->yieldPushContent('recipe'); ?>
-
-    <?php echo $__env->yieldPushContent('ghead'); ?>
+    
+    <script type="application/ld+json">
+        {
+        "@context" : "http://schema.org",
+        "@type" : "WebSite",
+        "name" : "GW ENT",
+        "alternateName" : "Genius Works Ent",
+        "url" : "https://www.gw-ent.co.za"
+        }
+        </script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 
@@ -37,12 +44,12 @@
     <link rel="stylesheet" id="cssTheme" href="<?php echo e(asset('frontend/css/bootstrap.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('frontend/css/style.css')); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-   
+
     <?php echo $__env->yieldPushContent('tellcss'); ?>
     <?php echo $__env->yieldPushContent('aplayer'); ?>
 
     <?php if($setting && $setting->favicon): ?>
-        <link rel="icon" type="image/png" href="<?php echo e(\Storage::url($setting->favicon)); ?>">
+    <link rel="icon" type="image/png" href="<?php echo e(\Storage::url($setting->favicon)); ?>">
     <?php endif; ?>
 
     <style>
@@ -51,18 +58,22 @@
                 width: 100%;
                 margin-bottom: 15px;
             }
+
             .card-img-top {
                 max-height: 150px;
                 object-fit: cover;
             }
+
             .card-img-top:hover {
-                transform: scale(1.1);      
+                transform: scale(1.1);
             }
+
             .row-cols-2>* {
                 flex: 0 0 50%;
                 max-width: 50%;
             }
         }
+
         .card-img-wrapper {
             display: flex;
             align-items: center;
@@ -70,12 +81,15 @@
             height: 50%;
             overflow: hidden;
         }
+
         .card-img-wrapper img {
             transition: 1.5s ease;
         }
+
         .card:hover .card-img-wrapper img {
             transform: scale(1.15);
         }
+
         .card-details {
             display: flex;
             position: absolute;
@@ -91,11 +105,13 @@
             justify-content: space-evenly;
             align-items: center;
         }
+
         .card:hover .card-details {
             transition: 1.5s ease;
             transform: scale(1.15);
             /* Show and fade in the card details */
         }
+
         .card-hide {
             display: flex;
             opacity: 1;
@@ -110,10 +126,12 @@
             justify-content: space-evenly;
             align-items: center;
         }
+
         .card:hover .card-hide {
             opacity: 0;
             background-color: rgb(255, 255, 255, 0);
         }
+
         .social-button {
             display: inline-flex;
             flex-wrap: wrap;
@@ -125,12 +143,14 @@
             font-size: x-large;
             color: #199945;
         }
-       .map-responsive {
+
+        .map-responsive {
             overflow: hidden;
             padding-bottom: 56.25%;
             position: relative;
             height: 0;
         }
+
         .map-responsive iframe {
             left: 0;
             top: 0;
@@ -138,6 +158,8 @@
             width: 100%;
             position: absolute;
         }
+
+       
     </style>
     <!-- Favicon Link -->
 
@@ -175,5 +197,4 @@
 </head>
 
 <body>
-    <?php echo $__env->yieldPushContent('gbody'); ?>
-<?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/head.blade.php ENDPATH**/ ?>
+    <?php echo $__env->yieldPushContent('gbody'); ?><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/head.blade.php ENDPATH**/ ?>

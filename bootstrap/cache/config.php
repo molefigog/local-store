@@ -589,7 +589,7 @@
         'port' => '587',
         'encryption' => 'tls',
         'username' => 'apikey',
-        'password' => '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',
+        'password' => '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',
         'timeout' => NULL,
         'local_domain' => NULL,
       ),

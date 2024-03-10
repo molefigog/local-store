@@ -17,9 +17,9 @@
                         <label for="email" class="form-label">Email address</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">@</div>
+                                <div class="input-group-text"><i class="icon-mail_outline"></i></div>
                             </div>
-                            <input id="login" type="text" placeholder="Email/Mobile Number"
+                            <input id="login" type="text" placeholder="Enter Email"
                                 class="form-control @error('login') is-invalid @enderror" name="login"
                                 value="{{ old('login') }}" required autocomplete="login" autofocus>
                             @error('login')
@@ -36,19 +36,19 @@
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">@</div>
+                                <div class="input-group-text">
+                                    <i id="togglePassword" class="icon-lock_outline"></i>
+                                </div>
                             </div>
                             <input type="password" id="password" placeholder="Enter Password"
-                                class="form-control  @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="new-password">
-
+                                   class="form-control @error('password') is-invalid @enderror" name="password" required
+                                   autocomplete="new-password">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-
                     </div>
 
                     <!-- Remember Me checkbox -->
@@ -102,3 +102,19 @@
         </div>
     </div>
 </div> --}}
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordInput = document.getElementById('password');
+        var icon = document.getElementById('togglePassword');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('icon-lock_outline');
+            icon.classList.add('icon-lock_open');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('icon-lock_open');
+            icon.classList.add('icon-lock_outline');
+        }
+    });
+</script>

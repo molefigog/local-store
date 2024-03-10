@@ -2,25 +2,20 @@
 $apiKey = '863c6f17965b59a056305e51';
 $baseCurrency = 'ZAR';
 $targetCurrency = 'USD';
-$amount = $beat->amount; // Assuming $beat->amount contains the ZAR amount you want to convert
+$amount = $beat->amount; 
 
-// Make API request to get the exchange rate
 $apiUrl = "https://open.er-api.com/v6/latest/{$baseCurrency}?apikey={$apiKey}";
 $response = file_get_contents($apiUrl);
 $data = json_decode($response, true);
 
 if ($data && isset($data['rates'][$targetCurrency])) {
-    // Perform the conversion
+
     $exchangeRate = $data['rates'][$targetCurrency];
     $convertedAmount = $amount * $exchangeRate;
-
-    // Round the converted amount to 2 decimal places (you can adjust this as needed)
     $convertedAmount = round($convertedAmount, 2);
-
-    // Assign the converted amount to $amount
     $amount = $convertedAmount;
 } else {
-    // Handle the case where the exchange rate data is not available
+    
     $amount = "Failed to retrieve exchange rate data.";
 }
 
@@ -43,7 +38,11 @@ if ($data && isset($data['rates'][$targetCurrency])) {
                 <P> Size: {{ $beat->size ?? '-' }}MB Duration:
                     <span>{{ $beat->duration ?? '-' }}</span>
                 </P>
+                @if ($beat->used == 1)
+                <h3 class="text-muted">Sold </h3>
+                @else
                 <h3 class="text-success">Price R{{ $beat->amount }} </h3>
+                @endif
                 <p>
                     Genre <span
                         class="text-success">{{ $beat->genre ? $beat->genre->title : '-' }}</span>
@@ -76,20 +75,29 @@ if ($data && isset($data['rates'][$targetCurrency])) {
                                                 <div class="input-group-text"> <img src="{{ asset('assets/vcl1.png') }}"
                                                         alt="" style="width: 24px; height: 24px;"> </i></div>
                                             </div>
-                                            <input type="number" class="form-control col-6" name="mobileNumber" value=""
-                                                placeholder="mpesa number" maxlength="8">
+                                            <input type="text" class="form-control col-6" name="mobileNumber" value=""
+                                            placeholder="Enter mpesa number" pattern="5\d{7}"
+                                            title="Please enter 8 digits starting with 5" maxlength="8" required>
                                             <input type="hidden" name="amount" value="{{ $beat->amount }}">
                                             {{-- <input type="hidden" name="amount" value="{{ $music->amount }}"> --}}
                                             <input type="hidden" name="client_reference"
                                                 value="{{ $beat->id }} {{ $beat->title ?? '-' }}">
                                             <input type="hidden" name="beatId"value="{{ $beat->id }}">
+                                            @if ($beat->used == 1)
+                                            &nbsp; <button type="submit" disabled class="btn btn-outline-danger btn-sm">
+                                                <span class="circle2"><img src="{{ asset('assets/vcl1.png') }}" alt=""
+                                                        style="width: 24px; height: 24px;"> </i></span>
+                                                <span class="title2 gee">Sold</span>
     
+                                            </button>
+                                           @else
                                             &nbsp; <button type="submit" class="btn btn-outline-danger btn-sm">
                                                 <span class="circle2"><img src="{{ asset('assets/vcl1.png') }}" alt=""
                                                         style="width: 24px; height: 24px;"> </i></span>
                                                 <span class="title2 gee">Pay M{{ $beat->amount }}</span>
     
                                             </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </form>

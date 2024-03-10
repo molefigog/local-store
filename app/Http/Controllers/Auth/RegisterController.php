@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
@@ -57,90 +58,48 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile_number' => ['required', 'numeric', 'unique:users'],
+            'mobile_number' => 'phone:INTERNATIONAL,US,BE,LS,BW,ZA,MZ,ZW',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-
+        ], [
+            'phone.phone' => 'The phone number must be a valid phone number.',
         ]);
     }
-
-
-
-
-
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\Models\User
      */
-    // protected function create(array $data)
-    // {
-    //     // Get the full mobile number from the hidden input
-    //     $fullMobileNumber = str_replace('+', '', $data['full_mobile_number']);
-        
-    //     // Split the full mobile number into dialing code and actual phone number
-    //     $dialingCode = substr($fullMobileNumber, 0, 4); // Adjust the length based on your requirements
-    //     $mobileNumber = substr($fullMobileNumber, 4);
-    //     $verificationToken = sha1(time() . $data['email']);
-    
-    //     // Create the user
-    //     $user = User::create([
-    //         'name' => $data['name'],
-    //         'email' => $data['email'],
-    //         'mobile_number' => $fullMobileNumber, // Store the full mobile number including the dialing code
-    //         'password' => Hash::make($data['password']),
-    //         'balance' => 0, // Default balance
-    //         'avatar' => 'default_avatar.png', // Default avatar
-    //         'email_verification_token' => $verificationToken,
-    //     ]);
-    
-    //     // Send email verification notification
-    //     $user->sendEmailVerificationNotification();
-    
-    //     return $user;
-    // }
-    
-    
     protected function create(array $data)
     {
-        // Get the full mobile number from the hidden input
-        $fullMobileNumber = str_replace('+', '', $data['full_mobile_number']);
-        
-        // Split the full mobile number into dialing code and actual phone number
-        $dialingCode = substr($fullMobileNumber, 0, 4); // Adjust the length based on your requirements
-        $mobileNumber = substr($fullMobileNumber, 4);
+       
+        // dd($data);
         $verificationToken = sha1(time() . $data['email']);
-    
-        // Log or dump the data for debugging
-        Log::info('Data to be saved to the database:', [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'mobile_number' => $fullMobileNumber,
-            'password' => Hash::make($data['password']),
-            'balance' => 0,
-            'avatar' => 'default_avatar.png',
-            'email_verification_token' => $verificationToken,
-        ]);
-    
-        // Create the user
+        // Log::info('Data to be saved to the database:', [
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'mobile_number' => $data['mobile_number'],
+        //     'full_number' => $data['full_number'],
+        //     'password' => Hash::make($data['password']),
+        //     'balance' => 0,
+        //     'avatar' => 'default_avatar.png',
+        //     'email_verification_token' => $verificationToken,
+        // ]);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'mobile_number' => $fullMobileNumber,
+            'mobile_number'=> $data['mobile_number'],
             'password' => Hash::make($data['password']),
-            'balance' => 0,
-            'avatar' => 'default_avatar.png',
+            'balance' => 0, // Default balance
+            'avatar' => 'default_avatar.png', // Default avatar
             'email_verification_token' => $verificationToken,
         ]);
-    
-        // Send email verification notification
+
         $user->sendEmailVerificationNotification();
-    
+
         return $user;
     }
     
-
-
     protected function registered(Request $request, $user)
     {
         return redirect()->route('home')->withSuccess(__('Account registered successfully! Please check your email for verification.'));
