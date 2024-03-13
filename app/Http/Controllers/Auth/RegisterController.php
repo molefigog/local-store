@@ -102,7 +102,7 @@ class RegisterController extends Controller
     
     protected function registered(Request $request, $user)
     {
-        return redirect()->route('home')->withSuccess(__('Account registered successfully! Please check your email for verification.'));
+        return redirect()->route('gee')->withSuccess(__('Account registered successfully! Please check your email for verification.'));
     }
 
     public function registerWithMobile(Request $request)

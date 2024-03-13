@@ -10,7 +10,7 @@ use App\Http\Controllers\MusicController;
 use App\Http\Controllers\BeatController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Http\Request;
 use App\Models\Beat;
 use App\Models\Music;
@@ -45,26 +45,26 @@ Route::get('/success2', [PaypalController::class, 'returnUrl'])->name('success2'
 Route::get('/success', [PaypalController::class, 'handleSuccess'])->name('success');
 Route::post('/ipn', [PaypalController::class, 'handleIPN']);
 
-Route::get('/sitemap', function () {
-    $sitemap = Sitemap::create();
-    Product::all()->each(function (Product $product) use ($sitemap) {
-        $sitemap->add(Url::create("/products/{$product->slug}"));
-    });
+// Route::get('/sitemap', function () {
+//     $sitemap = Sitemap::create();
+//     Product::all()->each(function (Product $product) use ($sitemap) {
+//         $sitemap->add(Url::create("/products/{$product->slug}"));
+//     });
 
-// Adding the most recent 'about' post if it exists
-$latestAboutPost = Product::where('category_name', 'About')->orderBy('created_at', 'desc')->first();
-if ($latestAboutPost) {
-    $sitemap->add(Url::create("/about")->setLastModificationDate($latestAboutPost->updated_at));
-}
+// // Adding the most recent 'about' post if it exists
+// $latestAboutPost = Product::where('category_name', 'About')->orderBy('created_at', 'desc')->first();
+// if ($latestAboutPost) {
+//     $sitemap->add(Url::create("/about")->setLastModificationDate($latestAboutPost->updated_at));
+// }
 
-    Music::all()->each(function (Music $music) use ($sitemap) {
-        $sitemap->add(Url::create("/msingle/{$music->slug}"));
-    });
-    $sitemap->writeTofile(public_path('sitemap.xml'));
-    return redirect()
-        ->route('home')
-        ->withSuccess(__('sitemap created!!'));
-});
+//     Music::all()->each(function (Music $music) use ($sitemap) {
+//         $sitemap->add(Url::create("/msingle/{$music->slug}"));
+//     });
+//     $sitemap->writeTofile(public_path('sitemap.xml'));
+//     return redirect()
+//         ->route('gee')
+//         ->withSuccess(__('sitemap created!!'));
+// });
 
 
 Route::get('songs', function (Request $request) {
@@ -94,8 +94,8 @@ Route::get('songs', function (Request $request) {
     ));
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/sitemap', [HomeController::class, 'sitemap'])->name('sitemap');
+Route::get('/', [SiteController::class, 'landingPage'])->name('gee');
+Route::get('/sitemap', [SiteController::class, 'sitemap'])->name('sitemap');
 Route::get('beatz', function (Request $request) {
     $search = $request->get('search', '');
     $beats = Beat::search($search)->latest()->paginate(15)->withQueryString();
