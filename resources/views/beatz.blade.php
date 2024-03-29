@@ -101,12 +101,7 @@
     <!-- End Google Tag Manager (noscript) -->
 @endpush
 
-@push('recipe')
-    <script type="application/ld+json">
-    {!! json_encode($siteData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    {!! json_encode($recipeData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-</script>
-@endpush
+
 
 @push('player')
 

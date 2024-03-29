@@ -4,7 +4,8 @@
 
 
 <div class="container">
-
+    <?php echo $__env->make('slider', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <hr>
     <?php echo $__env->yieldContent('content'); ?>
 
     <br>
@@ -31,9 +32,9 @@
                             <tr>
                                 <td><img src="<?php echo e($song->image ? \Storage::url($song->image) : ''); ?>"
                                     alt="Avatar" width="40" height="40"></td>
-                                <td><?php echo e($song->title ?? '-'); ?></td>        
-                                <td><?php echo e($song->artist ?? '-'); ?></td> 
-                                <td><?php echo e($song->downloads ?? '-'); ?></td>
+                                <td style="font-size: 10px"><?php echo e($song->title ?? '-'); ?></td>        
+                                <td style="font-size: 10px"><?php echo e($song->artist ?? '-'); ?></td> 
+                                <td style="font-size: 10px"><?php echo e($song->downloads ?? '-'); ?></td>
                                 <td>
                                    
                                     <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($song->slug)])); ?>"

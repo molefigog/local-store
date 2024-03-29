@@ -10,12 +10,13 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    {{--
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
     <meta name="author" content="gog">
     <meta name="MobileOptimized" content="320">
     <meta property="og:site_name" content="gw-ent" />
     @yield('head')
-    
+
     <script type="application/ld+json">
         {
         "@context" : "http://schema.org",
@@ -24,36 +25,39 @@
         "alternateName" : "Genius Works Ent",
         "url" : "https://www.gw-ent.co.za"
         }
-        </script>
+    </script>
     {{-- @stack('recipe')
 
     @stack('ghead') --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-
-
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <!-- <link rel="stylesheet" href="css/fontello.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('frontend/font/icomoon/style.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css') }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" id="cssTheme" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-
-    @stack('tellcss')
-    @stack('aplayer')
-
     @if ($setting && $setting->favicon)
     <link rel="icon" type="image/png" href="{{ \Storage::url($setting->favicon) }}">
     @endif
+    @if ($setting && $setting->favicon)
+    <link rel="apple-touch-icon" href="{{ \Storage::url($setting->favicon) }}">
+    @endif
+    @if ($setting && $setting->favicon)
+    <meta name="msapplication-TileImage" content="{{ \Storage::url($setting->favicon) }}">
+    @endif
+    @if ($setting && $setting->favicon)
+    <link rel="shortcut icon" href="{{ \Storage::url($setting->favicon) }}">
+    @endif
 
+
+    @stack('tellcss')
+    @stack('aplayer')
+   
     <style>
         @media (max-width: 767.98px) {
             .card {
@@ -134,7 +138,7 @@
             background-color: rgb(255, 255, 255, 0);
         }
 
-        .social-button {
+        /* .social-button {
             display: inline-flex;
             flex-wrap: wrap;
             align-content: stretch;
@@ -144,7 +148,7 @@
             gap: 0px 4px;
             font-size: x-large;
             color: #199945;
-        }
+        } */
 
         .map-responsive {
             overflow: hidden;
@@ -160,42 +164,105 @@
             width: 100%;
             position: absolute;
         }
+        .carousel-wrap {
+    width: 1000px;
+    margin: auto;
+    position: relative;
+  }
+  .owl-carousel .owl-nav{
+    overflow: hidden;
+    height: 0px;
+  }
 
-       
+  .owl-theme .owl-dots .owl-dot.active span, 
+  .owl-theme .owl-dots .owl-dot:hover span {
+      background: #2caae1;
+  }
+
+
+  .owl-carousel .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .owl-carousel .item img {
+        max-width: 100%;
+        height: auto;
+    }
+  .owl-carousel .nav-btn{
+      height: 47px;
+      position: absolute;
+      width: 26px;
+      cursor: pointer;
+      top: 100px !important;
+  }
+
+  .owl-carousel .owl-prev.disabled,
+  .owl-carousel .owl-next.disabled{
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
+  .owl-carousel .prev-slide{
+    content: "\f190";
+      /* background: url(nav-icon.png) no-repeat scroll 0 0; */
+      left: 33px;
+  }
+  .owl-carousel .next-slide{
+      /* background: url(nav-icon.png) no-repeat scroll -24px 0px; */
+      content: "\f18e";
+      right: 33px;
+  }
+  .owl-carousel .prev-slide:hover{
+     background-position: 0px -53px;
+  }
+  .owl-carousel .next-slide:hover{
+    background-position: -24px -53px;
+  }
+
+  span.img-text {
+    text-decoration: none;
+    outline: none;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    cursor: pointer;
+    width: 100%;
+    font-size: 23px;
+    display: block;
+    text-transform: capitalize;
+  }
+  span.img-text:hover {
+    color: #2caae1;
+  }
     </style>
     <!-- Favicon Link -->
-
-
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-
-    <!-- Include SweetAlert2 JS -->
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var downloadLink = '{{ session('
-                                downloadLink ') }}';
-
-            if (downloadLink) {
-                var downloadButton = document.createElement('a');
-                downloadButton.href = downloadLink;
-                downloadButton.textContent = 'Download Music';
-
-                var container = document.getElementById('download-container');
-                container.appendChild(downloadButton);
-
-                // Clear the session variable after using it
-
-
-                // Automatically remove the download link after 15 seconds
-                setTimeout(function() {
-                    container.removeChild(downloadButton);
-                }, 15000); // 15000 milliseconds = 15 seconds
-            }
-        });
-    </script>
-
+    <style>
+        /* .owl-nav button.owl-prev,
+        .owl-nav button.owl-next {
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .owl-nav button.owl-prev {
+            left: 30px;
+        }
+        .owl-nav button.owl-next {
+            right: 30px;
+        }
+         */
+        
+    </style>
+    
 </head>
 
 <body>

@@ -2,21 +2,32 @@
 $apiKey = '863c6f17965b59a056305e51';
 $baseCurrency = 'ZAR';
 $targetCurrency = 'USD';
-$amount = $beat->amount; 
+$amount = $beat->amount; // Assuming $music->amount contains the ZAR amount you want to convert
 
+// Make API request to get the exchange rate
 $apiUrl = "https://open.er-api.com/v6/latest/{$baseCurrency}?apikey={$apiKey}";
-$response = file_get_contents($apiUrl);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$response = curl_exec($ch);
+curl_close($ch);
+
 $data = json_decode($response, true);
 
 if ($data && isset($data['rates'][$targetCurrency])) {
-
+    // Perform the conversion
     $exchangeRate = $data['rates'][$targetCurrency];
     $convertedAmount = $amount * $exchangeRate;
+
+    // Round the converted amount to 2 decimal places (you can adjust this as needed)
     $convertedAmount = round($convertedAmount, 2);
+
+    // Assign the converted amount to $amount
     $amount = $convertedAmount;
 } else {
-    
-    $amount = "Failed to retrieve exchange rate data.";
+    // Handle the case where the exchange rate data is not available
+    $amount = 'Failed to retrieve exchange rate data.';
 }
 
 

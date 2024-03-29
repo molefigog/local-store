@@ -24,7 +24,7 @@
             <div class="row align-items-center">
 
                 <div class="col-6 col-xl-2">
-                    <h1 class="mb-0 site-logo"><a href="/"><img src="<?php echo e(\Storage::url($setting->logo)); ?>" alt="" class="img-fluid"
+                    <h1 class="mb-0 site-logo"><a href="/"><img src="<?php echo e(asset("storage/$setting->logo")); ?>" alt="" class="img-fluid"
                         style="width:150px;" /><span class="text-primary">.</span> </a></h1>
 
                 </div>
@@ -57,8 +57,9 @@
                                     <?php if(Auth::check()): ?>
                                   
                                       <?php if(Auth::user()->upload_status == 1): ?>
-                                       <li><a class="nav-link" href="<?php echo e(url('/all-music/create')); ?>"><i class="icon-upload"></i> Upload</a></li>
-                                       
+                                       <li><a class="nav-link" href="<?php echo e(url('/admin/music/create')); ?>"><i class="icon-upload"></i> Upload Music</a></li>
+                                       <li><a class="nav-link" href="<?php echo e(url('/admin/beats/create')); ?>"><i class="icon-upload"></i> Upload Beat</a></li>
+                                       <!---->
                                        <?php endif; ?>
                                        <li><a class="nav-link" href="<?php echo e(url('/purchased-musics')); ?>"><i class="icon-download"></i> Downloads</a></li>
                                        <li><a class="nav-link" href="<?php echo e(url('/top-up')); ?>"><i class="fa fa-cart-plus"></i> Account <span class="badge bg-danger">!</span></a></li>
@@ -86,10 +87,10 @@
 
                             
                             <li><a href="<?php echo e(route('about')); ?>" class="nav-link">About Us</a></li>
-                            <li class="social"><a href="#" class="nav-link" onclick="toggleMode(); return false;"><span
-                                        class="icon-brightness_high"></span></a></li>
+                            <li class="social"><a href="#" class="nav-link" onclick="toggleMode(); return false;">
+                                <span id="iconMode" class="icon-brightness_high"></span></a></li>
 
-                            <li class="social"><a href="https://www.facebook.co.za/elliot.gog" target="_blank" class="nav-link"><span
+                            <li class="social"><a href="https://www.facebook.com/elliot.gog" target="_blank" class="nav-link"><span
                                         class="icon-facebook"></span></a></li>
                             <li class="social"><a href="https://twitter.com/Molefi18186414" target="_blank" class="nav-link"><span
                                         class="icon-twitter"></span></a></li>
@@ -110,16 +111,28 @@
     </header>
     <div class="hero">
         <div class="search text-center">
-            <a class="btn btn-secondary" href="#notice" id="infoIcon"><i class="icon-info-circle"></i></a>
-            <form action="">
-                <div class="input-group">
-                    <input type="text" id="indexSearch" name="search" value="<?php echo e($search ?? ''); ?>" class="form-control" placeholder="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">
-                            <i class="icon-search"></i>
-                        </button>
+            
+            
+
+            <div class="input-group">
+                
+                <i class="icon-search" id="searchIcon" style="cursor: pointer;"></i>
+            </div>
+        
+            <!-- Modal for displaying search results -->
+            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Adjust the size as needed -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                 
+                            <input  class="form-control" type="text" id="search" placeholder="Type to search" autocomplete="off">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group bg-transparent text-primary" id="results"></ul>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/menu.blade.php ENDPATH**/ ?>

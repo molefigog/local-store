@@ -1,90 +1,101 @@
 @extends('welcome')
 
 @section('content')
-    
-    <div class="articles">
-        @forelse($allMusic as $music)
-        <div class="article-card">
-            <div class="cover">
-                <img src="{{ $music->image ? \Storage::url($music->image) : '' }}" alt="Article 1 Cover Image">
-                @if ($music->amount == 0)
-                <div class="overlay">
-                    <a href="#" class="play-button track-list" data-track="{{ \Storage::url($music->file) }}"
-                        data-poster="{{ $music->image ? \Storage::url($music->image) : '' }}" data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
-                        <i class="icon-play"></i>
-                    </a>
-                </div>
-                @else
-                <div class="overlay">
-                    <a href="#" class="play-button track-list" data-track="{{ \Storage::url($music->demo) }}"
-                        data-poster="{{ $music->image ? \Storage::url($music->image) : '' }}" data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
-                        <i class="icon-play"></i>
-                    </a>
-                </div>
-                @endif
+<div id="music-list" class="articles">
+    @forelse($allMusic as $music)
+    <div class="article-card">
+        <div class="cover">
+            <img src="{{ asset("storage/$music->image") }}" alt="Article 1 Cover Image">
+            @if ($music->amount == 0)
+            <div class="overlay">
+                <a href="#" class="play-button track-list" data-track="{{ asset("storage/$music->file") }}"
+                    data-poster="{{ asset("storage/$music->image") }}"
+                    data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
+                    <i class="icon-play"></i>
+                </a>
             </div>
-
-            <div class="details">
-                <h6 class="artist">{{ $music->artist ?? '-' }}</h6>
-                <p class="card-text" id="product1Description">
-                    {{ $music->title ?? '-' }}
-                </p>
-
-                @if ($music->amount == 0)
-                <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}" class="btn buy-button">Download</a>
-                @else
-                <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}" class="btn buy-button">Buy R{{ $music->amount }}</a>
-                @endif
-
+            @else
+            <div class="overlay">
+                <a href="#" class="play-button track-list" data-track="{{ asset("storage/demos/$music->demo") }}"
+                    data-poster="{{ asset("storage/$music->image") }}"
+                    data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
+                    <i class="icon-play"></i>
+                </a>
             </div>
-            <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li>
-                        <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
-                        <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
-                        <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
-                            Download
-                            Offline</a>
-                        <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><span class="icon-line-share"></span> Share</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="details-left">
-
-                <p class="texts"><i class="icon-download"></i>&nbsp;{{ $music->downloads }}</p>
-                <p class="texts"><i class="icon-clock-o"></i>&nbsp;{{ $music->duration }}</p>
-            </div>
+            @endif
         </div>
-        @empty
 
-        @lang('no_items_found')
-        @endforelse
+        <div class="details">
+            <h6 class="artist">{{ $music->artist ?? '-' }}</h6>
+            <p class="card-text" id="product1Description">
+                {{ $music->title ?? '-' }}
+            </p>
 
+            @if ($music->amount == 0)
+            <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
+                class="btn buy-button">Download</a>
+            @else
+            <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}" class="btn buy-button">Buy R{{
+                $music->amount }}</a>
+            @endif
+
+        </div>
+        <?php
+         $baseUrl = config('app.url');
+        $url = "{$baseUrl}/msingle/{$music->slug}";
+        $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
+                                ->facebook()
+                                ->twitter()
+                                ->whatsapp();
+    ?>
+        <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                    <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
+                    <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
+                    <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
+                        Download
+                        Offline</a>
+                    <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
+                    <div class="dropdown-divider"></div>
+                    {!! $shareButtons !!}
+                </li>
+            </ul>
+        </div>
+        <div class="details-left">
+
+            <p class="texts"><i class="icon-download"></i>&nbsp;{{ $music->downloads }}</p>
+            <p class="texts"><i class="icon-clock-o"></i>&nbsp;{{ $music->duration }}</p>
+        </div>
     </div>
-    <div class="pagination">{{ $allMusic->links() }}</div>
+    @empty
+
+    @lang('no_items_found')
+    @endforelse
+
+</div>
+<div class="pagination">{{ $allMusic->links() }}</div>
 @endsection
 @section('head')
-    <title>{{ $metaTags['title'] }}</title>
-    <meta name="description" content="{{ $metaTags['description'] }}">
-    <meta property="og:title" content="{{ $metaTags['title'] }}">
-    <meta property="og:image" content="{{ $metaTags['image'] }}">
-    <meta property="og:description" content="{{ $metaTags['description'] }}">
-    <meta property="og:url" content="{{ $metaTags['url'] }}" />
-    <meta name="keywords" content="{{ $metaTags['keywords'] }}">
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="{{ $metaTags['title'] }}" />
-    <meta name="twitter:description" content="{{ $metaTags['description'] }}" />
-    <meta name="twitter:image" content="{{ $metaTags['image'] }}" />
-    <meta property="fb:app_id" content="337031642040584" />
+<title>{{ $metaTags['title'] }}</title>
+<meta name="description" content="{{ $metaTags['description'] }}">
+<meta property="og:title" content="{{ $metaTags['title'] }}">
+<meta property="og:image" content="{{ $metaTags['image'] }}">
+<meta property="og:description" content="{{ $metaTags['description'] }}">
+<meta property="og:url" content="{{ $metaTags['url'] }}" />
+<meta name="keywords" content="{{ $metaTags['keywords'] }}">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="{{ $metaTags['title'] }}" />
+<meta name="twitter:description" content="{{ $metaTags['description'] }}" />
+<meta name="twitter:image" content="{{ $metaTags['image'] }}" />
+<meta property="fb:app_id" content="337031642040584" />
 @endsection
 
 @push('ghead')
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
+<!-- Google Tag Manager -->
+<script>
+    (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
@@ -98,31 +109,23 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-MT3JSPQW');
-    </script>
-    <!-- End Google Tag Manager -->
+</script>
+<!-- End Google Tag Manager -->
 @endpush
 
 @push('gbody')
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
-            style="display:none;visibility:hidden">
-        </iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-@endpush
-
-@push('recipe')
-    <script type="application/ld+json">
-    {!! json_encode($siteData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    {!! json_encode($recipeData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
+        style="display:none;visibility:hidden">
+    </iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 @endpush
 
 @push('player')
+<script src="{{ asset('frontend/js/mediaelement-and-player.js') }}"></script>
 
-    <script src="{{ asset('frontend/js/mediaelement-and-player.js')}}"></script>
-
-    <script>
-        var trackPlaying = '',
+<script>
+    var trackPlaying = '',
             audioPlayer = document.getElementById('audio-player');
 
         audioPlayer.addEventListener("ended", function() {
@@ -214,16 +217,59 @@
             // Initial check after DOM loaded
             hideMediaPlayer();
         });
-    </script>
+</script>
+<script>
+    $(document).ready(function() {
+            $('#search').on('input', function() {
+                var query = $(this).val().trim();
+
+                if (query.length === 0) {
+                    $('#results').empty();
+                    return;
+                }
+                $.ajax({
+                    url: '{{ route('liveSearch') }}',
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    success: function(data) {
+                        var results = $('#results');
+                        results.empty();
+                        $.each(data, function(index, item) {
+                            // Adjust the HTML structure based on your needs
+                            var imageUrl =
+                                `storage/${item.image ? item.image.replace('public/', '') : ''}`;
+                            var resultHtml = `<li class="list-group-item">
+                                <img src="${imageUrl}" alt="${item.artist}" style="width: 30px; height: 30px;">
+                                <span>${item.artist}</span>
+                                <a href="/msingle/${encodeURIComponent(item.slug)}" class="btn buy-button">
+                                    ${item.amount == 0 ? 'Download' : 'Buy R' + item.amount}
+                                </a>
+                            </li>`;
+
+                            results.append(resultHtml);
+                        });
+                        // Open the modal when results are available
+                        // $('#searchModal').modal('show');
+                    }
+                });
+            });
+            $('#searchIcon').on('click', function () {
+            $('#searchModal').modal('show');
+        });
+        });                        
+</script>
+
 @endpush
 
 @push('aplayer')
 <link rel="stylesheet" href="{{ asset('frontend/css/mediaelementplayer.css') }}">
 @endpush
-
+<br>
 @section('audio')
 <audio id="audio-player" preload="none" class="mejs__player" controls
-            data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
-            <source src="" type="audio/mp3">
-        </audio>
+    data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
+    <source src="" type="audio/mp3">
+</audio>
 @endsection

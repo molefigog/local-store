@@ -2,42 +2,28 @@
 @php
 $artists = App\Models\User::orderBy('name')->get();
 @endphp
-{{-- <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-  <div class="col-md-4 d-flex align-items-center">
-    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-      <i class="icon-library_music"> </i> </a>&nbsp;&nbsp;&nbsp;
-    <span class="mb-3 mb-md-0 text-primary">©
-      <script>
-        document.write(new Date().getFullYear());
-      </script> GENIUS WORKS ENT
-    </span>
-  </div>
-
-  <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-    <li class="ms-3"><a class="text-primary" href="#"><i class="icon-facebook" width="24" height="24"></i></a></li>
-    &nbsp;&nbsp;
-    <li class="ms-3"><a class="text-primary" href="#"><i class="icon-whatsapp" width="24" height="24"></i></a></li>
-    &nbsp;&nbsp;
-    <li class="ms-3"><a class="text-primary" href="#"><i class="icon-twitter" width="24" height="24"></i></a></li>
-    &nbsp;&nbsp;
-  </ul>
-</footer> --}}
 
 <footer class="footer-07">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 text-center">
-        <h2 class="footer-heading"><a href="/" class="logo">GW ENT</a></h2>
+        <h4 class="footer-heading"><a href="/" class="logo">GW ENT</a></h4>
 
         <p class="">Select Songs By Artist</p>
         <ul class="nav">
           @foreach ($artists as $artist)
-          <li class="nav-item">
-            <a class="nav-link text-secondary" href="{{ route('songs-by-artist', rawurlencode($artist->name)) }}">
-              {{ $artist->name }}
-            </a>
-          </li>
-          @endforeach
+          @php
+            $musicCount = DB::table('music_user')->where('user_id', $artist->id)->count();
+          @endphp
+        
+          @if ($musicCount > 0)
+            <li class="nav-item text-uppercase">
+              <a class="nav-link text-secondary" href="{{ route('songs-by-artist', rawurlencode($artist->name)) }}">
+                {{ $artist->name }}
+              </a>
+            </li>
+          @endif
+        @endforeach
         </ul>
 
         <ul class="nav justify-content-center">

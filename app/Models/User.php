@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Music;
 use App\Models\Items;
+use App\Models\Beat;
 use App\Models\Scopes\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,11 +16,12 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+// use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    // use HasSuperAdmin;
     /**
      * The attributes that are mass assignable.
      *
@@ -44,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
     protected $attributes = [
-        'avatar' => 'default_avatar.png',
+        'avatar' => 'avatars/default_avatar.png',
     ];
     /**
      * The attributes that should be cast.
@@ -70,18 +72,26 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->action('Verify Email Address', $url);
         });
     }
-    public function music()
+     public function musics()
     {
-        return $this->belongsToMany(Music::class);
+        return $this->belongsToMany(Music::class, 'music_user');
+    }
+    
+     public function beat()
+    {
+        return $this->belongsToMany(Beat::class, 'beat_user');
     }
     // User.php (User model)
 
 
     public function purchasedMusic()
     {
-        return $this->belongsToMany(Music::class, 'items', 'user_id', 'music_id')->withTimestamps();
+        return $this->belongsToMany(Music::class, 'items', 'user_id', 'music_id');
     }
-
+    public function purchasedBeat()
+    {
+        return $this->belongsToMany(Beat::class, 'items', 'user_id', 'music_id');
+    }
     public function items()
     {
         return $this->hasMany(Items::class);

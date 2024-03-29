@@ -65,6 +65,7 @@ class Music extends Model
     }
     public function users()
     {
-        return $this->belongsToMany(User::class, 'purchaseditems', 'music_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'music_user')->withTimestamps();
     }
+    
 }

@@ -4,15 +4,15 @@
         ->first();
 @endphp
 
-
 <script src="{{ asset('frontend/js/jquery-3.6.0.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="{{ asset('frontend/js/popper.min.js') }}"></script>
 <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('frontend/js/jquery.sticky.js') }}"></script>
 <script src="{{ asset('frontend/js/main.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @stack('telljs')
 @stack('player')
 <script>
@@ -40,6 +40,10 @@
         isDarkMode = !isDarkMode;
         localStorage.setItem('isDarkMode', isDarkMode);
         applyTheme(isDarkMode);
+
+        // Change icon based on mode
+        const iconMode = document.getElementById('iconMode');
+        iconMode.className = isDarkMode ? 'icon-brightness_2' : 'icon-brightness_high';
     }
 
     // Apply theme on page load
@@ -48,17 +52,16 @@
 </script>
 
 <script>
-    // Truncate text for each product description
     document.addEventListener("DOMContentLoaded", function() {
         const productDescriptions = document.querySelectorAll(".card-text");
         productDescriptions.forEach(description => {
             let text = description.textContent;
-            const maxLength = 60; // Set the maximum length of the text
+            const maxLength = 60;
             if (text.length > maxLength) {
-                text = text.substring(0, maxLength); // Truncate the text
+                text = text.substring(0, maxLength);
                 text = text.substring(0, Math.min(text.length, text.lastIndexOf(
-                " "))); // Cut off at the last space to avoid cutting off in the middle of a word
-                description.textContent = text + "..."; // Add ellipsis
+                " ")));
+                description.textContent = text + "...";
             }
         });
     });
@@ -66,10 +69,27 @@
 
 @stack('pal')
 @stack('upload_status')
-
-<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-@stack('upload_status')
+<script>
+          $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin: 10,
+            nav: true,
+            navText:["<div class='nav-btn prev-slide'></div>","<div class='nav-btn next-slide'></div>"],
+            autoplay:true, // Enable autoplay
+            autoplayTimeout:3000,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        });
+</script>
 @if (session()->has('success'))
     <script>
         var notyf = new Notyf({

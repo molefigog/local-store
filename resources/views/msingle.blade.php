@@ -6,23 +6,30 @@ $amount = $music->amount; // Assuming $music->amount contains the ZAR amount you
 
 // Make API request to get the exchange rate
 $apiUrl = "https://open.er-api.com/v6/latest/{$baseCurrency}?apikey={$apiKey}";
-$response = file_get_contents($apiUrl);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$response = curl_exec($ch);
+curl_close($ch);
+
 $data = json_decode($response, true);
 
 if ($data && isset($data['rates'][$targetCurrency])) {
-// Perform the conversion
-$exchangeRate = $data['rates'][$targetCurrency];
-$convertedAmount = $amount * $exchangeRate;
+    // Perform the conversion
+    $exchangeRate = $data['rates'][$targetCurrency];
+    $convertedAmount = $amount * $exchangeRate;
 
-// Round the converted amount to 2 decimal places (you can adjust this as needed)
-$convertedAmount = round($convertedAmount, 2);
+    // Round the converted amount to 2 decimal places (you can adjust this as needed)
+    $convertedAmount = round($convertedAmount, 2);
 
-// Assign the converted amount to $amount
-$amount = $convertedAmount;
+    // Assign the converted amount to $amount
+    $amount = $convertedAmount;
 } else {
-// Handle the case where the exchange rate data is not available
-$amount = 'Failed to retrieve exchange rate data.';
+    // Handle the case where the exchange rate data is not available
+    $amount = 'Failed to retrieve exchange rate data.';
 }
+
 
 @endphp
 
@@ -33,7 +40,7 @@ $amount = 'Failed to retrieve exchange rate data.';
 <div class="container mt-5">
     <div class="row">
         <div class="card-img-wrapper col-md-6 ">
-            <img src="{{ $music->image ? \Storage::url($music->image) : '' }}" class="img-fluid" alt="Product Image">
+            <img src="{{ asset("storage/$music->image") }}" class="img-fluid" alt="Product Image">
         </div>
         <div class="col-md-6">
             <h2>{{ $music->title ?? '-' }}</h2>
@@ -196,7 +203,7 @@ $amount = 'Failed to retrieve exchange rate data.';
             @endif
             <div id="wrapper">
                 <audio preload="auto" controls>
-                    <source src="{{ \Storage::url($music->demo) }}">
+                    <source src="{{ asset("storage/demos/$music->demo") }}">
                 </audio>
 
             </div>

@@ -1,89 +1,100 @@
 <?php $__env->startSection('content'); ?>
-    
-    <div class="articles">
-        <?php $__empty_1 = true; $__currentLoopData = $allMusic; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $music): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-        <div class="article-card">
-            <div class="cover">
-                <img src="<?php echo e($music->image ? \Storage::url($music->image) : ''); ?>" alt="Article 1 Cover Image">
-                <?php if($music->amount == 0): ?>
-                <div class="overlay">
-                    <a href="#" class="play-button track-list" data-track="<?php echo e(\Storage::url($music->file)); ?>"
-                        data-poster="<?php echo e($music->image ? \Storage::url($music->image) : ''); ?>" data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
-                        <i class="icon-play"></i>
-                    </a>
-                </div>
-                <?php else: ?>
-                <div class="overlay">
-                    <a href="#" class="play-button track-list" data-track="<?php echo e(\Storage::url($music->demo)); ?>"
-                        data-poster="<?php echo e($music->image ? \Storage::url($music->image) : ''); ?>" data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
-                        <i class="icon-play"></i>
-                    </a>
-                </div>
-                <?php endif; ?>
+<div id="music-list" class="articles">
+    <?php $__empty_1 = true; $__currentLoopData = $allMusic; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $music): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+    <div class="article-card">
+        <div class="cover">
+            <img src="<?php echo e(asset("storage/$music->image")); ?>" alt="Article 1 Cover Image">
+            <?php if($music->amount == 0): ?>
+            <div class="overlay">
+                <a href="#" class="play-button track-list" data-track="<?php echo e(asset("storage/$music->file")); ?>"
+                    data-poster="<?php echo e(asset("storage/$music->image")); ?>"
+                    data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
+                    <i class="icon-play"></i>
+                </a>
             </div>
-
-            <div class="details">
-                <h6 class="artist"><?php echo e($music->artist ?? '-'); ?></h6>
-                <p class="card-text" id="product1Description">
-                    <?php echo e($music->title ?? '-'); ?>
-
-                </p>
-
-                <?php if($music->amount == 0): ?>
-                <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>" class="btn buy-button">Download</a>
-                <?php else: ?>
-                <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>" class="btn buy-button">Buy R<?php echo e($music->amount); ?></a>
-                <?php endif; ?>
-
+            <?php else: ?>
+            <div class="overlay">
+                <a href="#" class="play-button track-list" data-track="<?php echo e(asset("storage/demos/$music->demo")); ?>"
+                    data-poster="<?php echo e(asset("storage/$music->image")); ?>"
+                    data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
+                    <i class="icon-play"></i>
+                </a>
             </div>
-            <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li>
-                        <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
-                        <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
-                        <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
-                            Download
-                            Offline</a>
-                        <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><span class="icon-line-share"></span> Share</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="details-left">
-
-                <p class="texts"><i class="icon-download"></i>&nbsp;<?php echo e($music->downloads); ?></p>
-                <p class="texts"><i class="icon-clock-o"></i>&nbsp;<?php echo e($music->duration); ?></p>
-            </div>
+            <?php endif; ?>
         </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
-        <?php echo app('translator')->get('no_items_found'); ?>
-        <?php endif; ?>
+        <div class="details">
+            <h6 class="artist"><?php echo e($music->artist ?? '-'); ?></h6>
+            <p class="card-text" id="product1Description">
+                <?php echo e($music->title ?? '-'); ?>
 
+            </p>
+
+            <?php if($music->amount == 0): ?>
+            <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"
+                class="btn buy-button">Download</a>
+            <?php else: ?>
+            <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>" class="btn buy-button">Buy R<?php echo e($music->amount); ?></a>
+            <?php endif; ?>
+
+        </div>
+        <?php
+         $baseUrl = config('app.url');
+        $url = "{$baseUrl}/msingle/{$music->slug}";
+        $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
+                                ->facebook()
+                                ->twitter()
+                                ->whatsapp();
+    ?>
+        <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                    <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
+                    <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
+                    <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
+                        Download
+                        Offline</a>
+                    <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
+                    <div class="dropdown-divider"></div>
+                    <?php echo $shareButtons; ?>
+
+                </li>
+            </ul>
+        </div>
+        <div class="details-left">
+
+            <p class="texts"><i class="icon-download"></i>&nbsp;<?php echo e($music->downloads); ?></p>
+            <p class="texts"><i class="icon-clock-o"></i>&nbsp;<?php echo e($music->duration); ?></p>
+        </div>
     </div>
-    <div class="pagination"><?php echo e($allMusic->links()); ?></div>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+
+    <?php echo app('translator')->get('no_items_found'); ?>
+    <?php endif; ?>
+
+</div>
+<div class="pagination"><?php echo e($allMusic->links()); ?></div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('head'); ?>
-    <title><?php echo e($metaTags['title']); ?></title>
-    <meta name="description" content="<?php echo e($metaTags['description']); ?>">
-    <meta property="og:title" content="<?php echo e($metaTags['title']); ?>">
-    <meta property="og:image" content="<?php echo e($metaTags['image']); ?>">
-    <meta property="og:description" content="<?php echo e($metaTags['description']); ?>">
-    <meta property="og:url" content="<?php echo e($metaTags['url']); ?>" />
-    <meta name="keywords" content="<?php echo e($metaTags['keywords']); ?>">
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="<?php echo e($metaTags['title']); ?>" />
-    <meta name="twitter:description" content="<?php echo e($metaTags['description']); ?>" />
-    <meta name="twitter:image" content="<?php echo e($metaTags['image']); ?>" />
-    <meta property="fb:app_id" content="337031642040584" />
+<title><?php echo e($metaTags['title']); ?></title>
+<meta name="description" content="<?php echo e($metaTags['description']); ?>">
+<meta property="og:title" content="<?php echo e($metaTags['title']); ?>">
+<meta property="og:image" content="<?php echo e($metaTags['image']); ?>">
+<meta property="og:description" content="<?php echo e($metaTags['description']); ?>">
+<meta property="og:url" content="<?php echo e($metaTags['url']); ?>" />
+<meta name="keywords" content="<?php echo e($metaTags['keywords']); ?>">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="<?php echo e($metaTags['title']); ?>" />
+<meta name="twitter:description" content="<?php echo e($metaTags['description']); ?>" />
+<meta name="twitter:image" content="<?php echo e($metaTags['image']); ?>" />
+<meta property="fb:app_id" content="337031642040584" />
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('ghead'); ?>
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
+<!-- Google Tag Manager -->
+<script>
+    (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
@@ -97,33 +108,23 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-MT3JSPQW');
-    </script>
-    <!-- End Google Tag Manager -->
+</script>
+<!-- End Google Tag Manager -->
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startPush('gbody'); ?>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
-            style="display:none;visibility:hidden">
-        </iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-<?php $__env->stopPush(); ?>
-
-<?php $__env->startPush('recipe'); ?>
-    <script type="application/ld+json">
-    <?php echo json_encode($siteData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
-
-    <?php echo json_encode($recipeData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
-
-</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
+        style="display:none;visibility:hidden">
+    </iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startPush('player'); ?>
+<script src="<?php echo e(asset('frontend/js/mediaelement-and-player.js')); ?>"></script>
 
-    <script src="<?php echo e(asset('frontend/js/mediaelement-and-player.js')); ?>"></script>
-
-    <script>
-        var trackPlaying = '',
+<script>
+    var trackPlaying = '',
             audioPlayer = document.getElementById('audio-player');
 
         audioPlayer.addEventListener("ended", function() {
@@ -215,17 +216,60 @@
             // Initial check after DOM loaded
             hideMediaPlayer();
         });
-    </script>
+</script>
+<script>
+    $(document).ready(function() {
+            $('#search').on('input', function() {
+                var query = $(this).val().trim();
+
+                if (query.length === 0) {
+                    $('#results').empty();
+                    return;
+                }
+                $.ajax({
+                    url: '<?php echo e(route('liveSearch')); ?>',
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    success: function(data) {
+                        var results = $('#results');
+                        results.empty();
+                        $.each(data, function(index, item) {
+                            // Adjust the HTML structure based on your needs
+                            var imageUrl =
+                                `storage/${item.image ? item.image.replace('public/', '') : ''}`;
+                            var resultHtml = `<li class="list-group-item">
+                                <img src="${imageUrl}" alt="${item.artist}" style="width: 30px; height: 30px;">
+                                <span>${item.artist}</span>
+                                <a href="/msingle/${encodeURIComponent(item.slug)}" class="btn buy-button">
+                                    ${item.amount == 0 ? 'Download' : 'Buy R' + item.amount}
+                                </a>
+                            </li>`;
+
+                            results.append(resultHtml);
+                        });
+                        // Open the modal when results are available
+                        // $('#searchModal').modal('show');
+                    }
+                });
+            });
+            $('#searchIcon').on('click', function () {
+            $('#searchModal').modal('show');
+        });
+        });                        
+</script>
+
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startPush('aplayer'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('frontend/css/mediaelementplayer.css')); ?>">
 <?php $__env->stopPush(); ?>
-
+<br>
 <?php $__env->startSection('audio'); ?>
 <audio id="audio-player" preload="none" class="mejs__player" controls
-            data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
-            <source src="" type="audio/mp3">
-        </audio>
+    data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
+    <source src="" type="audio/mp3">
+</audio>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('welcome', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/music.blade.php ENDPATH**/ ?>

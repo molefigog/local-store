@@ -45,104 +45,14 @@ Route::get('/success2', [PaypalController::class, 'returnUrl'])->name('success2'
 Route::get('/success', [PaypalController::class, 'handleSuccess'])->name('success');
 Route::post('/ipn', [PaypalController::class, 'handleIPN']);
 
-// Route::get('/sitemap', function () {
-//     $sitemap = Sitemap::create();
-//     Product::all()->each(function (Product $product) use ($sitemap) {
-//         $sitemap->add(Url::create("/products/{$product->slug}"));
-//     });
+Route::get('/ajax-paginate',[SiteController::class,'ajax_paginate'])->name('ajax.paginate');
 
-// // Adding the most recent 'about' post if it exists
-// $latestAboutPost = Product::where('category_name', 'About')->orderBy('created_at', 'desc')->first();
-// if ($latestAboutPost) {
-//     $sitemap->add(Url::create("/about")->setLastModificationDate($latestAboutPost->updated_at));
-// }
-
-//     Music::all()->each(function (Music $music) use ($sitemap) {
-//         $sitemap->add(Url::create("/msingle/{$music->slug}"));
-//     });
-//     $sitemap->writeTofile(public_path('sitemap.xml'));
-//     return redirect()
-//         ->route('gee')
-//         ->withSuccess(__('sitemap created!!'));
-// });
-
-
-Route::get('songs', function (Request $request) {
-    $search = $request->get('search', '');
-
-    // Fetch all music with search filter
-    $music = Music::search($search)->latest()->paginate(10)->withQueryString();
-    $genres = Genre::withCount('music')->get();
-    // Fetch recently added songs
-    $recentlyAddedSongs = Music::latest()->take(10)->get();
-
-    // Fetch the first genre (you might need to adjust this logic)
-    $genre = Genre::firstOrFail();
-
-    $metaTags = [
-        'title' => $genre->title,
-        'description' => 'Browse music by genre hip hop, Local, amapiano.... ',
-        'image' => Storage::url($genre->image),
-    ];
-
-    return view('songs', compact(
-        'search',
-        'metaTags',
-        'recentlyAddedSongs',
-        'music', // Change 'Music' to 'music'
-        'genres' // Include the 'genres' variable here
-    ));
-});
-
+Route::get('/live-search', [SiteController::class, 'liveSearch'])->name('liveSearch');
 Route::get('/', [SiteController::class, 'landingPage'])->name('gee');
+Route::get('beatz', [SiteController::class, 'beatsPage'])->name('beatz');
+Route::get('songs', [SiteController::class, 'songsPage'])->name('songs');
+Route::get('songs', [SiteController::class, 'songsPage'])->name('songs');
 Route::get('/sitemap', [SiteController::class, 'sitemap'])->name('sitemap');
-Route::get('beatz', function (Request $request) {
-    $search = $request->get('search', '');
-    $beats = Beat::search($search)->latest()->paginate(15)->withQueryString();
-    $products = Product::search($search)->latest()->paginate(10)->withQueryString();
-    $recentlyAddedSongs = Beat::latest()->take(10)->get();
-    $downloads = Music::where('downloads', '>', 0)
-        ->orderBy('downloads', 'desc')
-        ->take(10)
-        ->get();
-    $setting = Setting::firstOrFail();
-    $appName = config('app.name');
-    $url = config('app.url');
-
-    $title = $setting ? $setting->site : $appName;
-    $image = asset('storage/og-tag.jpg');
-    $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
-
-    $metaTags = [
-        'title' => $setting->site,
-        'description' => $setting->description,
-        'image' =>  $image,
-        'keywords' => $keywords,
-        'url' =>  $url,
-    ];
-
-    $recipeData = [
-        "@context" => "https://schema.org/",
-        "@type" => "Recipe",
-        "name" => "Mseja Local Music",
-        "author" => [
-            "@type" => "Person",
-            "name" => "Elliot Gog"
-        ],
-        "datePublished" => "2021-05-01",
-        "description" => "Best way to sell digital Items with M-Pesa.",
-        "prepTime" => "PT20M"
-    ];
-    $siteData = [
-        "@context" => "https://schema.org",
-        "@type" => "WebSite",
-        "name" => "Genius Works Ent",
-        "alternateName" => "GW-ENT",
-        "url" => "https://gw-ent.co.za/"
-    ];
-
-    return view('beatz', compact('beats', 'products', 'downloads', 'metaTags', 'recipeData', 'siteData', 'search',));
-})->name('beatz');
 
 Route::get('msingle/{slug}', [MusicController::class, 'showBySlug'])
     ->where('slug', '[a-zA-Z0-9\-]+')  // Regular expression pattern for the slug
@@ -195,7 +105,7 @@ Route::post('/buy-music', [MusicController::class, 'buyMusic'])->name('buy-music
 Route::post('/pay', [MusicController::class, 'pay'])->name('pay');
 Route::get('about', [ProductController::class, 'about'])->name('about');
 Route::get('/songs/genre/{genre}', [MusicController::class, 'songsByGenre'])->name('songs-by-genre');
-Route::get('/songs/{artist}', [MusicController::class, 'songsByArtist'])->name('songs-by-artist');
+Route::get('/songs/{artist}', [SiteController::class, 'songsByArtist'])->name('songs-by-artist');
 /*
 |--------------------------------------------------------------------------|
 | Admin Routes                                                             |
@@ -218,7 +128,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/total-users', [UserController::class, 'getTotalUsers'])->name('admin.total-users');
 
-    Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
+    Route::get('/admin1', [DashboardController::class, 'index'])->name('admin1');
     Route::get('msingle/{music}', [MusicController::class, 'show'])->name('/msingle');
 
     Route::resource('categories', CategoryController::class);

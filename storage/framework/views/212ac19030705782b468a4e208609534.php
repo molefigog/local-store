@@ -3,23 +3,28 @@
 $artists = App\Models\User::orderBy('name')->get();
 ?>
 
-
 <footer class="footer-07">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 text-center">
-        <h2 class="footer-heading"><a href="/" class="logo">GW ENT</a></h2>
+        <h4 class="footer-heading"><a href="/" class="logo">GW ENT</a></h4>
 
         <p class="">Select Songs By Artist</p>
         <ul class="nav">
           <?php $__currentLoopData = $artists; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $artist): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-          <li class="nav-item">
-            <a class="nav-link text-secondary" href="<?php echo e(route('songs-by-artist', rawurlencode($artist->name))); ?>">
-              <?php echo e($artist->name); ?>
+          <?php
+            $musicCount = DB::table('music_user')->where('user_id', $artist->id)->count();
+          ?>
+        
+          <?php if($musicCount > 0): ?>
+            <li class="nav-item text-uppercase">
+              <a class="nav-link text-secondary" href="<?php echo e(route('songs-by-artist', rawurlencode($artist->name))); ?>">
+                <?php echo e($artist->name); ?>
 
-            </a>
-          </li>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </a>
+            </li>
+          <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
 
         <ul class="nav justify-content-center">

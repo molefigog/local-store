@@ -64,7 +64,7 @@ class Beat extends Model
     }
     public function users()
     {
-        return $this->belongsToMany(User::class, 'purchaseditems', 'beat_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'beat_user')->withTimestamps();
     }
     public function markAsUsed()
     {

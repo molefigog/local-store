@@ -4,7 +4,8 @@
 
 
 <div class="container">
-
+    @include('slider')
+    <hr>
     @yield('content')
 
     <br>
@@ -31,9 +32,9 @@
                             <tr>
                                 <td><img src="{{ $song->image ? \Storage::url($song->image) : '' }}"
                                     alt="Avatar" width="40" height="40"></td>
-                                <td>{{ $song->title ?? '-' }}</td>        
-                                <td>{{ $song->artist ?? '-' }}</td> 
-                                <td>{{ $song->downloads ?? '-' }}</td>
+                                <td style="font-size: 10px">{{ $song->title ?? '-' }}</td>        
+                                <td style="font-size: 10px">{{ $song->artist ?? '-' }}</td> 
+                                <td style="font-size: 10px">{{ $song->downloads ?? '-' }}</td>
                                 <td>
                                    
                                     <a href="{{ route('msingle.slug', ['slug' => urlencode($song->slug)]) }}"

@@ -1,15 +1,19 @@
 @extends('layouts.master')
 
 @section('content')
-    
+    <div class="text-center"> <h3 class="text-uppercase footer-heading">{{ $artist['name'] }}</h3><div>
+        <h5><i class="icon-share2"></i></h5>
+        {!! $shareButtons !!}
+    </div></div>
+    <hr>
     <div class="articles">
         @forelse($musicCollection as $music)
         <div class="article-card">
             <div class="cover">
-                <img src="{{ $music->image ? \Storage::url($music->image) : '' }}" alt="Article 1 Cover Image">
+                <img src="{{ asset("storage/$music->image") }}" alt="Article 1 Cover Image">
                 <div class="overlay">
-                    <a href="#" class="play-button track-list" data-track="{{ \Storage::url($music->demo) }}"
-                        data-poster="{{ $music->image ? \Storage::url($music->image) : '' }}" data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
+                    <a href="#" class="play-button track-list" data-track="{{ asset("storage/demos/$music->demo") }}"
+                        data-poster="{{ asset("storage/$music->image") }}" data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
                         <i class="icon-play"></i>
                     </a>
                 </div>
@@ -101,12 +105,6 @@
     <!-- End Google Tag Manager (noscript) -->
 @endpush
 
-@push('recipe')
-    <script type="application/ld+json">
-    {!! json_encode($siteData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-    {!! json_encode($recipeData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-</script>
-@endpush
 
 @push('player')
 

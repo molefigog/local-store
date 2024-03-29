@@ -3,23 +3,35 @@ $apiKey = '863c6f17965b59a056305e51';
 $baseCurrency = 'ZAR';
 $targetCurrency = 'USD';
 $amount = '100';
+
 $apiUrl = "https://open.er-api.com/v6/latest/{$baseCurrency}?apikey={$apiKey}";
-$response = file_get_contents($apiUrl);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$response = curl_exec($ch);
+curl_close($ch);
+
 $data = json_decode($response, true);
 
 if ($data && isset($data['rates'][$targetCurrency])) {
-$exchangeRate = $data['rates'][$targetCurrency];
-$convertedAmount = $amount * $exchangeRate;
-$convertedAmount = round($convertedAmount, 2);
-$amount = $convertedAmount;
+    // Perform the conversion
+    $exchangeRate = $data['rates'][$targetCurrency];
+    $convertedAmount = $amount * $exchangeRate;
+
+    $convertedAmount = round($convertedAmount, 2);
+
+    $amount = $convertedAmount;
 } else {
-$amount = 'Failed to retrieve exchange rate data.';
+    $amount = 'Failed to retrieve exchange rate data.';
 }
+
 @endphp
 
 @extends('layouts.master')
 
 @section('content')
+@auth
 <style>
     #text {
         font-weight: bold;
@@ -92,7 +104,7 @@ $amount = 'Failed to retrieve exchange rate data.';
                                     <div class="card">
                                         <h6 class="text-center">account Wallet</h6>
 
-                                        @if ($songs->count() > 0)
+                                       @if ($songs && $songs->count() > 0)
                                         <table border="1">
                                             <thead>
                                                 <tr>
@@ -311,6 +323,7 @@ $amount = 'Failed to retrieve exchange rate data.';
         });
 </script>
 @endpush
+@endauth
 @push('mpesa')
 <script>
     $(document).ready(function() {

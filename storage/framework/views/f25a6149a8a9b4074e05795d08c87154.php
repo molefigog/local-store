@@ -1,13 +1,18 @@
 <?php $__env->startSection('content'); ?>
-    
+    <div class="text-center"> <h3 class="text-uppercase footer-heading"><?php echo e($artist['name']); ?></h3><div>
+        <h5><i class="icon-share2"></i></h5>
+        <?php echo $shareButtons; ?>
+
+    </div></div>
+    <hr>
     <div class="articles">
         <?php $__empty_1 = true; $__currentLoopData = $musicCollection; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $music): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
         <div class="article-card">
             <div class="cover">
-                <img src="<?php echo e($music->image ? \Storage::url($music->image) : ''); ?>" alt="Article 1 Cover Image">
+                <img src="<?php echo e(asset("storage/$music->image")); ?>" alt="Article 1 Cover Image">
                 <div class="overlay">
-                    <a href="#" class="play-button track-list" data-track="<?php echo e(\Storage::url($music->demo)); ?>"
-                        data-poster="<?php echo e($music->image ? \Storage::url($music->image) : ''); ?>" data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
+                    <a href="#" class="play-button track-list" data-track="<?php echo e(asset("storage/demos/$music->demo")); ?>"
+                        data-poster="<?php echo e(asset("storage/$music->image")); ?>" data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
                         <i class="icon-play"></i>
                     </a>
                 </div>
@@ -89,14 +94,6 @@
     <!-- End Google Tag Manager (noscript) -->
 <?php $__env->stopPush(); ?>
 
-<?php $__env->startPush('recipe'); ?>
-    <script type="application/ld+json">
-    <?php echo json_encode($siteData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
-
-    <?php echo json_encode($recipeData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
-
-</script>
-<?php $__env->stopPush(); ?>
 
 <?php $__env->startPush('player'); ?>
 

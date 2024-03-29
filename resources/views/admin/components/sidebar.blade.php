@@ -27,7 +27,7 @@
 
     <!-- Dashboard -->
     <li class="menu-item active">
-      <a href="{{ url('/admin')}}" class="menu-link">
+      <a href="{{ url('/admin')}}" class="menu-link"onclick="return false;">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
         <div data-i18n="Analytics">Dashboard</div>
       </a>
@@ -42,22 +42,22 @@
 
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('/categories') }}" class="menu-link">
+          <a href="{{ url('/categories') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Without menu">Categories</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/categories/create') }}" class="menu-link">
+          <a href="{{ url('/categories/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Without navbar">Add Category</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/genres') }}" class="menu-link">
+          <a href="{{ url('/genres') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Container">Genres</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/genres/create') }}" class="menu-link">
+          <a href="{{ url('/genres/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Fluid">Add Genre</div>
           </a>
         </li>
@@ -75,23 +75,23 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('/all-music') }}" class="menu-link">
+          <a href="{{ url('/all-music') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Account">Music <i class='bx bxs-music'></i></div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/all-music/create') }}" class="menu-link">
+          <a href="{{ url('/all-music/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Notifications">Upload Song</div>
           </a>
         </li>
 
         <li class="menu-item">
-          <a href="{{ url('/beats') }}" class="menu-link">
+          <a href="{{ url('/beats') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Account">Beats <i class='bx bxs-music'></i></div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/beats/create') }}" class="menu-link">
+          <a href="{{ url('/beats/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Notifications">Upload Beat</div>
           </a>
         </li>
@@ -105,12 +105,12 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('products') }}" class="menu-link" >
+          <a href="{{ url('products') }}" class="menu-link" onclick="return false;">
             <div data-i18n="Basic">Pages</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('products.create') }}" class="menu-link" >
+          <a href="{{ url('products.create') }}" class="menu-link" onclick="return false;">
             <div data-i18n="Basic">Add Page</div>
           </a>
         </li>
@@ -128,22 +128,22 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('/all-music') }}" class="menu-link">
+          <a href="{{ url('/all-music') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Account">Music</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/all-music/create') }}" class="menu-link">
+          <a href="{{ url('/all-music/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Notifications">Add Song</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/beats') }}" class="menu-link">
+          <a href="{{ url('/beats') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Account">Beats <i class='bx bxs-music'></i></div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/beats/create') }}" class="menu-link">
+          <a href="{{ url('/beats/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Notifications">Upload Beat</div>
           </a>
         </li>
@@ -158,12 +158,12 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('products') }}" class="menu-link" >
+          <a href="{{ url('products') }}" class="menu-link" onclick="return false;">
             <div data-i18n="Basic">Pages</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('products.create') }}" class="menu-link" >
+          <a href="{{ url('products.create') }}" class="menu-link" onclick="return false;">
             <div data-i18n="Basic">Add Page</div>
           </a>
         </li>
@@ -193,7 +193,7 @@
           </a>
         </li>
         <li class="menu-item">
-            <a href="{{ route('users.index') }}" class="menu-link">
+            <a href="{{ route('users.index') }}" class="menu-link"onclick="return false;">
               <div data-i18n="Perfect Scrollbar">Users balance</div>
             </a>
           </li>
@@ -207,12 +207,12 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('/settings') }}" class="menu-link">
+          <a href="{{ url('/settings') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Error">Edit Setting</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="{{ url('/settings/create') }}" class="menu-link">
+          <a href="{{ url('/settings/create') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Under Maintenance">Settings</div>
           </a>
         </li>
@@ -245,7 +245,7 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ url('/owners') }}" class="menu-link">
+          <a href="{{ url('/owners') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Accordion">edit contacts</div>
           </a>
         </li>
@@ -279,7 +279,7 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ route('users.index') }}" class="menu-link">
+          <a href="{{ route('users.index') }}" class="menu-link"onclick="return false;">
             <div data-i18n="Perfect Scrollbar">Users balance</div>
           </a>
         </li>

@@ -168,7 +168,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\Filament\AdminPanelProvider::class,
+        ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
+        Owenoj\LaravelGetId3\GetId3ServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+       
     ])->toArray(),
 
     /*
@@ -184,6 +188,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class
     
     ])->toArray(),
 

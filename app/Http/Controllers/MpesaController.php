@@ -15,6 +15,8 @@ use App\Models\Beat;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\MusicController;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use App\Mail\MusicDownloadNotification;
 
 class MpesaController extends Controller
 {
@@ -55,7 +57,7 @@ class MpesaController extends Controller
                 $status = 'success';
                 $message = $verificationData['message'];
 
-               
+
                 $beatId = $request->input('beatId');
                 Log::info('Attempting to read beatid: ' . $beatId);
                 $downloadUrl = route('beat.download', ['beat' => $beatId]);
@@ -85,51 +87,30 @@ class MpesaController extends Controller
             return response()->json($responseData);
         }
     }
-    // public function downloadBeat($beatId)
-    // {
-    //     Log::info('Beat ID: ' . $beatId);
-    //     $beat = Beat::find($beatId);
-
-    //     if (!$beat) {
-    //         Log::error('Beat track not found for ID: ' . $beatId);
-    //         return redirect()->back()->with('error', 'Beat track not found.');
-    //     }
-    //     $beatFilePath = $beat->file;
-    //     $beat->used += 1;
-    //     $beat->save();
-    //     if (!Storage::exists($beatFilePath)) {
-    //         Log::error('Beat file not found in storage: ' . $beatFilePath);
-    //         return redirect()->back()->with('error', 'Beat file not found.');
-    //     }
-    //     $response = Storage::download($beatFilePath, $beat->artist . '-'. $beat->title .'.mp3');
-    //     Log::info('Download Response: ' . $response);
-
-    //     return $response;
-    // }
     public function downloadBeat($beatId)
     {
         Log::info('Beat ID: ' . $beatId);
         $beat = Beat::where('id', $beatId)->where('used', false)->first();
-    
+
         if (!$beat) {
             Log::error('Beat track not found for ID: ' . $beatId);
             return redirect()->back()->with('error', 'Beat track not found.');
         }
-    
+
         $beatFilePath = $beat->file;
         $beat->markAsUsed();
-        
+
         if (!Storage::exists($beatFilePath)) {
             Log::error('Beat file not found in storage: ' . $beatFilePath);
             return redirect()->back()->with('error', 'Beat file not found.');
         }
-    
-        $response = Storage::download($beatFilePath, $beat->artist . '-'. $beat->title .'.mp3');
+
+        $response = Storage::download($beatFilePath, $beat->artist . '-' . $beat->title . '.mp3');
         Log::info('Download Response: ' . $response);
-    
+
         return $response;
     }
-    
+
     public function uploadStatus(Request $request)
     {
         try {
@@ -168,11 +149,11 @@ class MpesaController extends Controller
             if ($verificationData['status_code'] === 'INS-0') {
                 $status = 'success';
                 $message = $verificationData['message'];
-            
-                    $user = User::find($userId);
-                    $user->upload_status += 1;
-                    $user->save();
-                    // $uploadUrl = route('all-music.create');
+
+                $user = User::find($userId);
+                $user->upload_status += 1;
+                $user->save();
+                // $uploadUrl = route('all-music.create');
                 $responseData = [
                     'status' => $status,
                     'message' => $message,
@@ -182,7 +163,7 @@ class MpesaController extends Controller
             } else {
                 $status = 'error';
                 $message = 'Transaction verification failed Error 400';
-            
+
                 $responseData = [
                     'status' => $status,
                     'message' => $message,
@@ -338,27 +319,27 @@ class MpesaController extends Controller
     }
 
     public function mpesaTransaction($payRef, $mobileNumber, $amount)
-{
+    {
 
-    $net_income = $amount - ($amount * 0.01);
-    $pay_lesotho = $amount * 0.01;
+        $net_income = $amount - ($amount * 0.01);
+        $pay_lesotho = $amount * 0.01;
 
-    $transaction = new Mpesa([
-        'number' => $mobileNumber,
-        'ref' => $payRef,
-        'gross_income' =>  $amount,
-        'net_income' => $net_income,
-        'pay_lesotho' => $pay_lesotho
-    ]);
+        $transaction = new Mpesa([
+            'number' => $mobileNumber,
+            'ref' => $payRef,
+            'gross_income' =>  $amount,
+            'net_income' => $net_income,
+            'pay_lesotho' => $pay_lesotho
+        ]);
 
-    $transaction->save();
-}
+        $transaction->save();
+    }
 
     public function downloadSong($musicId)
     {
         Log::info('Music ID: ' . $musicId);
         $music = Music::find($musicId);
-
+     
         if (!$music) {
             Log::error('Music track not found for ID: ' . $musicId);
             return redirect()->back()->with('error', 'Music track not found.');
@@ -374,12 +355,10 @@ class MpesaController extends Controller
             Log::error('Music file not found in storage: ' . $musicFilePath);
             return redirect()->back()->with('error', 'Music file not found.');
         }
-
         $response = Storage::download($musicFilePath, $music->artist . '-' . $music->title . '.mp3');
         Log::info('Download Response: ' . $response);
-
         return $response;
     }
-    
+
 
 }
