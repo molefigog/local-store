@@ -32,7 +32,7 @@ class OwnerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == 2;
+        return $user->role == 1;
     }
 
     /**

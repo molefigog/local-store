@@ -66,7 +66,9 @@ class MusicResource extends Resource
                             ->options(Genre::all()->pluck('title', 'id'))
                             ->searchable(),
                         MarkdownEditor::make('description')->columnSpanFull(),
-                        FileUpload::make('image')->preserveFilenames()->maxSize(512)->disk('public')->directory('images'),
+                        FileUpload::make('image')->maxSize(512)
+                        ->disk('public')->directory('images')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif']),
                         FileUpload::make('file')->preserveFilenames()
                             ->acceptedFileTypes(['audio/mpeg', 'audio/mp3'])->maxSize(10024),
 
@@ -163,7 +165,7 @@ class MusicResource extends Resource
             'index' => Pages\ListMusic::route('/'),
             'create' => Pages\CreateMusic::route('/create'),
             'edit' => Pages\EditMusic::route('/{record}/edit'),
-         
+
         ];
     }
     public static function getNavigationBadge(): ?string

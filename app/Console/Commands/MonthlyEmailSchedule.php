@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
-use App\Models\Music; 
-use App\Models\Setting; 
+use App\Models\Music;
+use App\Models\Setting;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +22,7 @@ class MonthlyEmailSchedule extends Command
 
         foreach ($users as $user) {
             // Eager load the songs relationship
-            $songs = $user->music()->get();
+            $songs = $user->musics()->get();
 
             // Calculate current month and year in PHP
             $currentMonth = now()->format('F');
@@ -48,5 +48,5 @@ class MonthlyEmailSchedule extends Command
 
         $this->info('Monthly schedule emails sent successfully.');
     }
-   
+
 }

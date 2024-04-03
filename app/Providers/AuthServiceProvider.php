@@ -2,33 +2,48 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\Owner;
+use App\Models\Setting;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Music;
+use App\Policies\OwnerPolicy;
+use App\Policies\SettingPolicy;
+use App\Policies\UserPolicy;
+use App\Policies\ProductPolicy;
+use App\Policies\MusicPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The model to policy mappings for the application.
+     * The policy mappings for the application.
      *
-     * @var array<class-string, class-string>
+     * @var array
      */
     protected $policies = [
         Owner::class => OwnerPolicy::class,
         Setting::class => SettingPolicy::class,
         User::class => UserPolicy::class,
-        Post::class => PostPolicy::class,
-         Music::class => MusicPolicy::class,
+        Product::class => ProductPolicy::class,
+        Music::class => MusicPolicy::class,
     ];
 
     /**
      * Register any authentication / authorization services.
+     *
+     * @return void
      */
-    public function boot(): void
+    public function boot()
     {
-    //   Gate::before(function (User $user, string $ability) {
-    //     return $user->isSuperAdmin() ? true: null;
-    //   });
+        $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            // If the user is a super admin, grant all abilities.
+            if ($user->isSuperAdmin()) {
+                return true;
+            }
+        });
     }
-    
 }

@@ -19,22 +19,64 @@
             </div>
 
             <div class="details">
-                <h6 class="artist"><?php echo e($music->artist ?? '-'); ?></h6>
+                <h6 class="artist" id="artistName"><?php echo e($music->artist ?? '-'); ?></h6>
+
                 <p class="card-text" id="product1Description">
                     <?php echo e($music->title ?? '-'); ?>
 
                 </p>
 
                 <?php if($music->amount == 0): ?>
-                <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>" class="btn buy-button">Download</a>
+                    <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"
+                      style="margin-right: 4px;"  class="btn buy-button">Download</a>
                 <?php else: ?>
-                <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>" class="btn buy-button">Buy R<?php echo e($music->amount); ?></a>
+                    <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"
+                      style="margin-right: 4px;"  class="btn buy-button">Buy R<?php echo e($music->amount); ?></a>
                 <?php endif; ?>
+                <button style="font-size: 9px; margin-right: 4px;" class="btn btn-transparent btn-outline-danger btn-sm" wire:click="incrementLikes(<?php echo e($music->id); ?>)">
+                    <span class="icon-heart"></span>  <?php echo e($music->likes); ?>
 
+                </button>
+
+                <a style="font-size: 9px;" class="btn btn-transparent btn-outline-primary btn-sm"
+                            href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"><span
+                                class="icon-eye"></span> <?php echo e($music->views); ?></a>
             </div>
-            <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
-                
+            <?php
+            $baseUrl = config('app.url');
+            $url = "{$baseUrl}/msingle/{$music->slug}";
+            $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
+                ->facebook()
+                ->twitter()
+                ->whatsapp();
+            ?>
+            <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        
+                        <a class="dropdown-item"
+                            href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"><span
+                                class="icon-eye"></span> Views <?php echo e($music->views); ?></a>
+                        <a class="dropdown-item"
+                            href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"><span
+                                class="icon-download"></span>
+                            Downloads <?php echo e($music->downloads); ?>
+
+                        </a>
+                        
+
+                        <!-- Button to increment likes -->
+                        <button class="dropdown-item" wire:click="incrementLikes(<?php echo e($music->id); ?>)">
+                            <span class="icon-heart"></span> React <?php echo e($music->likes); ?>
+
+                        </button>
+                        <div class="dropdown-divider"></div>
+
+                        <?php echo $shareButtons; ?>
+
+                    </li>
+                </ul>
             </div>
             <div class="details-left">
 
@@ -205,4 +247,5 @@
             <source src="" type="audio/mp3">
         </audio>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/songs_by_artist.blade.php ENDPATH**/ ?>

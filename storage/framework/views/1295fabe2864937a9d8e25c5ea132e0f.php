@@ -9,8 +9,8 @@
     <?php echo $__env->yieldContent('content'); ?>
 
     <br>
-   
-    
+
+
 <div class="card">
             <h5 class="card-header text-center">Most Downloaded Songs</h5>
             <div class="table-responsive text-nowrap">
@@ -27,28 +27,28 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                         <?php $__currentLoopData = $downloads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $song): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            
-                    
+
+
                             <tr>
                                 <td><img src="<?php echo e($song->image ? \Storage::url($song->image) : ''); ?>"
                                     alt="Avatar" width="40" height="40"></td>
-                                <td style="font-size: 10px"><?php echo e($song->title ?? '-'); ?></td>        
-                                <td style="font-size: 10px"><?php echo e($song->artist ?? '-'); ?></td> 
+                                <td style="font-size: 10px"><?php echo e($song->title ?? '-'); ?></td>
+                                <td style="font-size: 10px"><?php echo e($song->artist ?? '-'); ?></td>
                                 <td style="font-size: 10px"><?php echo e($song->downloads ?? '-'); ?></td>
                                 <td>
-                                   
+
                                     <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($song->slug)])); ?>"
-                                        class="btn buy-button btn-sm">Buy R<?php echo e($song->amount ?? '-'); ?></a> 
-                                        
+                                        class="btn buy-button btn-sm">Buy R<?php echo e($song->amount ?? '-'); ?></a>
+
                                 </td>
                             </tr>
-                       
+
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
         </div>
-   
+
 
 
     <?php echo $__env->make('layouts.modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -81,6 +81,13 @@
             document.querySelector('meta[property="og:url"]').setAttribute("content", url);
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var artistName = document.getElementById('artistName');
+    if (artistName.textContent.length === 16) {
+        artistName.classList.add('long-artist');
+    }
+});
 </script>
 </body>
 

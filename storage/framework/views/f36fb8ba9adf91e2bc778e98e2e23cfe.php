@@ -1,81 +1,24 @@
 <?php $__env->startSection('content'); ?>
-<div id="music-list" class="articles">
-    <?php $__empty_1 = true; $__currentLoopData = $allMusic; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $music): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-    <div class="article-card">
-        <div class="cover">
-            <img src="<?php echo e(asset("storage/$music->image")); ?>" alt="Article 1 Cover Image">
-            <?php if($music->amount == 0): ?>
-            <div class="overlay">
-                <a href="#" class="play-button track-list" data-track="<?php echo e(asset("storage/$music->file")); ?>"
-                    data-poster="<?php echo e(asset("storage/$music->image")); ?>"
-                    data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
-                    <i class="icon-play"></i>
-                </a>
-            </div>
-            <?php else: ?>
-            <div class="overlay">
-                <a href="#" class="play-button track-list" data-track="<?php echo e(asset("storage/demos/$music->demo")); ?>"
-                    data-poster="<?php echo e(asset("storage/$music->image")); ?>"
-                    data-title="<?php echo e($music->title ?? '-'); ?>" data-singer="<?php echo e($music->artist ?? '-'); ?>">
-                    <i class="icon-play"></i>
-                </a>
-            </div>
-            <?php endif; ?>
-        </div>
 
-        <div class="details">
-            <h6 class="artist"><?php echo e($music->artist ?? '-'); ?></h6>
-            <p class="card-text" id="product1Description">
-                <?php echo e($music->title ?? '-'); ?>
+<?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('music');
 
-            </p>
+$__html = app('livewire')->mount($__name, $__params, 'lw-1502944268-0', $__slots ?? [], get_defined_vars());
 
-            <?php if($music->amount == 0): ?>
-            <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>"
-                class="btn buy-button">Download</a>
-            <?php else: ?>
-            <a href="<?php echo e(route('msingle.slug', ['slug' => urlencode($music->slug)])); ?>" class="btn buy-button">Buy R<?php echo e($music->amount); ?></a>
-            <?php endif; ?>
+echo $__html;
 
-        </div>
-        <?php
-         $baseUrl = config('app.url');
-        $url = "{$baseUrl}/msingle/{$music->slug}";
-        $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
-                                ->facebook()
-                                ->twitter()
-                                ->whatsapp();
-    ?>
-        <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
-            <ul class="dropdown-menu dropdown-menu-right">
-                <li>
-                    <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
-                    <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
-                    <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
-                        Download
-                        Offline</a>
-                    <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
-                    <div class="dropdown-divider"></div>
-                    <?php echo $shareButtons; ?>
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
 
-                </li>
-            </ul>
-        </div>
-        <div class="details-left">
-
-            <p class="texts"><i class="icon-download"></i>&nbsp;<?php echo e($music->downloads); ?></p>
-            <p class="texts"><i class="icon-clock-o"></i>&nbsp;<?php echo e($music->duration); ?></p>
-        </div>
-    </div>
-    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-
-    <?php echo app('translator')->get('no_items_found'); ?>
-    <?php endif; ?>
-
-</div>
-<div class="pagination"><?php echo e($allMusic->links()); ?></div>
 <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('head'); ?>
 <title><?php echo e($metaTags['title']); ?></title>
 <meta name="description" content="<?php echo e($metaTags['description']); ?>">
@@ -200,22 +143,35 @@
             }
         });
         document.addEventListener('DOMContentLoaded', function() {
-            const audioPlayer = document.getElementById('audio-player');
+        const audioPlayer = document.getElementById('audio-player');
+        const divToHide = document.querySelector('.toggle--player');
 
-            function hideMediaPlayer() {
-                if (!audioPlayer.paused || audioPlayer.src) {
-                    audioPlayer.style.display = 'block';
-                } else {
-                    audioPlayer.style.display = 'none';
-                }
+        if (!audioPlayer || !divToHide) {
+            console.error('Audio player or div to hide not found.');
+            return;
+        }
+
+        function hideDivIfNoAudio() {
+            if (!audioPlayer.paused || audioPlayer.currentTime > 0) {
+                divToHide.style.display = 'block';
+            } else {
+                divToHide.style.display = 'none';
             }
+        }
 
-            audioPlayer.addEventListener('loadeddata', hideMediaPlayer);
-            audioPlayer.addEventListener('pause', hideMediaPlayer);
+        function handleAudioEvents() {
+            hideDivIfNoAudio();
+        }
 
-            // Initial check after DOM loaded
-            hideMediaPlayer();
-        });
+        audioPlayer.addEventListener('loadeddata', handleAudioEvents);
+        audioPlayer.addEventListener('play', handleAudioEvents);
+        audioPlayer.addEventListener('pause', handleAudioEvents);
+        audioPlayer.addEventListener('ended', handleAudioEvents);
+        audioPlayer.addEventListener('timeupdate', handleAudioEvents);
+
+        // Initial check after DOM loaded
+        hideDivIfNoAudio();
+    });
 </script>
 <script>
     $(document).ready(function() {
@@ -257,7 +213,7 @@
             $('#searchIcon').on('click', function () {
             $('#searchModal').modal('show');
         });
-        });                        
+        });
 </script>
 
 <?php $__env->stopPush(); ?>
@@ -267,9 +223,12 @@
 <?php $__env->stopPush(); ?>
 <br>
 <?php $__env->startSection('audio'); ?>
+<div class="toggle--player">
 <audio id="audio-player" preload="none" class="mejs__player" controls
     data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
     <source src="" type="audio/mp3">
 </audio>
+</div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('welcome', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/music.blade.php ENDPATH**/ ?>

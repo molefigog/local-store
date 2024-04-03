@@ -52,13 +52,7 @@ class UserPolicy
         return $user->role == 1;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, User $model): bool
-    {
-        //
-    }
+
 
     /**
      * Determine whether the user can permanently delete the model.

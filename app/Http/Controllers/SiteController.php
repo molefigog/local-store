@@ -64,27 +64,7 @@ class SiteController extends Controller
         return view('music', compact('allMusic', 'products', 'downloads', 'metaTags', 'genres'));
     }
 
-    public function Share()
-    {
-        // Replace with your logic to generate title, image, and description
-        // Assuming you want to share the first music item
-        $music = Music::latest()->firstOrFail();
 
-        // Get the base URL dynamically
-        $title = $music->title;
-        $image = url($music->image ? Storage::url($music->image) : '');
-        $description = $music->description;
-        $baseUrl = config('app.url');
-        $url = "{$baseUrl}/msingle/{$music->slug}";
-
-        // Generate social share buttons
-        $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
-            ->facebook()
-            ->twitter()
-            ->whatsapp();
-
-        return $shareButtons;
-    }
     public function songsPage(Request $request): View
     {
         $search = $request->get('search', '');
@@ -110,7 +90,7 @@ class SiteController extends Controller
             'url' =>  $url,
         ];
 
-        return view('songs', compact('allMusic', 'products', 'downloads', 'metaTags', 'genres'));
+        return view('songs', compact('music', 'products', 'downloads', 'metaTags', 'genres'));
     }
     public function beatsPage(Request $request): View
     {

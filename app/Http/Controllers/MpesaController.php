@@ -217,6 +217,9 @@ class MpesaController extends Controller
             $verificationData = json_decode($verificationResponse, true);
             error_log('Verification Response: ' . $verificationResponse);
             if ($verificationData['status_code'] === 'INS-0') {
+
+                $this->updateUserBalance($request->input('musicId'), $request->input('amount'));
+
                 $status = 'success';
                 $message = $verificationData['message'];
 
@@ -262,6 +265,48 @@ class MpesaController extends Controller
             Log::error('Guzzle Request Error: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to verify the transaction'], 500);
         }
+    }
+
+    private function updateUserBalance($musicId, $amount)
+    {
+         // Find the music track based on the provided ID
+    $music = Music::find($musicId);
+    
+    // If music track not found, log error and return
+    if (!$music) {
+        Log::error('Music track not found for ID: ' . $musicId);
+        return;
+    }
+
+    // Retrieve the pivot record for the music track and user
+    $pivot = $music->users()->wherePivot('music_id', $musicId)->first()->pivot;
+
+    // If pivot record not found, log error and return
+    if (!$pivot) {
+        Log::error('Pivot record not found for music ID: ' . $musicId);
+        return;
+    }
+
+    // Get the uploader ID from the pivot record
+    $uploaderId = $pivot->user_id;
+
+    // Retrieve the uploader user model
+    $user = User::find($uploaderId);
+
+    // If user not found, log error and return
+    if (!$user) {
+        Log::error('Uploader user not found for ID: ' . $uploaderId);
+        return;
+    }
+
+    // Increment the user's balance by the provided amount
+    $user->balance += $amount;
+
+    // Save the user model
+    $user->save();
+
+    // Log successful balance update
+    Log::info('User balance updated successfully for User ID: ' . $user->id);
     }
 
     public function sendSMS2($message, $mobileNumber)
@@ -345,8 +390,10 @@ class MpesaController extends Controller
             return redirect()->back()->with('error', 'Music track not found.');
         }
 
+
         $musicFilePath = $music->file;
 
+     
         $music->md++;
         $music->downloads++;
         $music->save();
@@ -359,6 +406,53 @@ class MpesaController extends Controller
         Log::info('Download Response: ' . $response);
         return $response;
     }
+    // public function downloadSong($musicId)
+    // {
+    //     // Logging the music ID for debugging purposes
+    //     Log::info('Music ID: ' . $musicId);
+        
+    //     // Finding the music track based on the provided ID
+    //     $music = Music::find($musicId);
+     
+    //     // If music track not found, log error and redirect back with error message
+    //     if (!$music) {
+    //         Log::error('Music track not found for ID: ' . $musicId);
+    //         return redirect()->back()->with('error', 'Music track not found.');
+    //     }
+    
+    //     $user = User::find($uploaderId);
 
+    //     // If user not found, log error and return
+    //     if (!$user) {
+    //         Log::error('Uploader user not found for ID: ' . $uploaderId);
+    //         return redirect()->back()->with('error', 'Uploader user not found.');
+    //     }
+        
+    //     // Incrementing user's balance
+    //     $user->balance += $music->amount;
+    //     $user->save();
+
+    //     $music->md++; // What is md? Ensure it's defined properly
+    //     $music->downloads++;
+    //     $music->save();
+    
+    //     // Retrieving the file path of the music track
+    //     $musicFilePath = $music->file;
+    
+    //     // If music file not found in storage, log error and redirect back with error message
+    //     if (!Storage::exists($musicFilePath)) {
+    //         Log::error('Music file not found in storage: ' . $musicFilePath);
+    //         return redirect()->back()->with('error', 'Music file not found.');
+    //     }
+    
+    //     // Downloading the music file and returning the response
+    //     $response = Storage::download($musicFilePath, $music->artist . '-' . $music->title . '.mp3');
+        
+    //     // Logging the download response for debugging purposes
+    //     Log::info('Download Response: ' . $response);
+        
+    //     return $response;
+    // }
+    
 
 }

@@ -152,7 +152,7 @@ class MusicController extends Controller
     {
         // $title = urldecode($title); // Decode URL-encoded title
         $music = Music::where('slug', $slug)->firstOrFail();
-
+        $music->increment('views');
         // Get the base URL dynamically
         $artist = $music->artist;
         $title = $music->title;
@@ -173,7 +173,7 @@ class MusicController extends Controller
 
         $userId = Auth::check() ? Auth::user()->id : null;
 
-        // "https://www.paypal.com/cgi-bin/webscr" live url 
+        // "https://www.paypal.com/cgi-bin/webscr" live url
         $Paypal = config('paypal.paypal_url');
         $PAYPAL_ID = config('paypal.paypal_id');
         $currency = config('paypal.paypal_currency');
@@ -347,7 +347,7 @@ class MusicController extends Controller
         ];
         return view('songs_by_genre', compact('musicCollection', 'genre', 'recentlyAddedSongs', 'metaTags', 'recipeData', 'siteData'));
     }
-    
+
 
 
     public function genre(Request $request): View

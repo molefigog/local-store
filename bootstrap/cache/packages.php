@@ -230,6 +230,17 @@
       'BladeCaptureDirective' => 'RyanChandler\\BladeCaptureDirective\\Facades\\BladeCaptureDirective',
     ),
   ),
+  'ryangjchandler/laravel-comments' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'RyanChandler\\Comments\\CommentsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Comments' => 'RyanChandler\\Comments\\Facades\\Comments',
+    ),
+  ),
   'spatie/laravel-cronless-schedule' => 
   array (
     'providers' => 

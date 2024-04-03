@@ -20,32 +20,60 @@
             </div>
 
             <div class="details">
-                <h6 class="artist">{{ $music->artist ?? '-' }}</h6>
+                <h6 class="artist" id="artistName">{{ $music->artist ?? '-' }}</h6>
+
                 <p class="card-text" id="product1Description">
                     {{ $music->title ?? '-' }}
                 </p>
 
                 @if ($music->amount == 0)
-                <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}" class="btn buy-button">Download</a>
+                    <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
+                      style="margin-right: 4px;"  class="btn buy-button">Download</a>
                 @else
-                <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}" class="btn buy-button">Buy R{{ $music->amount }}</a>
+                    <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
+                      style="margin-right: 4px;"  class="btn buy-button">Buy R{{ $music->amount }}</a>
                 @endif
+                <button style="font-size: 9px; margin-right: 4px;" class="btn btn-transparent btn-outline-danger btn-sm" wire:click="incrementLikes({{ $music->id }})">
+                    <span class="icon-heart"></span>  {{ $music->likes }}
+                </button>
 
+                <a style="font-size: 9px;" class="btn btn-transparent btn-outline-primary btn-sm"
+                            href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                                class="icon-eye"></span> {{ $music->views }}</a>
             </div>
-            <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
-                {{-- <ul class="dropdown-menu dropdown-menu-right">
+            <?php
+            $baseUrl = config('app.url');
+            $url = "{$baseUrl}/msingle/{$music->slug}";
+            $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
+                ->facebook()
+                ->twitter()
+                ->whatsapp();
+            ?>
+            <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
+                <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
-                        <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
-                        <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
-                            Download
-                            Offline</a>
-                        <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
+                        {{-- <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to
+                            Queue</a> --}}
+                        <a class="dropdown-item"
+                            href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                                class="icon-eye"></span> Views {{ $music->views }}</a>
+                        <a class="dropdown-item"
+                            href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                                class="icon-download"></span>
+                            Downloads {{ $music->downloads }}
+                        </a>
+                        {{-- <a class="dropdown-item" href="{{action(SiteController@likes)}}"><span class="icon-line-heart"></span> {{$music->likes}}</a> --}}
+
+                        <!-- Button to increment likes -->
+                        <button class="dropdown-item" wire:click="incrementLikes({{ $music->id }})">
+                            <span class="icon-heart"></span> React {{ $music->likes }}
+                        </button>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><span class="icon-line-share"></span> Share</a>
+
+                        {!! $shareButtons !!}
                     </li>
-                </ul> --}}
+                </ul>
             </div>
             <div class="details-left">
 

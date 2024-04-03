@@ -13,6 +13,7 @@
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@livewireScripts
 @stack('telljs')
 @stack('player')
 <script>

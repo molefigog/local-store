@@ -35,7 +35,137 @@ if ($data && isset($data['rates'][$targetCurrency])) {
 
 
 
+<style>
+section {
+    /* background-color: hsl(228, 33%, 97%); */
+    height: 100vh;
+    display: flex;
+    padding: 0 2%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
 
+.comment-box {
+    display: flex;
+    background-color: rgb(255 255 255 / 7%);
+    font-size: 14px;
+    gap: 20px;
+    padding: 8px;
+    border-radius: 10px;
+    background-clip: padding-box;
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.13);
+}
+.ddd{
+    background-color: rgba(255, 255, 255, 0.205);
+    border-radius: 6px;
+    padding: 4px;
+}
+.comment-reply {
+  display: flex;
+}
+
+.comment-reply .vline {
+  background-color: hsl(223, 19%, 93%);
+  width: 5px;
+  margin: 0 50px;
+}
+
+.reply-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-count {
+  background-color: hsl(228, 33%, 97%);
+  color: hsl(238, 40%, 52%);
+  font-weight: 500;
+  padding: 10px 8px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  align-self: flex-start;
+  align-items: center;
+}
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.comment-head .dname {
+  font-weight: 500;
+  color: hsl(212, 24%, 26%);
+}
+
+.comment-head .name {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.comment-head .trailing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.comment-body {
+    line-height: 22px;
+    padding: 0px 39px;
+    margin-top: -26px;
+}
+
+.comment-text {
+  background-color: rgba(255, 255, 255, 0.178);
+  padding: 25px 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  border-radius: 10px;
+}
+
+/* button {
+  background-color: hsl(238, 40%, 52%);
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+} */
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.you {
+  padding: 3px 8px;
+  background-color: hsl(238, 40%, 52%);
+  color: white;
+  font-weight: 500;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.delete {
+  margin-right: 10px;
+}
+
+.reply-to {
+  color: hsl(238, 40%, 52%);
+  font-weight: 500;
+}
+</style>
 <?php $__env->startSection('content'); ?>
 <div class="container mt-5">
     <div class="row">
@@ -195,6 +325,24 @@ if ($data && isset($data['rates'][$targetCurrency])) {
     </div>
 
 </div>
+
+
+        <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('comment-section', ['musicId' => $music->id]);
+
+$__html = app('livewire')->mount($__name, $__params, 'lw-410213722-0', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
 <br>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('head'); ?>
@@ -334,12 +482,12 @@ if ($data && isset($data['rates'][$targetCurrency])) {
 <script>
     $(document).ready(function() {
             var delayTimer;
-    
+
             $('#otp').on('input', function() {
                 var otp = $(this).val();
-    
+
                 clearTimeout(delayTimer);
-    
+
                 delayTimer = setTimeout(function() {
                     $.ajax({
                         type: 'POST',
@@ -369,4 +517,5 @@ if ($data && isset($data['rates'][$targetCurrency])) {
 
 
 <?php $__env->stopPush(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/msingle.blade.php ENDPATH**/ ?>

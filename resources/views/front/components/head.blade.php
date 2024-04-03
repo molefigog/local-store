@@ -29,6 +29,7 @@
     {{-- @stack('recipe')
 
     @stack('ghead') --}}
+    <livewire:styles />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <!-- <link rel="stylesheet" href="css/fontello.css"> -->

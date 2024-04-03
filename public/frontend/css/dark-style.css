@@ -2,7 +2,7 @@ body {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   background-color: #100f1a;
   color: #ffffff;
- 
+
   position: relative;
 
 }
@@ -64,7 +64,7 @@ a:hover {
   width: fit-content;
   display: flex;
   justify-content: center;
- align-items: center; 
+ align-items: center;
   /* Use this if you want to align vertically too */
 }
 
@@ -93,10 +93,14 @@ a:hover {
   justify-content: center;
 }
 
-artist {
-  font-size: 12px;
-  font-weight: 600;
-  
+.artist {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.long-artist {
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .row1 {
@@ -109,7 +113,7 @@ artist {
   margin-left: -15px;
   align-content: flex-start;
   justify-content: center;
-  
+
 }
 .form-horizontal{
   background: #171b22;
@@ -812,7 +816,9 @@ artist {
 
 .details {
   flex: 1;
-  padding: 6px;
+  display: inline-table;
+  padding: 1px;
+
 }
 .songs-button {
   color: #ffffff;
@@ -821,7 +827,7 @@ artist {
   align-content: stretch;
   justify-content: space-evenly;
   align-items: center;
-  
+
 }
 
 .details h2 {

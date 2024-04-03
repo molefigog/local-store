@@ -13,6 +13,8 @@
 <script src="<?php echo e(asset('frontend/js/main.js')); ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
+
 <?php echo $__env->yieldPushContent('telljs'); ?>
 <?php echo $__env->yieldPushContent('player'); ?>
 <script>

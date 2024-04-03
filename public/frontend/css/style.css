@@ -70,12 +70,15 @@ a:hover {
   /* Use this if you want to align vertically too */
 }
 
-artist {
-  font-size: 12px;
-  font-weight: 600;
-
+.artist {
+    font-size: 12px;
+    font-weight: 600;
 }
 
+.long-artist {
+    font-size: 10px;
+    font-weight: 500;
+}
 .row1 {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -86,7 +89,7 @@ artist {
   margin-left: -15px;
   align-content: flex-start;
   justify-content: center;
-  
+
 }
 .form-horizontal{
   background: #fff;
@@ -829,7 +832,8 @@ artist {
 
 .details {
   flex: 1;
-  padding: 6px;
+  display: inline-table;
+  padding: 1px;
 }
 
 .songs-button {

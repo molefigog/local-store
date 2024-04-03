@@ -23,9 +23,9 @@ use Filament\Forms\Components\FileUpload;
 class CreateMusic extends CreateRecord
 {
     use CreateRecord\Concerns\HasWizard;
-    
+
     protected static string $resource = MusicResource::class;
-    
+
  protected function getSteps(): array
 {
     return [
@@ -35,7 +35,7 @@ class CreateMusic extends CreateRecord
                 TextInput::make('artist')->required(),
                 TextInput::make('title')->required(),
             ]),
-            
+
             Step::make('Genre')
             ->description('Add Genre and Price')
             ->schema([
@@ -64,7 +64,9 @@ class CreateMusic extends CreateRecord
         Step::make('Upload')
             ->description('Add Cover And Song ')
             ->schema([
-                 FileUpload::make('image')->preserveFilenames()->maxSize(512)->disk('public')->directory('images'),
+                 FileUpload::make('image')->maxSize(512)
+                 ->disk('public')->directory('images')
+                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif']),
                  FileUpload::make('file')->preserveFilenames()
                       ->acceptedFileTypes(['audio/mpeg', 'audio/mp3'])->maxSize(10024),
             ]),
@@ -77,14 +79,14 @@ class CreateMusic extends CreateRecord
 
     // Log the created record
     logger($this->record);
-    
+
     // Get the file path
     $file = Storage::disk('public')->path($this->record->file);
 
     $track = new GetId3($file);
     $track->extractInfo();
     $duration = $track->getPlaytime();
- 
+
     $filesizeInBytes = filesize($file);
     $filesizeInMB = round($filesizeInBytes / (1024 * 1024), 2);
 
@@ -94,33 +96,33 @@ class CreateMusic extends CreateRecord
     MpegAudio::fromFile($file)->trim(10, 30)->saveFile(public_path('storage/demos/' . $demoFilename));
     $demoName = $demoFilename;
 
-    $music = Music::findOrFail($this->record->id); 
+    $music = Music::findOrFail($this->record->id);
 
     $music->update([
         'duration' => $duration,
         'size' => $filesizeInMB,
         'demo' => $demoName,
     ]);
-    
+
    $this->record->users()->attach($user);
-    
+
     Notification::make()
         ->success()
         ->title('Music Uploaded!')
-        ->body('Song is uploaded and 30 seconds snippet is also generated!!')
+        ->body('30 seconds snippet generated Successfully!!')
         ->duration(9000)
         ->send();
 }
-    
+
     //  protected function afterCreate()
     // {
     //     logger($this->record);
-    
+
     //     $file = Storage::disk('public')->path($this->record->file);
     //     $track = new GetId3($file);
     //     $track->extractInfo();
     //     $duration = $track->getPlaytime();
- 
+
     //     $filesizeInBytes = filesize($file);
     //     $filesizeInMB = round($filesizeInBytes / (1024 * 1024), 2);
 
@@ -131,13 +133,13 @@ class CreateMusic extends CreateRecord
     // MpegAudio::fromFile($file)->trim(10, 30)->saveFile(public_path('storage/' . $demoFilename));
     // $demoName = $demoFilename;
 
-    //     $music = Music::findOrFail($this->record->id); 
+    //     $music = Music::findOrFail($this->record->id);
     //     $music->update([
     //         'duration' => $duration,
     //         'size' => $filesizeInMB,
     //         'demo' => $demoName,
     //     ]);
-        
+
     //     Notification::make()
     //         ->success()
     //         ->title('Music Uploaded!')

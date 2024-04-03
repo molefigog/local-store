@@ -1,82 +1,11 @@
 @extends('welcome')
 
 @section('content')
-<div id="music-list" class="articles">
-    @forelse($allMusic as $music)
-    <div class="article-card">
-        <div class="cover">
-            <img src="{{ asset("storage/$music->image") }}" alt="Article 1 Cover Image">
-            @if ($music->amount == 0)
-            <div class="overlay">
-                <a href="#" class="play-button track-list" data-track="{{ asset("storage/$music->file") }}"
-                    data-poster="{{ asset("storage/$music->image") }}"
-                    data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
-                    <i class="icon-play"></i>
-                </a>
-            </div>
-            @else
-            <div class="overlay">
-                <a href="#" class="play-button track-list" data-track="{{ asset("storage/demos/$music->demo") }}"
-                    data-poster="{{ asset("storage/$music->image") }}"
-                    data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
-                    <i class="icon-play"></i>
-                </a>
-            </div>
-            @endif
-        </div>
 
-        <div class="details">
-            <h6 class="artist">{{ $music->artist ?? '-' }}</h6>
-            <p class="card-text" id="product1Description">
-                {{ $music->title ?? '-' }}
-            </p>
+@livewire('music')
 
-            @if ($music->amount == 0)
-            <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
-                class="btn buy-button">Download</a>
-            @else
-            <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}" class="btn buy-button">Buy R{{
-                $music->amount }}</a>
-            @endif
-
-        </div>
-        <?php
-         $baseUrl = config('app.url');
-        $url = "{$baseUrl}/msingle/{$music->slug}";
-        $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
-                                ->facebook()
-                                ->twitter()
-                                ->whatsapp();
-    ?>
-        <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
-            <ul class="dropdown-menu dropdown-menu-right">
-                <li>
-                    <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to Queue</a>
-                    <a class="dropdown-item" href="#"><span class="icon-music"></span> Add to Playlist</a>
-                    <a class="dropdown-item" href="#"><span class="icon-line-cloud-download"></span>
-                        Download
-                        Offline</a>
-                    <a class="dropdown-item" href="#"><span class="icon-line-heart"></span> Love</a>
-                    <div class="dropdown-divider"></div>
-                    {!! $shareButtons !!}
-                </li>
-            </ul>
-        </div>
-        <div class="details-left">
-
-            <p class="texts"><i class="icon-download"></i>&nbsp;{{ $music->downloads }}</p>
-            <p class="texts"><i class="icon-clock-o"></i>&nbsp;{{ $music->duration }}</p>
-        </div>
-    </div>
-    @empty
-
-    @lang('no_items_found')
-    @endforelse
-
-</div>
-<div class="pagination">{{ $allMusic->links() }}</div>
 @endsection
+
 @section('head')
 <title>{{ $metaTags['title'] }}</title>
 <meta name="description" content="{{ $metaTags['description'] }}">
@@ -201,22 +130,35 @@
             }
         });
         document.addEventListener('DOMContentLoaded', function() {
-            const audioPlayer = document.getElementById('audio-player');
+        const audioPlayer = document.getElementById('audio-player');
+        const divToHide = document.querySelector('.toggle--player');
 
-            function hideMediaPlayer() {
-                if (!audioPlayer.paused || audioPlayer.src) {
-                    audioPlayer.style.display = 'block';
-                } else {
-                    audioPlayer.style.display = 'none';
-                }
+        if (!audioPlayer || !divToHide) {
+            console.error('Audio player or div to hide not found.');
+            return;
+        }
+
+        function hideDivIfNoAudio() {
+            if (!audioPlayer.paused || audioPlayer.currentTime > 0) {
+                divToHide.style.display = 'block';
+            } else {
+                divToHide.style.display = 'none';
             }
+        }
 
-            audioPlayer.addEventListener('loadeddata', hideMediaPlayer);
-            audioPlayer.addEventListener('pause', hideMediaPlayer);
+        function handleAudioEvents() {
+            hideDivIfNoAudio();
+        }
 
-            // Initial check after DOM loaded
-            hideMediaPlayer();
-        });
+        audioPlayer.addEventListener('loadeddata', handleAudioEvents);
+        audioPlayer.addEventListener('play', handleAudioEvents);
+        audioPlayer.addEventListener('pause', handleAudioEvents);
+        audioPlayer.addEventListener('ended', handleAudioEvents);
+        audioPlayer.addEventListener('timeupdate', handleAudioEvents);
+
+        // Initial check after DOM loaded
+        hideDivIfNoAudio();
+    });
 </script>
 <script>
     $(document).ready(function() {
@@ -258,7 +200,7 @@
             $('#searchIcon').on('click', function () {
             $('#searchModal').modal('show');
         });
-        });                        
+        });
 </script>
 
 @endpush
@@ -268,8 +210,10 @@
 @endpush
 <br>
 @section('audio')
+<div class="toggle--player">
 <audio id="audio-player" preload="none" class="mejs__player" controls
     data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
     <source src="" type="audio/mp3">
 </audio>
+</div>
 @endsection

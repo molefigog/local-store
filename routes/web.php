@@ -27,8 +27,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\PurchasedMusicController;
 use Carbon\Carbon;
-use Spatie\Sitemap\Sitemap;
-use Spatie\Sitemap\Tags\Url;
+// use App\Http\Livewire\CommentSection;
 use App\Http\Controllers\SocialShareController;
 use App\Http\Controllers\MpesaController;
 
@@ -36,11 +35,17 @@ Route::get('/cancel', function () {
     return view('paypal.cancel');
 });
 
+// Route::get('/', Gee::class);
+// Route::get('/', function () {
+//     return view('music');
+// });
 
+
+// Route::get('/comments/{music}', CommentSection::class);
 Route::get('/mpesa/success', [MpesaController::class, 'showSuccessPage'])->name('mpesa.success');
 
 Route::get('mpesa/error', [MpesaController::class, 'showErrorPage'])->name('mpesa.error');
-Route::get('/success2', [PaypalController::class, 'returnUrl'])->name('success2'); 
+Route::get('/success2', [PaypalController::class, 'returnUrl'])->name('success2');
 
 Route::get('/success', [PaypalController::class, 'handleSuccess'])->name('success');
 Route::post('/ipn', [PaypalController::class, 'handleIPN']);
@@ -58,7 +63,7 @@ Route::get('msingle/{slug}', [MusicController::class, 'showBySlug'])
     ->where('slug', '[a-zA-Z0-9\-]+')  // Regular expression pattern for the slug
     ->name('msingle.slug');
 
-    
+
 Route::get('beat/{slug}', [BeatController::class, 'showBySlug'])
 ->where('slug', '[a-zA-Z0-9\-]+')  // Regular expression pattern for the slug
 ->name('beat.slug');

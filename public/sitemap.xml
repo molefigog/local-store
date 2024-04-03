@@ -22,11 +22,6 @@
         <priority>0.8</priority>
             </url>
     <url>
-        <loc>https://www.gw-ent.co.za/msingle/miserru</loc>
-            <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-            </url>
-    <url>
         <loc>https://www.gw-ent.co.za/msingle/darklight-ft-kkeed</loc>
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
@@ -133,6 +128,61 @@
             </url>
     <url>
         <loc>https://www.gw-ent.co.za/msingle/areeng-ho-mmagrasia</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/mahamba-etwa</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/alfa-and-omega-instrumental</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/iqm-entertainment</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/ha-kea-ikhethela</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/kejolla-monate</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/lerat-la-molimo</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/happiness</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/rea-mecha</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/molimo-oa-mehlolo</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/bohloko-bapelo</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/keai-tshepa</loc>
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
             </url>

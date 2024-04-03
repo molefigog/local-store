@@ -8,13 +8,14 @@ use App\Models\Scopes\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
+use RyanChandler\Comments\Concerns\HasComments;
 
 class Beat extends Model
 {
     use HasFactory;
     use Searchable;
-  
+    use HasComments;
+
 
     protected $fillable = [
         'genre_id',
