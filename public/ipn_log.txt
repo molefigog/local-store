@@ -2628,3 +2628,41 @@
 )
 
 2024-04-03 16:32:01 - IPN Request: cmd=_notify-validate&mc_gross=4.00&protection_eligibility=Eligible&address_status=unconfirmed&payer_id=EGSVM7F87S88E&address_street=Unit+15+Ululapa+2+Suikerbossie+Street+Extension+17+Sharon+Lea+Randburg&payment_date=09%3A48%3A16+Apr+01%2C+2024+PDT&payment_status=Completed&charset=windows-1252&address_zip=2194&first_name=Matumelo+Ida&mc_fee=0.48&address_country_code=ZA&address_name=Matumelo+Ida+Moleleki&notify_version=3.9&payer_status=verified&business=sebatadorothy%40gmail.com&address_country=South+Africa&address_city=Johannesburg&verify_sign=A.lE12pkxUiJPsbimsI41afMxiNYAs2K8dKpkn-nH0c768LnzBk6NRnT&payer_email=khanye.cryptot1969%40gmail.com&txn_id=7AX59210V8539843C&payment_type=instant&last_name=Moleleki&address_state=&receiver_email=sebatadorothy%40gmail.com&payment_fee=0.48&receiver_id=CD7MLPV9KX9Y4&txn_type=send_money&mc_currency=USD&residence_country=ZA&transaction_subject=&payment_gross=4.00&ipn_track_id=61a913470f115
+2024-04-04 16:32:05 - Processed POST Data: Array
+(
+    [mc_gross] => 4.00
+    [protection_eligibility] => Eligible
+    [address_status] => unconfirmed
+    [payer_id] => EGSVM7F87S88E
+    [address_street] => Unit 15 Ululapa 2 Suikerbossie Street Extension 17 Sharon Lea Randburg
+    [payment_date] => 09:48:16 Apr 01, 2024 PDT
+    [payment_status] => Completed
+    [charset] => windows-1252
+    [address_zip] => 2194
+    [first_name] => Matumelo Ida
+    [mc_fee] => 0.48
+    [address_country_code] => ZA
+    [address_name] => Matumelo Ida Moleleki
+    [notify_version] => 3.9
+    [payer_status] => verified
+    [business] => sebatadorothy@gmail.com
+    [address_country] => South Africa
+    [address_city] => Johannesburg
+    [verify_sign] => A.lE12pkxUiJPsbimsI41afMxiNYAs2K8dKpkn-nH0c768LnzBk6NRnT
+    [payer_email] => khanye.cryptot1969@gmail.com
+    [txn_id] => 7AX59210V8539843C
+    [payment_type] => instant
+    [last_name] => Moleleki
+    [address_state] => 
+    [receiver_email] => sebatadorothy@gmail.com
+    [payment_fee] => 0.48
+    [receiver_id] => CD7MLPV9KX9Y4
+    [txn_type] => send_money
+    [mc_currency] => USD
+    [residence_country] => ZA
+    [transaction_subject] => 
+    [payment_gross] => 4.00
+    [ipn_track_id] => 61a913470f115
+)
+
+2024-04-04 16:32:05 - IPN Request: cmd=_notify-validate&mc_gross=4.00&protection_eligibility=Eligible&address_status=unconfirmed&payer_id=EGSVM7F87S88E&address_street=Unit+15+Ululapa+2+Suikerbossie+Street+Extension+17+Sharon+Lea+Randburg&payment_date=09%3A48%3A16+Apr+01%2C+2024+PDT&payment_status=Completed&charset=windows-1252&address_zip=2194&first_name=Matumelo+Ida&mc_fee=0.48&address_country_code=ZA&address_name=Matumelo+Ida+Moleleki&notify_version=3.9&payer_status=verified&business=sebatadorothy%40gmail.com&address_country=South+Africa&address_city=Johannesburg&verify_sign=A.lE12pkxUiJPsbimsI41afMxiNYAs2K8dKpkn-nH0c768LnzBk6NRnT&payer_email=khanye.cryptot1969%40gmail.com&txn_id=7AX59210V8539843C&payment_type=instant&last_name=Moleleki&address_state=&receiver_email=sebatadorothy%40gmail.com&payment_fee=0.48&receiver_id=CD7MLPV9KX9Y4&txn_type=send_money&mc_currency=USD&residence_country=ZA&transaction_subject=&payment_gross=4.00&ipn_track_id=61a913470f115

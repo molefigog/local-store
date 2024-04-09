@@ -33,12 +33,7 @@ class MusicResource extends Resource
 
 
     protected static ?string $model = Music::class;
-    protected $appends = ['total'];
 
-    public function getTotalAttribute()
-    {
-        return $this->md * $this->amount;
-    }
     protected static ?string $navigationIcon = 'heroicon-o-musical-note';
     protected static ?string $navigationGroup = 'Products';
 
@@ -49,9 +44,9 @@ class MusicResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        TextInput::make('artist'),
-                        TextInput::make('title'),
-                        Select::make('amount')->label('price')
+                        TextInput::make('artist')->required(),
+                        TextInput::make('title')->required(),
+                        Select::make('amount')->label('price')->required()
                             ->options([
                                 '2' => 'R2',
                                 '5' => 'R5',
@@ -61,15 +56,15 @@ class MusicResource extends Resource
                                 '15' => 'R15',
                             ]),
 
-                        Select::make('genre_id')
+                        Select::make('genre_id')->required()
                             ->label('Genre')
                             ->options(Genre::all()->pluck('title', 'id'))
                             ->searchable(),
-                        MarkdownEditor::make('description')->columnSpanFull(),
-                        FileUpload::make('image')->maxSize(512)
+                        MarkdownEditor::make('description')->required()->columnSpanFull(),
+                        FileUpload::make('image')->maxSize(512)->required()
                         ->disk('public')->directory('images')
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif']),
-                        FileUpload::make('file')->preserveFilenames()
+                        FileUpload::make('file')->preserveFilenames()->required()
                             ->acceptedFileTypes(['audio/mpeg', 'audio/mp3'])->maxSize(10024),
 
 
