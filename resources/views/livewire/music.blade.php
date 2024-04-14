@@ -19,13 +19,25 @@
                             </a>
                         </div>
                     @else
-                        <div class="overlay">
+                        {{-- <div class="overlay">
                             <a href="#" class="play-button track-list"
                                 data-track="{{ asset("storage/demos/$music->demo") }}"
                                 data-poster="{{ asset("storage/$music->image") }}"
                                 data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
                                 <i class="icon-play"></i>
                             </a>
+                        </div> --}}
+                        <div class="overlay">
+                            <div class="play-button track-list"
+                                role="button"
+                                tabindex="0"
+                                data-track="{{ asset('storage/demos/'.$music->demo) }}"
+                                data-poster="{{ asset('storage/'.$music->image) }}"
+                                data-title="{{ $music->title ?? '-' }}"
+                                data-singer="{{ $music->artist ?? '-' }}"
+                                onclick="playTrack(this);">
+                                <i class="icon-play"></i>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -39,18 +51,20 @@
 
                     @if ($music->amount == 0)
                         <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
-                          style="margin-right: 4px;"  class="btn buy-button">Download</a>
+                            style="margin-right: 4px;" class="btn buy-button">Download</a>
                     @else
                         <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
-                          style="margin-right: 4px;"  class="btn buy-button">Buy R{{ $music->amount }}</a>
+                            style="margin-right: 4px;" class="btn buy-button">Buy R{{ $music->amount }}</a>
                     @endif
-                    <button style="font-size: 9px; margin-right: 4px;" class="btn btn-transparent btn-outline-danger btn-sm" wire:click="incrementLikes({{ $music->id }})">
-                        <span class="icon-heart"></span>  {{ $music->likes }}
+                    <button style="font-size: 9px; margin-right: 4px;"
+                        class="btn btn-transparent btn-outline-danger btn-sm"
+                        wire:click="incrementLikes({{ $music->id }})">
+                        <span class="icon-heart"></span> {{ $music->likes }}
                     </button>
 
                     <a style="font-size: 9px; " class="btn btn-transparent btn-outline-primary btn-sm"
-                                href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
-                                    class="icon-eye"></span> {{ $music->views }}</a>
+                        href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                            class="icon-eye"></span> {{ $music->views }}</a>
                 </div>
                 <?php
                 $baseUrl = config('app.url');

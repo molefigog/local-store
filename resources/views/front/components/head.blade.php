@@ -16,6 +16,7 @@
     <meta name="MobileOptimized" content="320">
     <meta property="og:site_name" content="gw-ent" />
     @yield('head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <script type="application/ld+json">
         {
@@ -58,7 +59,7 @@
 
     @stack('tellcss')
     @stack('aplayer')
-   
+    @stack('pondcss')
     <style>
         @media (max-width: 767.98px) {
             .card {
@@ -175,7 +176,7 @@
     height: 0px;
   }
 
-  .owl-theme .owl-dots .owl-dot.active span, 
+  .owl-theme .owl-dots .owl-dot.active span,
   .owl-theme .owl-dots .owl-dot:hover span {
       background: #2caae1;
   }
@@ -241,29 +242,10 @@
     color: #2caae1;
   }
     </style>
-    <!-- Favicon Link -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <style>
-        /* .owl-nav button.owl-prev,
-        .owl-nav button.owl-next {
-            font-size: 30px;
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-        .owl-nav button.owl-prev {
-            left: 30px;
-        }
-        .owl-nav button.owl-next {
-            right: 30px;
-        }
-         */
-        
-    </style>
-    
+
+
 </head>
 
 <body>

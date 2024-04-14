@@ -17,16 +17,6 @@ use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     use RegistersUsers;
 
@@ -72,19 +62,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-       
-        // dd($data);
+
+        //  dd($data);
         $verificationToken = sha1(time() . $data['email']);
-        // Log::info('Data to be saved to the database:', [
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'mobile_number' => $data['mobile_number'],
-        //     'full_number' => $data['full_number'],
-        //     'password' => Hash::make($data['password']),
-        //     'balance' => 0,
-        //     'avatar' => 'default_avatar.png',
-        //     'email_verification_token' => $verificationToken,
-        // ]);
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -99,7 +80,7 @@ class RegisterController extends Controller
 
         return $user;
     }
-    
+
     protected function registered(Request $request, $user)
     {
         return redirect()->route('gee')->withSuccess(__('Account registered successfully! Please check your email for verification.'));

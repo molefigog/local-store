@@ -90,7 +90,7 @@ class SiteController extends Controller
             'url' =>  $url,
         ];
 
-        return view('songs', compact('music', 'products', 'downloads', 'metaTags', 'genres'));
+        return view('songs', compact('music', 'downloads', 'metaTags', 'genres'));
     }
     public function beatsPage(Request $request): View
     {

@@ -11,6 +11,8 @@ use App\Http\Controllers\BeatController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Http\Request;
 use App\Models\Beat;
 use App\Models\Music;
@@ -27,6 +29,10 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\PurchasedMusicController;
 use Carbon\Carbon;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\EmailVerificationController;
 // use App\Http\Livewire\CommentSection;
 use App\Http\Controllers\SocialShareController;
 use App\Http\Controllers\MpesaController;
@@ -129,6 +135,35 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name(
+        'profile.edit'
+    );
+    Route::patch('/profile', [ProfileController::class, 'update'])->name(
+        'profile.update'
+    );
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
+        'profile.destroy'
+    );
+    // Route::post('/email/verify/resend', [EmailVerificationController::class, 'sendVerificationEmail'])->name('verification.send');
+    Route::get('verify-email', EmailVerificationPromptController::class)
+                ->name('verification.notice');
+
+    // Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+    //             ->middleware(['signed', 'throttle:6,1'])
+    //             ->name('verification.verify');
+
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+                ->middleware('throttle:6,1')
+                ->name('verification.send');
+                Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+                ->name('pass.confirm');
+
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::put('password', [PasswordController::class, 'update'])->name('pass.update');
+});
+
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/total-users', [UserController::class, 'getTotalUsers'])->name('admin.total-users');
@@ -172,4 +207,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/topup/{id}', [UserController::class, 'creditUp'])->name('creditup');
     Route::delete('users/{id}', [UserController::class, 'deleteuser'])->name('users.delete');
+
+    // Route::post('/upload-avatar', [ProfileController::class, 'avatar'])->name('avatar.store');
+    Route::post('/temporary-upload', [ProfileController::class,'temporaryUpload'])->name('avatar.temp.upload');
+    Route::patch('/update-avatar', [ProfileController::class,'updateAvatar'])->name('avatar.update');
+    Route::post('/revert-upload', [ProfileController::class, 'revertUpload'])->name('avatar.revert.upload');
+
 });

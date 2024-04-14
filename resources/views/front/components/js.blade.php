@@ -132,7 +132,7 @@
         notyf.error('Invalid credentials');
     </script>
 @endif
-
+@stack('updated')
 <script>
     function showSoldOutNotification() {
         var notyf = new Notyf({
@@ -153,12 +153,12 @@
       // Check if 12 hours have passed since the last close
       const lastCloseTimestamp = localStorage.getItem('lastCloseTimestamp');
       const twelveHoursInMillis = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
-  
+
       if (!lastCloseTimestamp || Date.now() - lastCloseTimestamp > twelveHoursInMillis) {
         Swal.fire({
           title: 'Welcome to Our Store!',
           iconHtml:'<a class="btn btn-primary-outline btn-sm" href="{{ url('/all-music/create') }}"><i class="icon-upload"></i> Upload</a>',
-          icon: 'info',       
+          icon: 'info',
           confirmButtonText: 'Close',
         }).then((result) => {
           if (result.isConfirmed) {
@@ -168,10 +168,10 @@
         });
       }
     }
-  
+
     document.addEventListener('DOMContentLoaded', function () {
       const noticeLink = document.querySelector('a[href="#notice"]');
-      
+
       if (noticeLink) {
         noticeLink.addEventListener('click', function (event) {
           event.preventDefault();
