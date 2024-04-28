@@ -1,13 +1,13 @@
 body {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  background-color: #100f1a;
+  background-color: rgb(22 33 49 );
   color: #ffffff;
 
   position: relative;
 
 }
 
-body:before {
+/* body:before {
   content: "";
   position: absolute;
   top: 0;
@@ -21,7 +21,7 @@ body:before {
   opacity: 0;
   visibility: hidden;
   z-index: 1;
-}
+} */
 
 body.offcanvas-menu:before {
   opacity: 1;
@@ -60,12 +60,13 @@ a:hover {
 }
 
 .search {
-  padding: 74px 0px;
-  width: fit-content;
-  display: flex;
-  justify-content: center;
- align-items: center;
-  /* Use this if you want to align vertically too */
+    padding: 60px 0px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 /* .hero {
@@ -713,6 +714,7 @@ a:hover {
   width: calc(50% - 230px);
   /* width: calc(90%/ 4); */
   margin-bottom: 11px;
+  background:rgb(22 33 49 );
   border: 1px solid #cccccc0a;
   border-radius: 2%;
   display: flex;
@@ -730,7 +732,7 @@ a:hover {
 }
 
 .texts {
-  color: #b7b1b1;
+  color: #f7e9e9;
   font-size: 10px;
 }
 

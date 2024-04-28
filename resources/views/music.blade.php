@@ -1,54 +1,38 @@
 @extends('welcome')
 
 @section('content')
-
-@livewire('music')
-
+{{--
+@livewire('mmino') --}}
+{{-- <main>  {{ $slot }}</main> --}}
 @endsection
 
+
+@php
+        $setting = App\Models\Setting::firstOrFail();
+        $appName = config('app.name');
+        $url = config('app.url');
+
+        $title = $setting ? $setting->site : $appName;
+        $image = asset("storage/$setting->image");
+        $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
+@endphp
 @section('head')
-<title>{{ $metaTags['title'] }}</title>
-<meta name="description" content="{{ $metaTags['description'] }}">
-<meta property="og:title" content="{{ $metaTags['title'] }}">
-<meta property="og:image" content="{{ $metaTags['image'] }}">
-<meta property="og:description" content="{{ $metaTags['description'] }}">
-<meta property="og:url" content="{{ $metaTags['url'] }}" />
-<meta name="keywords" content="{{ $metaTags['keywords'] }}">
+<title>{{ $title}}</title>
+<meta name="description" content="{{ $setting->description }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:image" content="{{  $image}}">
+<meta property="og:description" content="{{ $setting->description }}">
+<meta property="og:url" content="{{ $url }}" />
+<meta name="keywords" content="{{$keywords }}">
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="{{ $metaTags['title'] }}" />
-<meta name="twitter:description" content="{{ $metaTags['description'] }}" />
-<meta name="twitter:image" content="{{ $metaTags['image'] }}" />
+<meta name="twitter:title" content="{{ $title}}" />
+<meta name="twitter:description" content="{{ $setting->description}}" />
+<meta name="twitter:image" content="{{ $image}}" />
 <meta property="fb:app_id" content="337031642040584" />
 @endsection
 
-@push('ghead')
-<!-- Google Tag Manager -->
-<script>
-    (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-MT3JSPQW');
-</script>
-<!-- End Google Tag Manager -->
-@endpush
 
-@push('gbody')
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
-        style="display:none;visibility:hidden">
-    </iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-@endpush
+
 
 @push('player')
 <script src="{{ asset('frontend/js/mediaelement-and-player.js') }}"></script>

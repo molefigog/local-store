@@ -250,9 +250,9 @@
             $('#searchIcon').on('click', function () {
             $('#searchModal').modal('show');
         });
-        });                        
+        });
     </script>
-  
+
 @endpush
 
 @push('aplayer')

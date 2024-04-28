@@ -33,7 +33,7 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\EmailVerificationController;
-// use App\Http\Livewire\CommentSection;
+use App\Livewire\Mmino;
 use App\Http\Controllers\SocialShareController;
 use App\Http\Controllers\MpesaController;
 
@@ -47,7 +47,7 @@ Route::get('/cancel', function () {
 // });
 
 
-// Route::get('/comments/{music}', CommentSection::class);
+Route::get('/', Mmino::class);
 Route::get('/mpesa/success', [MpesaController::class, 'showSuccessPage'])->name('mpesa.success');
 
 Route::get('mpesa/error', [MpesaController::class, 'showErrorPage'])->name('mpesa.error');
@@ -59,11 +59,14 @@ Route::post('/ipn', [PaypalController::class, 'handleIPN']);
 Route::get('/ajax-paginate',[SiteController::class,'ajax_paginate'])->name('ajax.paginate');
 
 Route::get('/live-search', [SiteController::class, 'liveSearch'])->name('liveSearch');
-Route::get('/', [SiteController::class, 'landingPage'])->name('gee');
+// Route::get('/', [SiteController::class, 'landingPage'])->name('gee');
 Route::get('beatz', [SiteController::class, 'beatsPage'])->name('beatz');
 Route::get('songs', [SiteController::class, 'songsPage'])->name('songs');
 Route::get('songs', [SiteController::class, 'songsPage'])->name('songs');
 Route::get('/sitemap', [SiteController::class, 'sitemap'])->name('sitemap');
+Route::post('otpdownloads', [SiteController::class, 'otpDownloads'])->name('otpdownloads');
+Route::get('getdownloads', [SiteController::class, 'getDownloads'])->name('getdownloads');
+Route::post('dl', [SiteController::class, 'getDl'])->name('getDl');
 
 Route::get('msingle/{slug}', [MusicController::class, 'showBySlug'])
     ->where('slug', '[a-zA-Z0-9\-]+')  // Regular expression pattern for the slug

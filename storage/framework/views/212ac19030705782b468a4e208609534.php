@@ -15,13 +15,16 @@ $artists = App\Models\User::orderBy('name')->get();
           <?php
             $musicCount = DB::table('music_user')->where('user_id', $artist->id)->count();
           ?>
-        
-          <?php if($musicCount > 0): ?>
-            <li class="nav-item text-uppercase">
-              <a class="nav-link text-secondary" href="<?php echo e(route('songs-by-artist', rawurlencode($artist->name))); ?>">
-                <?php echo e($artist->name); ?>
 
-              </a>
+          <?php if($musicCount > 0): ?>
+            
+            <li class="nav-item text-uppercase">
+                <div class="p-2">
+                    <a class="nav-link text-secondary btn btn-outline-primary btn-sm text-truncate" href="<?php echo e(route('songs-by-artist', rawurlencode($artist->name))); ?>" style="max-width: 150px;">
+                        <?php echo e($artist->name); ?>
+
+                    </a>
+                </div>
             </li>
           <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -46,4 +49,5 @@ $artists = App\Models\User::orderBy('name')->get();
       </div>
     </div>
   </div>
-</footer><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/footer.blade.php ENDPATH**/ ?>
+</footer>
+<?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/footer.blade.php ENDPATH**/ ?>

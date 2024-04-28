@@ -15,12 +15,19 @@ $artists = App\Models\User::orderBy('name')->get();
           @php
             $musicCount = DB::table('music_user')->where('user_id', $artist->id)->count();
           @endphp
-        
+
           @if ($musicCount > 0)
-            <li class="nav-item text-uppercase">
+            {{-- <li class="nav-item text-uppercase">
               <a class="nav-link text-secondary" href="{{ route('songs-by-artist', rawurlencode($artist->name)) }}">
                 {{ $artist->name }}
               </a>
+            </li> --}}
+            <li class="nav-item text-uppercase">
+                <div class="p-2">
+                    <a class="nav-link text-secondary btn btn-outline-primary btn-sm text-truncate" href="{{ route('songs-by-artist', rawurlencode($artist->name)) }}" style="max-width: 150px;">
+                        {{ $artist->name }}
+                    </a>
+                </div>
             </li>
           @endif
         @endforeach

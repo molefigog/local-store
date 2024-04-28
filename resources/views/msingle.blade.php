@@ -236,7 +236,8 @@
                                         @csrf
                                         <div class="mb-3">
                                             <p></p>
-                                            <h6 id="text">Enter Your M-pesa Number To By This Song</h6>
+                                            <h6 id="text">Enter Your M-pesa Number To Buy This Song</h6>
+                                            <p>Reka ka mpesa</p>
                                             <div class="input-group mb-2">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text"> <img
@@ -386,34 +387,8 @@
     <meta property="og:type" content="music.song">
 @endsection
 
-@push('ghead')
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-MT3JSPQW');
-    </script>
-    <!-- End Google Tag Manager -->
-@endpush
 
-@push('gbody')
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
-            style="display:none;visibility:hidden">
-        </iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-@endpush
+
 
 @push('aplayer')
     <link rel="stylesheet" href="{{ asset('frontend/css/audioplayer.css') }}">
@@ -444,7 +419,55 @@
     </script>
 @endpush
 @push('mpesa')
-    <script>
+<script>
+    $(document).ready(function() {
+        $('#paymentForm').submit(function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Processing',
+                html: 'Please wait...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('m-pesa') }}',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    Swal.close();
+
+                    if (response.status === 'success') {
+                        // Redirect to download URL
+                        window.location.href = response.download_url;
+                    } else {
+                        Swal.fire({
+                            icon: response.status,
+                            title: response.status.charAt(0).toUpperCase() + response.status.slice(1),
+                            text: response.message,
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.close();
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to make the API request',
+                    });
+                },
+            });
+        });
+    });
+</script>
+
+    {{-- <script>
         $(document).ready(function() {
             $('#paymentForm').submit(function(e) {
                 e.preventDefault();
@@ -490,7 +513,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
     <script>
         // Add an event listener to the link
         document.getElementById('showAlert').addEventListener('click', function() {
@@ -503,39 +526,6 @@
             });
         });
     </script>
-    {{-- <script>
-    $(document).ready(function() {
-            var delayTimer;
-
-            $('#otp').on('input', function() {
-                var otp = $(this).val();
-
-                clearTimeout(delayTimer);
-
-                delayTimer = setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ route('check-otp') }}',
-                        data: {
-                            _token: $('input[name="_token"]').val(),
-                            otp: otp
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $('.info').html('Received Amount: ' + response.receivedAmount +
-                                    '<br>From Number: ' + response.fromNumber);
-                            } else {
-                                $('.info').html('Invalid OTP');
-                            }
-                        },
-                        error: function() {
-                            $('.info').html('Error checking OTP');
-                        }
-                    });
-                }, 500)
-            });
-        });
-</script> --}}
     <script>
         $(document).ready(function() {
             var delayTimer;

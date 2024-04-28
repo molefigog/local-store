@@ -1,9 +1,5 @@
 <div>
 
-    {{-- <div class="align-content-center">
-    <input wire:model.live="search" type="text" placeholder="search here" class="form-control">
-</div> --}}
-
     <div id="music-list" class="articles">
         @forelse($allMusic as $music)
             <div wire:key="{{ $music->id }}" class="article-card">
@@ -56,11 +52,11 @@
                         <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
                             style="margin-right: 4px;" class="btn buy-button">Buy R{{ $music->amount }}</a>
                     @endif
-                    <button style="font-size: 9px; margin-right: 4px;"
+                    {{-- <button style="font-size: 9px; margin-right: 4px;"
                         class="btn btn-transparent btn-outline-danger btn-sm"
                         wire:click="incrementLikes({{ $music->id }})">
                         <span class="icon-heart"></span> {{ $music->likes }}
-                    </button>
+                    </button> --}}
 
                     <a style="font-size: 9px; " class="btn btn-transparent btn-outline-primary btn-sm"
                         href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
@@ -79,8 +75,7 @@
                         aria-haspopup="true" aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            {{-- <a class="dropdown-item" href="#"><span class="icon-line-plus"></span> Add to
-                                Queue</a> --}}
+
                             <a class="dropdown-item"
                                 href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
                                     class="icon-eye"></span> Views {{ $music->views }}</a>
@@ -89,9 +84,7 @@
                                     class="icon-download"></span>
                                 Downloads {{ $music->downloads }}
                             </a>
-                            {{-- <a class="dropdown-item" href="{{action(SiteController@likes)}}"><span class="icon-line-heart"></span> {{$music->likes}}</a> --}}
 
-                            <!-- Button to increment likes -->
                             <button class="dropdown-item" wire:click="incrementLikes({{ $music->id }})">
                                 <span class="icon-heart"></span> React {{ $music->likes }}
                             </button>
@@ -115,3 +108,4 @@
     </div>
     <div class="pagination">{{ $allMusic->links() }}</div>
 </div>
+

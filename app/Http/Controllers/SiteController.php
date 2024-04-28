@@ -11,8 +11,10 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Genre;
 use App\Models\User;
+use App\Models\Downloads;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class SiteController extends Controller
@@ -21,6 +23,11 @@ class SiteController extends Controller
     {
         return view('live-search');
     }
+    public function getDownloads()
+    {
+        return view('otpdownloads');
+    }
+
     public function liveSearch(Request $request)
     {
         $query = $request->input('query');
@@ -29,40 +36,22 @@ class SiteController extends Controller
 
         return response()->json($results);
     }
-    public function landingPage(Request $request): View
-    {
-        $allMusic = Music::latest()->paginate(15)->withQueryString();
-        $products = Product::latest()->paginate(10)->withQueryString();
-        $recentlyAddedSongs = Music::latest()->take(10)->get();
-        $downloads = Music::where('downloads', '>', 0)
-            ->orderBy('downloads', 'desc')
-            ->take(10)
-            ->get();
-        $genres = Genre::withCount('music')
-            ->latest()
-            ->paginate(10) // You might want to adjust the pagination as needed
-            ->withQueryString();
-        $setting = Setting::firstOrFail();
-        $appName = config('app.name');
-        $url = config('app.url');
+    // public function landingPage(Request $request): View
+    // {
+    //     $allMusic = Music::latest()->paginate(15)->withQueryString();
+    //     $products = Product::latest()->paginate(10)->withQueryString();
+    //     $downloads = Music::where('downloads', '>', 0)
+    //         ->orderBy('downloads', 'desc')
+    //         ->take(10)
+    //         ->get();
+    //     $genres = Genre::withCount('music')
+    //         ->latest()
+    //         ->paginate(10) // You might want to adjust the pagination as needed
+    //         ->withQueryString();
 
-        $title = $setting ? $setting->site : $appName;
-        $image = asset("storage/$setting->image");
-        $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
 
-        // Call Share method and capture its result
-        // $shareButtons = $this->Share();
-
-        $metaTags = [
-            'title' => $title,
-            'description' => $setting->description,
-            'image' =>  $image,
-            'keywords' => $keywords,
-            'url' =>  $url,
-        ];
-
-        return view('music', compact('allMusic', 'products', 'downloads', 'metaTags', 'genres'));
-    }
+    //     return view('music', compact('allMusic', 'products', 'downloads', 'genres'));
+    // }
 
 
     public function songsPage(Request $request): View
@@ -78,7 +67,6 @@ class SiteController extends Controller
         $url = config('app.url');
 
         $title = $setting ? $setting->site : $appName;
-        // $image = asset('storage/$setting->site');
         $image = asset("storage/$setting->image");
         $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
 
@@ -182,6 +170,7 @@ class SiteController extends Controller
         ];
         return view('songs_by_artist', compact('musicCollection', 'artist', 'shareButtons', 'downloads', 'metaTags'));
     }
+
     public function sitemap()
     {
         $sitemap = Sitemap::create();
@@ -200,4 +189,38 @@ class SiteController extends Controller
             ->route('gee')
             ->withSuccess(__('sitemap created!!'));
     }
+
+    public function otpDownloads(Request $request)
+    {
+        $otp = $request->input('otp');
+        $downloads = Downloads::where('otp', $otp)->first();
+
+        if ($downloads) {
+            return response()->json(['success' => true, 'otp' => $downloads->title, 'fromNumber' => $downloads->mobile]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
+
+    public function getDl(Request $request)
+    {
+        $otp = $request->input('otp');
+        $download = Downloads::where('otp', $otp)->first();
+
+        if ($download) {
+            // Assuming 'file' column contains the file path
+            $filePath = public_path('storage/' . $download->file);
+
+            if (file_exists($filePath)) {
+                return response()->download($filePath);
+            } else {
+                Log::error('File not found for OTP: ' . $otp);
+                return redirect()->back()->with('error', 'File not found.');
+            }
+        } else {
+            Log::error('Invalid OTP: ' . $otp);
+            return redirect()->back()->with('error', 'Invalid OTP.');
+        }
+    }
+
 }

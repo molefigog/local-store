@@ -35,7 +35,7 @@
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                             <li><a href="/" class="nav-link">Home</a></li>
                             <li><a href="<?php echo e(url('beatz')); ?>" class="nav-link">Beatz</a></li>
-                            
+
                             <li class="has-children">
                                 <a href="#account" class="nav-link">Categories</a>
                                 <ul class="dropdown">
@@ -46,7 +46,7 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             </li>
-                      
+
                             <li class="has-children">
                                 <?php if(Auth::check()): ?>
                                 <a href="#account" class="nav-link"><?php echo e(Auth::user()->name); ?></a>
@@ -55,15 +55,15 @@
                                 <?php endif; ?>
                                 <ul class="dropdown">
                                     <?php if(Auth::check()): ?>
-                                  
+
                                       <?php if(Auth::user()->upload_status == 1): ?>
                                        <li><a class="nav-link" href="<?php echo e(url('/admin/music/create')); ?>"><i class="icon-upload"></i> Upload Music</a></li>
                                        <li><a class="nav-link" href="<?php echo e(url('/admin/beats/create')); ?>"><i class="icon-upload"></i> Upload Beat</a></li>
                                        <!---->
                                        <?php endif; ?>
                                        <li><a class="nav-link" href="<?php echo e(url('/purchased-musics')); ?>"><i class="icon-download"></i> Downloads</a></li>
-                                       <li><a class="nav-link" href="<?php echo e(url('/top-up')); ?>"><i class="fa fa-cart-plus"></i> Account <span class="badge bg-danger">!</span></a></li>
-  
+                                       <li><a class="nav-link" href="<?php echo e(url('/top-up')); ?>"><i class="fa fa-cart-plus"></i> Account <span class="badge bg-success">R<?php echo e(Auth::user()->balance); ?></span></a></li>
+
                                        <li><a class="nav-link" href="<?php echo e(url('edit-profile')); ?>"><i class="icon-user"></i> Profile</a></li>
                                        <li><a class="nav-link" href="<?php echo e(route('log')); ?>"><i class="icon-paypal"></i> Paypal History</a></li>
                                        <li><a class="nav-link" href="<?php echo e(url('/admin')); ?>"><i class="icon-dashboard"></i> Dashboard</a></li>
@@ -74,7 +74,7 @@
                                 </ul>
                             </li>
                             <?php if(auth()->guard()->check()): ?>
-                           
+
                             <li><a href="<?php echo e(route('logout')); ?>"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                             <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
@@ -83,9 +83,10 @@
                         <?php else: ?>
                         <li><a href="" data-toggle="modal" data-target="#exampleModal">Login</a></li>
                         <li><a href="<?php echo e(route('register')); ?>" class="nav-link">Register</a></li>
+
                         <?php endif; ?>
 
-                            
+                            <li><a href="<?php echo e(route('getdownloads')); ?>" class="nav-link">Downloads</a></li>
                             <li><a href="<?php echo e(route('about')); ?>" class="nav-link">About Us</a></li>
                             <li class="social"><a href="#" class="nav-link" onclick="toggleMode(); return false;">
                                 <span id="iconMode" class="icon-brightness_high"></span></a></li>
@@ -109,22 +110,35 @@
         </div>
 
     </header>
-    <div class="hero">
-        <div class="search text-center">
-            
-            
 
-            <div class="input-group">
-                
-                <i class="icon-search" id="searchIcon" style="cursor: pointer;"></i>
+    <div class="hero">
+        <div class="search">
+
+            <div class="">
+                <div class="d-flex justify-content-between">
+                    <?php if(Auth::check()): ?>
+                    <div class="mb-8 align-items-center">
+                        <button class="btn btn-outline-primary btn-sm">Wallet R<?php echo e(Auth::user()->balance); ?></button>
+                    </div>
+                    <?php endif; ?>
+                    &nbsp; &nbsp;&nbsp;
+                    <div class="mb-8 align-items-center text-center"> <!-- Center space -->
+                        <i class="icon-search" id="searchIcon" style="cursor: pointer;"></i>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <?php if(Auth::check()): ?>
+                    <div class="mb-8 align-items-center">
+                        <a class="btn btn-outline-primary btn-sm" href="<?php echo e(url('/admin/music/create')); ?>"> <i class="icon-cloud-upload"></i>Upload</a>
+                    </div>
+                    <?php endif; ?>
+                </div>
             </div>
-        
             <!-- Modal for displaying search results -->
             <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Adjust the size as needed -->
                     <div class="modal-content">
                         <div class="modal-header">
-                 
+
                             <input  class="form-control" type="text" id="search" placeholder="Type to search" autocomplete="off">
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                         </div>
@@ -135,4 +149,5 @@
                 </div>
             </div>
         </div>
-    </div><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/menu.blade.php ENDPATH**/ ?>
+    </div>
+<?php /**PATH /home/gw-ent.co.za/public_html/resources/views/front/components/menu.blade.php ENDPATH**/ ?>

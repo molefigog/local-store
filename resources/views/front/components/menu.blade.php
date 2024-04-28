@@ -35,7 +35,7 @@
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                             <li><a href="/" class="nav-link">Home</a></li>
                             <li><a href="{{ url('beatz') }}" class="nav-link">Beatz</a></li>
-                            
+
                             <li class="has-children">
                                 <a href="#account" class="nav-link">Categories</a>
                                 <ul class="dropdown">
@@ -45,7 +45,7 @@
                                 @endforeach
                                 </ul>
                             </li>
-                      
+
                             <li class="has-children">
                                 @if (Auth::check())
                                 <a href="#account" class="nav-link">{{ Auth::user()->name }}</a>
@@ -54,15 +54,15 @@
                                 @endif
                                 <ul class="dropdown">
                                     @if (Auth::check())
-                                  
+
                                       @if(Auth::user()->upload_status == 1)
                                        <li><a class="nav-link" href="{{ url('/admin/music/create') }}"><i class="icon-upload"></i> Upload Music</a></li>
                                        <li><a class="nav-link" href="{{ url('/admin/beats/create') }}"><i class="icon-upload"></i> Upload Beat</a></li>
                                        <!--{{-- <li><a class="nav-link" href="{{ url('/sales') }}"><i class="icon-account_balance_wallet"></i> Wallet</a></li> --}}-->
                                        @endif
                                        <li><a class="nav-link" href="{{ url('/purchased-musics') }}"><i class="icon-download"></i> Downloads</a></li>
-                                       <li><a class="nav-link" href="{{ url('/top-up') }}"><i class="fa fa-cart-plus"></i> Account <span class="badge bg-danger">!</span></a></li>
-  
+                                       <li><a class="nav-link" href="{{ url('/top-up') }}"><i class="fa fa-cart-plus"></i> Account <span class="badge bg-success">R{{Auth::user()->balance}}</span></a></li>
+
                                        <li><a class="nav-link" href="{{ url('edit-profile') }}"><i class="icon-user"></i> Profile</a></li>
                                        <li><a class="nav-link" href="{{ route('log') }}"><i class="icon-paypal"></i> Paypal History</a></li>
                                        <li><a class="nav-link" href="{{ url('/admin') }}"><i class="icon-dashboard"></i> Dashboard</a></li>
@@ -80,7 +80,7 @@
                                 </ul>
                             </li>
                             @auth
-                           
+
                             <li><a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -89,9 +89,10 @@
                         @else
                         <li><a href="" data-toggle="modal" data-target="#exampleModal">Login</a></li>
                         <li><a href="{{ route('register') }}" class="nav-link">Register</a></li>
+
                         @endauth
 
-                            
+                            <li><a href="{{ route('getdownloads') }}" class="nav-link">Downloads</a></li>
                             <li><a href="{{ route('about') }}" class="nav-link">About Us</a></li>
                             <li class="social"><a href="#" class="nav-link" onclick="toggleMode(); return false;">
                                 <span id="iconMode" class="icon-brightness_high"></span></a></li>
@@ -115,34 +116,35 @@
         </div>
 
     </header>
-    <div class="hero">
-        <div class="search text-center">
-            {{-- <a class="btn btn-secondary" href="#notice" id="infoIcon"><i class="icon-info-circle"></i></a> --}}
-            {{-- <form action="">
-                <div class="input-group">
-                    <input type="text" id="indexSearch" name="search" value="{{ $search ?? '' }}" class="form-control" placeholder="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">
-                            <i class="icon-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form> --}}
 
-            <div class="input-group">
-                {{-- <input  class="form-control" type="text" id="search" placeholder="Type to search">
-                <button class="btn btn-secondary" type="submit">
-                    <i class="icon-search"></i>
-                </button> --}}
-                <i class="icon-search" id="searchIcon" style="cursor: pointer;"></i>
+    <div class="hero">
+        <div class="search">
+
+            <div class="">
+                <div class="d-flex justify-content-between">
+                    @if (Auth::check())
+                    <div class="mb-8 align-items-center">
+                        <button class="btn btn-outline-primary btn-sm">Wallet R{{ Auth::user()->balance }}</button>
+                    </div>
+                    @endif
+                    &nbsp; &nbsp;&nbsp;
+                    <div class="mb-8 align-items-center text-center"> <!-- Center space -->
+                        <i class="icon-search" id="searchIcon" style="cursor: pointer;"></i>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    @if (Auth::check())
+                    <div class="mb-8 align-items-center">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ url('/admin/music/create') }}"> <i class="icon-cloud-upload"></i>Upload</a>
+                    </div>
+                    @endif
+                </div>
             </div>
-        
             <!-- Modal for displaying search results -->
             <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Adjust the size as needed -->
                     <div class="modal-content">
                         <div class="modal-header">
-                 
+
                             <input  class="form-control" type="text" id="search" placeholder="Type to search" autocomplete="off">
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                         </div>

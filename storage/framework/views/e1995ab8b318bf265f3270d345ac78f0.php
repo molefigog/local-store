@@ -1,4 +1,11 @@
-<div class="owl-carousel owl-theme">
+    <?php
+           $genres = App\Models\Genre::withCount('music')
+            ->latest()
+            ->paginate(10) // You might want to adjust the pagination as needed
+            ->withQueryString();
+    ?>
+
+    <div class="owl-carousel owl-theme">
         <?php $__currentLoopData = $genres; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $genre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="item">
             <img style="height: 300px; width:300px;" src="<?php echo e(asset("storage/$genre->image")); ?>"
@@ -14,4 +21,5 @@
             </div>
         </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/slider.blade.php ENDPATH**/ ?>
+    </div>
+<?php /**PATH /home/gw-ent.co.za/public_html/resources/views/slider.blade.php ENDPATH**/ ?>

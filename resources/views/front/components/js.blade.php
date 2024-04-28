@@ -148,6 +148,7 @@
     }
 </script>
 @stack('mpesa')
+
   <script>
     function showStoreNotice() {
       // Check if 12 hours have passed since the last close

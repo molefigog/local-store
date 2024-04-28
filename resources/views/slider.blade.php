@@ -1,4 +1,11 @@
-<div class="owl-carousel owl-theme">
+    @php
+           $genres = App\Models\Genre::withCount('music')
+            ->latest()
+            ->paginate(10) // You might want to adjust the pagination as needed
+            ->withQueryString();
+    @endphp
+
+    <div class="owl-carousel owl-theme">
         @foreach ($genres as $genre)
         <div class="item">
             <img style="height: 300px; width:300px;" src="{{ asset("storage/$genre->image") }}"

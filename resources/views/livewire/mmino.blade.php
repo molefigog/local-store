@@ -1,70 +1,136 @@
-<?php $__env->startSection('content'); ?>
+<div>
 
-<?php
-$__split = function ($name, $params = []) {
-    return [$name, $params];
-};
-[$__name, $__params] = $__split('music');
+    <div id="music-list" class="articles">
+        @forelse($allMusic as $music)
+            <div wire:key="{{ $music->id }}" class="article-card">
+                <div class="cover">
+                    <img src="{{ asset("storage/$music->image") }}" alt="Article 1 Cover Image">
+                    @if ($music->amount == 0)
+                        <div class="overlay">
+                            <a href="#" class="play-button track-list"
+                                data-track="{{ asset("storage/$music->file") }}"
+                                data-poster="{{ asset("storage/$music->image") }}"
+                                data-title="{{ $music->title ?? '-' }}" data-singer="{{ $music->artist ?? '-' }}">
+                                <i class="icon-play"></i>
+                            </a>
+                        </div>
+                    @else
 
-$__html = app('livewire')->mount($__name, $__params, 'lw-1502944268-0', $__slots ?? [], get_defined_vars());
+                        <div class="overlay">
+                            <div class="play-button track-list"
+                                role="button"
+                                tabindex="0"
+                                data-track="{{ asset('storage/demos/'.$music->demo) }}"
+                                data-poster="{{ asset('storage/'.$music->image) }}"
+                                data-title="{{ $music->title ?? '-' }}"
+                                data-singer="{{ $music->artist ?? '-' }}"
+                                onclick="playTrack(this);">
+                                <i class="icon-play"></i>
+                            </div>
+                        </div>
+                    @endif
+                </div>
 
-echo $__html;
+                <div class="details">
+                    <h6 class="artist" id="artistName">{{ $music->artist ?? '-' }}</h6>
 
-unset($__html);
-unset($__name);
-unset($__params);
-unset($__split);
-if (isset($__slots)) unset($__slots);
-?>
+                    <p class="card-text" id="product1Description">
+                        {{ $music->title ?? '-' }}
+                    </p>
 
-<?php $__env->stopSection(); ?>
+                    @if ($music->amount == 0)
+                        <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
+                            style="margin-right: 4px;" class="btn buy-button">Download</a>
+                    @else
+                        <a href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"
+                            style="margin-right: 4px;" class="btn buy-button">Buy R{{ $music->amount }}</a>
+                    @endif
+                    <button style="font-size: 9px; margin-right: 4px;"
+                        class="btn btn-transparent btn-sm"
+                        wire:click="incrementLikes({{ $music->id }})">
+                        <span style="color: #007bff;">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ $music->likes }}</span>
+                    </button>
 
-<?php $__env->startSection('head'); ?>
-<title><?php echo e($metaTags['title']); ?></title>
-<meta name="description" content="<?php echo e($metaTags['description']); ?>">
-<meta property="og:title" content="<?php echo e($metaTags['title']); ?>">
-<meta property="og:image" content="<?php echo e($metaTags['image']); ?>">
-<meta property="og:description" content="<?php echo e($metaTags['description']); ?>">
-<meta property="og:url" content="<?php echo e($metaTags['url']); ?>" />
-<meta name="keywords" content="<?php echo e($metaTags['keywords']); ?>">
+                    <a style="font-size: 9px; " class="btn btn-transparent btn-sm texts"
+                        href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                            class="icon-eye"></span> {{ $music->views }}</a>
+                </div>
+                <?php
+                $baseUrl = config('app.url');
+                $url = "{$baseUrl}/msingle/{$music->slug}";
+                $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
+                    ->facebook()
+                    ->twitter()
+                    ->whatsapp();
+                ?>
+
+                <div class="songs-button"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"><i class="icon-ellipsis-v"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+
+                            <a class="dropdown-item"
+                                href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                                    class="icon-eye"></span> Views {{ $music->views }}</a>
+                            <a class="dropdown-item"
+                                href="{{ route('msingle.slug', ['slug' => urlencode($music->slug)]) }}"><span
+                                    class="icon-download"></span>
+                                Downloads {{ $music->downloads }}
+                            </a>
+
+                            <button class="dropdown-item" wire:click="incrementLikes({{ $music->id }})">
+                                <span class="icon-heart"></span> React {{ $music->likes }}
+                            </button>
+                            <div class="dropdown-divider"></div>
+
+                            {!! $shareButtons !!}
+                        </li>
+                    </ul>
+                </div>
+                <div class="details-left">
+
+                    <p class="texts"><i class="icon-download"></i>&nbsp;{{ $music->downloads }}</p>
+                    <p class="texts"><i class="icon-clock-o"></i>&nbsp;{{ $music->duration }}</p>
+                </div>
+            </div>
+        @empty
+
+            @lang('no_items_found')
+        @endforelse
+
+    </div>
+    <div class="pagination">{{ $allMusic->links() }}</div>
+
+    @php
+        $setting = App\Models\Setting::firstOrFail();
+        $appName = config('app.name');
+        $url = config('app.url');
+
+        $title = $setting ? $setting->site : $appName;
+        $image = asset("storage/$setting->image");
+        $keywords = "GW ENT, genius Works ent, KS, K Fire, K-Fire, Elliotgog, GOG";
+@endphp
+@section('head')
+<title>{{ $title}}</title>
+<meta name="description" content="{{ $setting->description }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:image" content="{{  $image}}">
+<meta property="og:description" content="{{ $setting->description }}">
+<meta property="og:url" content="{{ $url }}" />
+<meta name="keywords" content="{{$keywords }}">
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="<?php echo e($metaTags['title']); ?>" />
-<meta name="twitter:description" content="<?php echo e($metaTags['description']); ?>" />
-<meta name="twitter:image" content="<?php echo e($metaTags['image']); ?>" />
+<meta name="twitter:title" content="{{ $title}}" />
+<meta name="twitter:description" content="{{ $setting->description}}" />
+<meta name="twitter:image" content="{{ $image}}" />
 <meta property="fb:app_id" content="337031642040584" />
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startPush('ghead'); ?>
-<!-- Google Tag Manager -->
-<script>
-    (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-MT3JSPQW');
-</script>
-<!-- End Google Tag Manager -->
-<?php $__env->stopPush(); ?>
 
-<?php $__env->startPush('gbody'); ?>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT3JSPQW" height="0" width="0"
-        style="display:none;visibility:hidden">
-    </iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<?php $__env->stopPush(); ?>
 
-<?php $__env->startPush('player'); ?>
-<script src="<?php echo e(asset('frontend/js/mediaelement-and-player.js')); ?>"></script>
+
+@push('player')
+<script src="{{ asset('frontend/js/mediaelement-and-player.js') }}"></script>
 
 <script>
     var trackPlaying = '',
@@ -183,7 +249,7 @@ if (isset($__slots)) unset($__slots);
                     return;
                 }
                 $.ajax({
-                    url: '<?php echo e(route('liveSearch')); ?>',
+                    url: '{{ route('liveSearch') }}',
                     method: 'GET',
                     data: {
                         query: query
@@ -216,19 +282,20 @@ if (isset($__slots)) unset($__slots);
         });
 </script>
 
-<?php $__env->stopPush(); ?>
+@endpush
 
-<?php $__env->startPush('aplayer'); ?>
-<link rel="stylesheet" href="<?php echo e(asset('frontend/css/mediaelementplayer.css')); ?>">
-<?php $__env->stopPush(); ?>
+@push('aplayer')
+<link rel="stylesheet" href="{{ asset('frontend/css/mediaelementplayer.css') }}">
+@endpush
 <br>
-<?php $__env->startSection('audio'); ?>
+@section('audio')
 <div class="toggle--player">
 <audio id="audio-player" preload="none" class="mejs__player" controls
     data-mejsoptions='{"defaultAudioHeight": "50", "alwaysShowControls": "true"}' style="max-width:100%;">
     <source src="" type="audio/mp3">
 </audio>
 </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php echo $__env->make('welcome', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/gw-ent.co.za/public_html/resources/views/music.blade.php ENDPATH**/ ?>
+</div>
+

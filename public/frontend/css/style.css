@@ -8,7 +8,7 @@ body {
   position: relative;
 
 }
-
+/*
 body:before {
   content: "";
   position: absolute;
@@ -23,7 +23,7 @@ body:before {
   opacity: 0;
   visibility: hidden;
   z-index: 1;
-}
+} */
 
 body.offcanvas-menu:before {
   opacity: 1;
@@ -62,12 +62,13 @@ a:hover {
 }
 
 .search {
-  padding: 74px 0px;
-  width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Use this if you want to align vertically too */
+    padding: 60px 0px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 .artist {
