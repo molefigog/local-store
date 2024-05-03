@@ -41,10 +41,10 @@ class SettingResource extends Resource
                FileUpload::make('favicon')->preserveFilenames()->maxSize(512)->disk('public')->directory('images'),
                TinyEditor::make('description')->columnSpanFull(),
 
-               
+
                 FileUpload::make('image')->preserveFilenames()->maxSize(512)->disk('public')->directory('images')->columnSpanFull(),
             ])->Columns(2),
-             
+
             ]);
     }
 
@@ -56,18 +56,18 @@ class SettingResource extends Resource
                  ImageColumn::make('favicon')->size(30),
                   ImageColumn::make('image')->size(30),
                 TextColumn::make('site'),
-                
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->visible(auth()->user()->role == 1 ? true : false),
+                Tables\Actions\DeleteAction::make()->visible(auth()->user()->role == 1 ? true : false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->visible(auth()->user()->role == 1 ? true : false),
                 ]),
             ]);
     }

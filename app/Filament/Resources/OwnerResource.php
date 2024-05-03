@@ -24,7 +24,7 @@ class OwnerResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-identification';
      protected static ?string $modelLabel = 'Admin Contact';
     protected static ?string $navigationGroup = 'General Settings';
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -35,9 +35,9 @@ class OwnerResource extends Resource
                 TextInput::make('whatsapp')->tel()->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
                 TextInput::make('facebook')->url(),
                 TextInput::make('address'),
-              
+
             ])->Columns(2),
-             
+
             ]);
     }
 
@@ -54,11 +54,11 @@ class OwnerResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->visible(auth()->user()->role == 1 ? true : false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->visible(auth()->user()->role == 1 ? true : false),
                 ]),
             ]);
     }

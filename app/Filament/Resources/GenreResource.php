@@ -23,7 +23,7 @@ class GenreResource extends Resource
     protected static ?string $model = Genre::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-folder-minus';
-   
+
     protected static ?string $navigationGroup = 'Products';
     public static function form(Form $form): Form
     {
@@ -31,14 +31,14 @@ class GenreResource extends Resource
             ->schema([
                 Card::make()
                 ->schema([
-                  
+
                 TextInput::make('title'),
-                  
+
                 FileUpload::make('image')->preserveFilenames()->maxSize(512)->disk('public')
     ->directory('images'),
-                   
+
              ])->Columns(2),
-             
+
             ]);
     }
 
@@ -53,11 +53,11 @@ class GenreResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->visible(auth()->user()->role == 1 ? true : false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->visible(auth()->user()->role == 1 ? true : false),
                 ]),
             ]);
     }
@@ -77,7 +77,7 @@ class GenreResource extends Resource
             'edit' => Pages\EditGenre::route('/{record}/edit'),
         ];
     }
-    
+
     public static function getNavigationBadge(): ?string
 {
     return static::getModel()::count();

@@ -44,9 +44,19 @@
 
         // Change icon based on mode
         const iconMode = document.getElementById('iconMode');
-        iconMode.className = isDarkMode ? 'icon-brightness_2' : 'icon-brightness_high';
+        iconMode.className = isDarkMode ? 'icon-brightness_high' : 'icon-brightness_2';
     }
 
+    function toggleMode2() {
+    let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+
+    isDarkMode = !isDarkMode;
+    localStorage.setItem('isDarkMode', isDarkMode);
+    applyTheme(isDarkMode);
+
+    const iconMode = document.getElementById('icon');
+    iconMode.className = isDarkMode ? 'icon-brightness_high' : 'icon-brightness_2';
+}
     // Apply theme on page load
     let savedTheme = localStorage.getItem('isDarkMode') === 'true';
     applyTheme(savedTheme);

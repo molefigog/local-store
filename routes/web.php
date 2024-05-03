@@ -14,11 +14,7 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Http\Request;
-use App\Models\Beat;
-use App\Models\Music;
-use App\Models\Product;
-use App\Models\Setting;
-use App\Models\Genre;
+
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopUpController;
@@ -47,7 +43,7 @@ Route::get('/cancel', function () {
 // });
 
 
-Route::get('/', Mmino::class);
+Route::get('/', Mmino::class)->name('gee');
 Route::get('/mpesa/success', [MpesaController::class, 'showSuccessPage'])->name('mpesa.success');
 
 Route::get('mpesa/error', [MpesaController::class, 'showErrorPage'])->name('mpesa.error');

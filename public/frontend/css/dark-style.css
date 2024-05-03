@@ -83,16 +83,16 @@ a:hover {
   padding: 25px 0;
 }
 .hero {
-  background-image: url(../images/wave-banner.jpg), linear-gradient(#348CD2, #FFFFFF);
-  background-repeat: no-repeat;
-  /* background-size: 108% 76%; */
-  background-position: top;
-  padding-top: 30px;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-}
+    background-image: url(../images/gradient.jpg), linear-gradient(#348CD2, #FFFFFF);
+    background-repeat: no-repeat;
+    background-size: 108% 76%;
+    background-position: top;
+    padding-top: 30px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
 
 .artist {
     font-size: 12px;

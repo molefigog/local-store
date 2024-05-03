@@ -230,7 +230,7 @@ a:hover {
   padding: 25px 0;
 }
 .hero {
-  background-image: url(../images/templatemo-wave-banner.jpg), linear-gradient(#348CD2, #FFFFFF);
+  background-image: url(../images/gradient.jpg), linear-gradient(#348CD2, #FFFFFF);
   background-repeat: no-repeat;
   background-size: 108% 76%;
   background-position: top;

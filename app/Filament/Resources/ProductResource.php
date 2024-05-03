@@ -48,14 +48,14 @@ class ProductResource extends Resource
                     TextInput::make('name')->live()
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                     TextInput::make('slug')->readonly(),
-                    
+
                 Select::make('category_name')
                     ->label('Category')
                     ->options(Category::all()->pluck('title', 'id'))
                     ->searchable(),
                 TinyEditor::make('detail')->columnSpanFull(),
              ])->Columns(2),
-             
+
             ]);
     }
 
@@ -72,11 +72,11 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->visible(auth()->user()->role == 1 ? true : false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->visible(auth()->user()->role == 1 ? true : false),
                 ]),
             ]);
     }
