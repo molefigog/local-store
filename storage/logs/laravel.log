@@ -1,4 +1,5 @@
 
+
 [2024-04-27 08:02:20] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"10","mobileNumber":"59093792","merchantname":"GW ENT","client_reference":"86 Kea Trya Kea Trya"}}
 [2024-04-27 08:02:54] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP339006"}
 [2024-04-27 08:03:00] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08A5PX9WV9V4","reference":"TQuerRefMP191693"}
@@ -192,7 +193,7 @@
 #65 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #66 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #67 {main}
-"} 
+"}
 [2024-04-28 02:02:22] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$Ml61roixI9xDAOyh0FhjLOmFq8im.1b3Xgyr9zMiS8LoGvHqYgkNO, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) {"exception":"[object] (Illuminate\\Database\\UniqueConstraintViolationException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$Ml61roixI9xDAOyh0FhjLOmFq8im.1b3Xgyr9zMiS8LoGvHqYgkNO, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:824)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\\Database\\Connection->runQueryCallback()
@@ -332,7 +333,7 @@
 #65 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #66 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #67 {main}
-"} 
+"}
 [2024-04-28 02:02:22] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$EwU6oS.04YEA1SNBdz8WZ.H2A8QwTTUgx5iL8gKfcy1JKh.mVtotC, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) {"exception":"[object] (Illuminate\\Database\\UniqueConstraintViolationException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$EwU6oS.04YEA1SNBdz8WZ.H2A8QwTTUgx5iL8gKfcy1JKh.mVtotC, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:824)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\\Database\\Connection->runQueryCallback()
@@ -472,7 +473,7 @@
 #65 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #66 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #67 {main}
-"} 
+"}
 [2024-04-28 02:02:22] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$M7EHHgUQ9rZSw2jpElIC3.Tlaw6RA/5I/44EogoEoh1qPPt3uXN.K, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) {"exception":"[object] (Illuminate\\Database\\UniqueConstraintViolationException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$M7EHHgUQ9rZSw2jpElIC3.Tlaw6RA/5I/44EogoEoh1qPPt3uXN.K, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:824)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\\Database\\Connection->runQueryCallback()
@@ -612,7 +613,7 @@
 #65 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #66 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #67 {main}
-"} 
+"}
 [2024-04-28 02:02:22] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$zLugjLLpBX9CyIEEMLSaZOh6hin3uXHaBuKnAO5VkKr.kswWlrama, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) {"exception":"[object] (Illuminate\\Database\\UniqueConstraintViolationException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'paddymylan440@gmail.com' for key 'users_email_unique' (Connection: mysql, SQL: insert into `users` (`avatar`, `name`, `email`, `mobile_number`, `password`, `balance`, `updated_at`, `created_at`) values (default_avatar.png, Paddy, paddymylan440@gmail.com, 66885488, $2y$10$zLugjLLpBX9CyIEEMLSaZOh6hin3uXHaBuKnAO5VkKr.kswWlrama, 0, 2024-04-28 02:02:22, 2024-04-28 02:02:22)) at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php:824)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php(783): Illuminate\\Database\\Connection->runQueryCallback()
@@ -752,7 +753,7 @@
 #65 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #66 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #67 {main}
-"} 
+"}
 [2024-04-28 02:02:32] local.ERROR: Route [gee] not defined. {"userId":99,"exception":"[object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [gee] not defined. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:477)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/Redirector.php(154): Illuminate\\Routing\\UrlGenerator->route()
@@ -807,15 +808,15 @@
 #49 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2024-04-28 02:09:50] local.INFO: Login method called  
-[2024-04-28 02:33:03] local.INFO: Login method called  
-[2024-04-28 02:41:51] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"1","mobileNumber":"59073443","merchantname":"GW ENT","client_reference":"7 Ke ya Jana"}}  
-[2024-04-28 02:42:12] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP54489"}  
-[2024-04-28 02:42:17] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"012PVX9FQOU6","reference":"TQuerRefMP609462"}  
-[2024-04-28 02:42:18] local.INFO: User balance updated successfully for User ID: 1  
-[2024-04-28 02:42:18] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW8352 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26659073443"}]}  
-[2024-04-28 02:42:18] local.INFO: SMS sent successfully  
+"}
+[2024-04-28 02:09:50] local.INFO: Login method called
+[2024-04-28 02:33:03] local.INFO: Login method called
+[2024-04-28 02:41:51] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"1","mobileNumber":"59073443","merchantname":"GW ENT","client_reference":"7 Ke ya Jana"}}
+[2024-04-28 02:42:12] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP54489"}
+[2024-04-28 02:42:17] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"012PVX9FQOU6","reference":"TQuerRefMP609462"}
+[2024-04-28 02:42:18] local.INFO: User balance updated successfully for User ID: 1
+[2024-04-28 02:42:18] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW8352 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26659073443"}]}
+[2024-04-28 02:42:18] local.INFO: SMS sent successfully
 [2024-04-28 08:34:14] local.ERROR: Route [gee] not defined. {"userId":104,"exception":"[object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [gee] not defined. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:477)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/Redirector.php(154): Illuminate\\Routing\\UrlGenerator->route()
@@ -870,7 +871,7 @@
 #49 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
+"}
 [2024-04-28 08:38:52] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -923,7 +924,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-04-28 16:41:40] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -976,7 +977,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-04-28 16:53:28] local.ERROR: Route [gee] not defined. {"userId":105,"exception":"[object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [gee] not defined. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:477)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/Redirector.php(154): Illuminate\\Routing\\UrlGenerator->route()
@@ -1031,8 +1032,8 @@
 #49 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2024-04-28 23:52:07] local.ERROR: Invalid OTP: Tekezele  
+"}
+[2024-04-28 23:52:07] local.ERROR: Invalid OTP: Tekezele
 [2024-04-29 02:38:00] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -1085,8 +1086,8 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
-[2024-04-29 07:55:25] local.INFO: Login method called  
+"}
+[2024-04-29 07:55:25] local.INFO: Login method called
 [2024-04-29 11:25:43] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -1139,8 +1140,8 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
-[2024-04-29 11:37:11] local.ERROR: Invalid OTP: Mosebetsi  
+"}
+[2024-04-29 11:37:11] local.ERROR: Invalid OTP: Mosebetsi
 [2024-04-29 11:47:35] local.ERROR: Route [gee] not defined. {"userId":106,"exception":"[object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [gee] not defined. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:477)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/Redirector.php(154): Illuminate\\Routing\\UrlGenerator->route()
@@ -1195,15 +1196,15 @@
 #49 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2024-04-29 12:00:45] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"100","mobileNumber":"56289240","merchantname":"GW ENT","client_reference":"uploading Fee"}}  
-[2024-04-29 12:00:59] local.INFO: Payment API Response: {"status_code":400,"message":" This error is caused by invalid mobile number or missing field inputs or invalid amount used or invalid shortcode"}  
-[2024-04-29 12:00:59] local.ERROR: Guzzle Request Error: Undefined array key "reference"  
-[2024-04-29 12:31:45] local.ERROR: Invalid OTP: Ks  
-[2024-04-29 13:44:06] local.INFO: Login method called  
-[2024-04-29 16:54:53] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"12","mobileNumber":"57652351","merchantname":"GW ENT","client_reference":"83 Keai Tshepa"}}  
-[2024-04-29 16:55:21] local.INFO: Payment API Response: {"status_code":422,"message":"Insufficient Balance"}  
-[2024-04-29 16:55:21] local.ERROR: Guzzle Request Error: Undefined array key "reference"  
+"}
+[2024-04-29 12:00:45] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"100","mobileNumber":"56289240","merchantname":"GW ENT","client_reference":"uploading Fee"}}
+[2024-04-29 12:00:59] local.INFO: Payment API Response: {"status_code":400,"message":" This error is caused by invalid mobile number or missing field inputs or invalid amount used or invalid shortcode"}
+[2024-04-29 12:00:59] local.ERROR: Guzzle Request Error: Undefined array key "reference"
+[2024-04-29 12:31:45] local.ERROR: Invalid OTP: Ks
+[2024-04-29 13:44:06] local.INFO: Login method called
+[2024-04-29 16:54:53] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"12","mobileNumber":"57652351","merchantname":"GW ENT","client_reference":"83 Keai Tshepa"}}
+[2024-04-29 16:55:21] local.INFO: Payment API Response: {"status_code":422,"message":"Insufficient Balance"}
+[2024-04-29 16:55:21] local.ERROR: Guzzle Request Error: Undefined array key "reference"
 [2024-04-29 18:25:13] local.ERROR: Route [gee] not defined. {"userId":107,"exception":"[object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [gee] not defined. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:477)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/Redirector.php(154): Illuminate\\Routing\\UrlGenerator->route()
@@ -1258,52 +1259,52 @@
 #49 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2024-04-29 18:35:27] local.INFO: Login method called  
-[2024-04-29 20:28:58] local.INFO: Login method called  
-[2024-04-30 07:22:51] local.ERROR: Invalid OTP: Tekezele  
-[2024-04-30 18:10:23] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"12","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"75 IQM ENTERTAINMENT"}}  
-[2024-04-30 18:10:51] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP215083"}  
-[2024-04-30 18:10:56] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY70Y","reference":"TQuerRefMP795844"}  
-[2024-04-30 18:10:56] local.INFO: User balance updated successfully for User ID: 77  
-[2024-04-30 18:10:56] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW1763 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}  
-[2024-04-30 18:10:57] local.INFO: SMS sent successfully  
-[2024-04-30 18:12:25] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"12","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"74 Alfa and Omega instrumental"}}  
-[2024-04-30 18:12:48] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP221056"}  
-[2024-04-30 18:12:55] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8BV","reference":"TQuerRefMP689341"}  
-[2024-04-30 18:12:55] local.INFO: User balance updated successfully for User ID: 77  
-[2024-04-30 18:12:55] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW5574 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}  
-[2024-04-30 18:12:56] local.INFO: SMS sent successfully  
-[2024-04-30 18:13:26] local.INFO: Login method called  
-[2024-04-30 18:14:18] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"5","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"73 Mahamba Etwa"}}  
-[2024-04-30 18:14:39] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP735653"}  
-[2024-04-30 18:14:45] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8ON","reference":"TQuerRefMP18738"}  
-[2024-04-30 18:14:45] local.INFO: User balance updated successfully for User ID: 77  
-[2024-04-30 18:14:45] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW9679 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}  
-[2024-04-30 18:14:45] local.INFO: SMS sent successfully  
-[2024-04-30 18:14:56] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"8","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"72 Areeng ho mmagrasia"}}  
-[2024-04-30 18:15:16] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP676430"}  
-[2024-04-30 18:15:21] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY71U","reference":"TQuerRefMP570070"}  
-[2024-04-30 18:15:21] local.INFO: User balance updated successfully for User ID: 77  
-[2024-04-30 18:15:21] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW3606 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}  
-[2024-04-30 18:15:21] local.INFO: SMS sent successfully  
-[2024-04-30 18:16:52] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"5","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"71 Kea morara Jesu"}}  
-[2024-04-30 18:17:17] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP857407"}  
-[2024-04-30 18:17:23] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8CP","reference":"TQuerRefMP775408"}  
-[2024-04-30 18:17:23] local.INFO: User balance updated successfully for User ID: 77  
-[2024-04-30 18:17:23] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW9561 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}  
-[2024-04-30 18:17:23] local.INFO: SMS sent successfully  
-[2024-04-30 18:20:06] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"8","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"70 Tsoha Jonase"}}  
-[2024-04-30 18:20:27] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP702006"}  
-[2024-04-30 18:20:31] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8Q7","reference":"TQuerRefMP456767"}  
-[2024-04-30 18:20:31] local.INFO: User balance updated successfully for User ID: 77  
-[2024-04-30 18:20:31] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW4354 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}  
-[2024-04-30 18:20:31] local.INFO: SMS sent successfully  
-[2024-04-30 18:39:40] local.INFO: Login method called  
-[2024-04-30 19:01:17] local.INFO: Login method called  
-[2024-04-30 19:04:08] local.INFO: Login method called  
-[2024-04-30 19:06:37] local.INFO: Login method called  
-[2024-04-30 19:16:18] local.INFO: Login method called  
+"}
+[2024-04-29 18:35:27] local.INFO: Login method called
+[2024-04-29 20:28:58] local.INFO: Login method called
+[2024-04-30 07:22:51] local.ERROR: Invalid OTP: Tekezele
+[2024-04-30 18:10:23] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"12","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"75 IQM ENTERTAINMENT"}}
+[2024-04-30 18:10:51] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP215083"}
+[2024-04-30 18:10:56] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY70Y","reference":"TQuerRefMP795844"}
+[2024-04-30 18:10:56] local.INFO: User balance updated successfully for User ID: 77
+[2024-04-30 18:10:56] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW1763 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}
+[2024-04-30 18:10:57] local.INFO: SMS sent successfully
+[2024-04-30 18:12:25] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"12","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"74 Alfa and Omega instrumental"}}
+[2024-04-30 18:12:48] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP221056"}
+[2024-04-30 18:12:55] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8BV","reference":"TQuerRefMP689341"}
+[2024-04-30 18:12:55] local.INFO: User balance updated successfully for User ID: 77
+[2024-04-30 18:12:55] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW5574 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}
+[2024-04-30 18:12:56] local.INFO: SMS sent successfully
+[2024-04-30 18:13:26] local.INFO: Login method called
+[2024-04-30 18:14:18] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"5","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"73 Mahamba Etwa"}}
+[2024-04-30 18:14:39] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP735653"}
+[2024-04-30 18:14:45] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8ON","reference":"TQuerRefMP18738"}
+[2024-04-30 18:14:45] local.INFO: User balance updated successfully for User ID: 77
+[2024-04-30 18:14:45] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW9679 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}
+[2024-04-30 18:14:45] local.INFO: SMS sent successfully
+[2024-04-30 18:14:56] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"8","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"72 Areeng ho mmagrasia"}}
+[2024-04-30 18:15:16] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP676430"}
+[2024-04-30 18:15:21] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY71U","reference":"TQuerRefMP570070"}
+[2024-04-30 18:15:21] local.INFO: User balance updated successfully for User ID: 77
+[2024-04-30 18:15:21] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW3606 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}
+[2024-04-30 18:15:21] local.INFO: SMS sent successfully
+[2024-04-30 18:16:52] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"5","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"71 Kea morara Jesu"}}
+[2024-04-30 18:17:17] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP857407"}
+[2024-04-30 18:17:23] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8CP","reference":"TQuerRefMP775408"}
+[2024-04-30 18:17:23] local.INFO: User balance updated successfully for User ID: 77
+[2024-04-30 18:17:23] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW9561 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}
+[2024-04-30 18:17:23] local.INFO: SMS sent successfully
+[2024-04-30 18:20:06] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"8","mobileNumber":"57660459","merchantname":"GW ENT","client_reference":"70 Tsoha Jonase"}}
+[2024-04-30 18:20:27] local.INFO: Payment API Response: {"status_code":"INS-0","message":"Request processed successfully","reference":"PayRefMP702006"}
+[2024-04-30 18:20:31] local.INFO: Confirmation API Response: {"status_code":"INS-0","message":"Request processed successfully","transaction_id":"08FQTTPUY8Q7","reference":"TQuerRefMP456767"}
+[2024-04-30 18:20:31] local.INFO: User balance updated successfully for User ID: 77
+[2024-04-30 18:20:31] local.INFO: SMS Sending Data: {"messages":[{"content":"Enter this GW4354 on https:\/\/www.gw-ent.co.za\/getdownloads if download did not start","destination":"+26657660459"}]}
+[2024-04-30 18:20:31] local.INFO: SMS sent successfully
+[2024-04-30 18:39:40] local.INFO: Login method called
+[2024-04-30 19:01:17] local.INFO: Login method called
+[2024-04-30 19:04:08] local.INFO: Login method called
+[2024-04-30 19:06:37] local.INFO: Login method called
+[2024-04-30 19:16:18] local.INFO: Login method called
 [2024-04-30 19:36:49] local.ERROR: Method Filament\Tables\Filters\Filter::where does not exist. {"userId":1,"exception":"[object] (BadMethodCallException(code: 0): Method Filament\\Tables\\Filters\\Filter::where does not exist. at /home/gw-ent.co.za/public_html/vendor/filament/support/src/Concerns/Macroable.php:72)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/app/Filament/Resources/UserResource.php(69): Filament\\Support\\Components\\Component->__call()
@@ -1387,7 +1388,7 @@
 #78 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #79 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #80 {main}
-"} 
+"}
 [2024-04-30 19:43:25] local.ERROR: An attempt was made to evaluate a closure for [Filament\Tables\Filters\Filter], but [$value] was unresolvable. {"view":{"view":"/home/gw-ent.co.za/public_html/vendor/filament/tables/resources/views/index.blade.php","data":[]},"userId":1,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): An attempt was made to evaluate a closure for [Filament\\Tables\\Filters\\Filter], but [$value] was unresolvable. at /home/gw-ent.co.za/public_html/vendor/filament/support/src/Concerns/EvaluatesClosures.php:98)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/filament/support/src/Concerns/EvaluatesClosures.php(32): Filament\\Support\\Components\\Component->resolveClosureDependencyForEvaluation()
@@ -1577,7 +1578,7 @@
 #89 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #90 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #91 {main}
-"} 
+"}
 [2024-05-01 15:23:02] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -1630,7 +1631,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-05-02 01:06:30] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -1683,7 +1684,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-05-02 03:16:45] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1692,7 +1693,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:16:56] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1701,7 +1702,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:25:55] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1710,7 +1711,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:06] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1719,7 +1720,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1728,7 +1729,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1737,7 +1738,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1746,7 +1747,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1755,7 +1756,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1764,7 +1765,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1773,7 +1774,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1782,7 +1783,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1791,7 +1792,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1800,7 +1801,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:26:09] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1809,7 +1810,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1818,7 +1819,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1827,7 +1828,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1836,7 +1837,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1845,7 +1846,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1854,7 +1855,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1863,7 +1864,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1872,7 +1873,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1881,7 +1882,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1890,7 +1891,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1899,7 +1900,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1908,7 +1909,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:39:59] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1917,7 +1918,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:43:20] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1926,7 +1927,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:46:32] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1935,7 +1936,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:48:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1944,7 +1945,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:48:07] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1953,7 +1954,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:48:09] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1962,7 +1963,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:48:09] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1971,11 +1972,11 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 03:48:11] local.ERROR: Cannot declare class App\Models\MailSetting, because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot declare class App\\Models\\MailSetting, because the name is already in use at /home/gw-ent.co.za/public_html/app/Models/MailSettings.php:4)
 [stacktrace]
 #0 {main}
-"} 
+"}
 [2024-05-02 03:55:28] local.ERROR: There are no commands defined in the "ide-helper" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"ide-helper\" namespace. at /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php:669)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
@@ -1984,7 +1985,7 @@
 #3 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #4 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #5 {main}
-"} 
+"}
 [2024-05-02 04:03:48] local.ERROR: Unable to prepare route [login] for serialization. Another route has already been assigned name [login]. {"exception":"[object] (LogicException(code: 0): Unable to prepare route [login] for serialization. Another route has already been assigned name [login]. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php:247)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php(208): Illuminate\\Routing\\AbstractRouteCollection->addToSymfonyRoutesCollection()
@@ -2023,7 +2024,7 @@
 #33 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
 #34 /home/gw-ent.co.za/public_html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #35 {main}
-"} 
+"}
 [2024-05-02 04:08:14] local.ERROR: Target class [AuthController] does not exist. {"exception":"[object] (Illuminate\\Contracts\\Container\\BindingResolutionException(code: 0): Target class [AuthController] does not exist. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:914)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(795): Illuminate\\Container\\Container->build()
@@ -2116,7 +2117,7 @@
 #41 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #42 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #43 {main}
-"} 
+"}
 [2024-05-02 04:15:25] local.ERROR: include(/home/gw-ent.co.za/public_html/vendor/composer/../../app/Http/Middleware/TrustProxies.php): Failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/home/gw-ent.co.za/public_html/vendor/composer/../../app/Http/Middleware/TrustProxies.php): Failed to open stream: No such file or directory at /home/gw-ent.co.za/public_html/vendor/composer/ClassLoader.php:576)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2135,7 +2136,7 @@
 #13 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #14 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #15 {main}
-"} 
+"}
 [2024-05-02 04:15:25] local.ERROR: include(/home/gw-ent.co.za/public_html/vendor/composer/../../app/Http/Middleware/TrustProxies.php): Failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/home/gw-ent.co.za/public_html/vendor/composer/../../app/Http/Middleware/TrustProxies.php): Failed to open stream: No such file or directory at /home/gw-ent.co.za/public_html/vendor/composer/ClassLoader.php:576)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2152,7 +2153,7 @@
 #11 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(213): Illuminate\\Foundation\\Http\\Kernel->terminateMiddleware()
 #12 /home/gw-ent.co.za/public_html/public/index.php(55): Illuminate\\Foundation\\Http\\Kernel->terminate()
 #13 {main}
-"} 
+"}
 [2024-05-02 04:19:04] local.ERROR: Target class [AuthController] does not exist. {"exception":"[object] (Illuminate\\Contracts\\Container\\BindingResolutionException(code: 0): Target class [AuthController] does not exist. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:914)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(795): Illuminate\\Container\\Container->build()
@@ -2245,7 +2246,7 @@
 #41 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #42 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #43 {main}
-"} 
+"}
 [2024-05-02 04:19:56] local.ERROR: Target class [AuthController] does not exist. {"exception":"[object] (Illuminate\\Contracts\\Container\\BindingResolutionException(code: 0): Target class [AuthController] does not exist. at /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php:914)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Container/Container.php(795): Illuminate\\Container\\Container->build()
@@ -2338,7 +2339,7 @@
 #41 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #42 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #43 {main}
-"} 
+"}
 [2024-05-02 04:45:54] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2391,7 +2392,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-05-02 11:27:24] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2444,8 +2445,8 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
-[2024-05-02 11:48:24] local.INFO: Login method called  
+"}
+[2024-05-02 11:48:24] local.INFO: Login method called
 [2024-05-02 13:20:51] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2498,7 +2499,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-05-02 15:38:52] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2551,7 +2552,7 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2024-05-02 16:24:10] local.ERROR: compact(): Undefined variable $downloads {"exception":"[object] (ErrorException(code: 0): compact(): Undefined variable $downloads at /home/gw-ent.co.za/public_html/app/Http/Controllers/SiteController.php:81)
 [stacktrace]
 #0 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
@@ -2604,22 +2605,20 @@
 #47 /home/gw-ent.co.za/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 /home/gw-ent.co.za/public_html/public/index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
-[2024-05-02 18:09:22] local.INFO: Login method called  
-[2024-05-02 18:11:18] local.INFO: Login method called  
-[2024-05-02 20:05:22] local.INFO: Login method called  
-[2024-05-02 23:45:40] local.DEBUG: {"artist":"Ks","title":"Ke Eme Hantle","amount":"20","genre_id":"9","description":"ke futhumetse","image":"images\/01HWXMAAKEBSW7SFXKB4VKEFRJ.jpg","file":"Ke Eme Hantle - KS.mp3","slug":"ke-eme-hantle","updated_at":"2024-05-02T21:45:39.000000Z","created_at":"2024-05-02T21:45:39.000000Z","id":100}  
-[2024-05-03 11:23:22] local.INFO: Login method called  
-[2024-05-03 11:49:24] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"20","mobileNumber":"59093792","merchantname":"GW ENT","client_reference":"100 Ke Eme Hantle"}}  
-[2024-05-03 11:50:00] local.INFO: Payment API Response: {"status_code":422,"message":"Insufficient Balance"}  
-[2024-05-03 11:50:00] local.ERROR: Guzzle Request Error: Undefined array key "reference"  
+"}
+[2024-05-02 18:09:22] local.INFO: Login method called
+[2024-05-02 18:11:18] local.INFO: Login method called
+[2024-05-02 20:05:22] local.INFO: Login method called
+[2024-05-02 23:45:40] local.DEBUG: {"artist":"Ks","title":"Ke Eme Hantle","amount":"20","genre_id":"9","description":"ke futhumetse","image":"images\/01HWXMAAKEBSW7SFXKB4VKEFRJ.jpg","file":"Ke Eme Hantle - KS.mp3","slug":"ke-eme-hantle","updated_at":"2024-05-02T21:45:39.000000Z","created_at":"2024-05-02T21:45:39.000000Z","id":100}
+[2024-05-03 11:23:22] local.INFO: Login method called
+[2024-05-03 11:49:24] local.INFO: Payment API Request: {"url":"https:\/\/staging.paylesotho.co.ls\/api\/v1\/vcl\/payment","data":{"merchantid":"51909","amount":"20","mobileNumber":"59093792","merchantname":"GW ENT","client_reference":"100 Ke Eme Hantle"}}
+[2024-05-03 11:50:00] local.INFO: Payment API Response: {"status_code":422,"message":"Insufficient Balance"}
+[2024-05-03 11:50:00] local.ERROR: Guzzle Request Error: Undefined array key "reference"
 [2024-05-03 19:57:32] local.ERROR: Cannot use App\Http\Controllers\Api\MusicController as MusicController because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use App\\Http\\Controllers\\Api\\MusicController as MusicController because the name is already in use at /home/gw-ent.co.za/public_html/routes/api.php:15)
 [stacktrace]
 #0 {main}
-"} 
+"}
 [2024-05-03 19:57:32] local.ERROR: Cannot use App\Http\Controllers\Api\MusicController as MusicController because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use App\\Http\\Controllers\\Api\\MusicController as MusicController because the name is already in use at /home/gw-ent.co.za/public_html/routes/api.php:15)
 [stacktrace]
 #0 {main}
-"} 
-[2024-05-03 23:00:41] local.INFO: Login method called  
-[2024-05-03 23:01:03] local.INFO: Login method called  
+"}
