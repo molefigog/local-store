@@ -251,4 +251,14 @@
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
             </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/nanny-ft-nator</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/living-life-freestyle-remix</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
 </urlset>
