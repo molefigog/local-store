@@ -172,7 +172,8 @@ return [
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
         Owenoj\LaravelGetId3\GetId3ServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-       
+        App\Providers\TzServiceProvider::class,
+
     ])->toArray(),
 
     /*
@@ -189,7 +190,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class
-    
+
     ])->toArray(),
 
 ];

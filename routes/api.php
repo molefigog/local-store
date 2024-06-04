@@ -18,7 +18,46 @@ use App\Http\Controllers\Api\FileUploaderController;
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\Components_dataController;
-// use App\Http\Controllers\Api\
+use Openpesa\Pesa\Facades\Pesa;
+use App\Http\Controllers\TzController;
+use Illuminate\Support\Facades\Log;
+// Route::get('/charge', [TzController::class, 'charge']);
+Route::get('/generate-session-key', [TzController::class, 'generateSessionKey']);
+
+Route::get('/mpesa/c2b-payment', [TzController::class, 'initiateC2BPayment']);
+
+Route::get('/charge', function () {
+    Log::info("Charge route accessed.");
+
+    // Directly setting the keys and options
+    $options = [
+        'api_key' => "FzEf1L4Ee4RkRCYVQE1cjfhKAWN2OMbl",
+        'public_key' => "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEArv9yxA69XQKBo24BaF/D+fvlqmGdYjqLQ5WtNBb5tquqGvAvG3WMFETVUSow/LizQalxj2ElMVrUmzu5mGGkxK08bWEXF7a1DEvtVJs6nppIlFJc2SnrU14AOrIrB28ogm58JjAl5BOQawOXD5dfSk7MaAA82pVHoIqEu0FxA8BOKU+RGTihRU+ptw1j4bsAJYiPbSX6i71gfPvwHPYamM0bfI4CmlsUUR3KvCG24rB6FNPcRBhM3jDuv8ae2kC33w9hEq8qNB55uw51vK7hyXoAa+U7IqP1y6nBdlN25gkxEA8yrsl1678cspeXr+3ciRyqoRgj9RD/ONbJhhxFvt1cLBh+qwK2eqISfBb06eRnNeC71oBokDm3zyCnkOtMDGl7IvnMfZfEPFCfg5QgJVk1msPpRvQxmEsrX9MQRyFVzgy2CWNIb7c+jPapyrNwoUbANlN8adU1m6yOuoX7F49x+OjiG2se0EJ6nafeKUXw/+hiJZvELUYgzKUtMAZVTNZfT8jjb58j8GVtuS+6TM2AutbejaCV84ZK58E2CRJqhmjQibEUO6KPdD7oTlEkFy52Y1uOOBXgYpqMzufNPmfdqqqSM4dU70PO8ogyKGiLAIxCetMjjm6FCMEA3Kc8K0Ig7/XtFm9By6VxTJK1Mg36TlHaZKP6VzVLXMtesJECAwEAAQ==",
+        'service_provider_code' => '000000',
+        'country' => 'LES',
+        'currency' => 'LSL',
+        'persistent_session' => false,
+        'env' => 'sandbox'
+    ];
+
+    Log::info("Options for TzController: ", $options);
+
+    $tzController = new TzController($options);
+    $response = $tzController->c2b([
+        'input_Amount' => 5000, // Amount to be charged
+        'input_Country' => 'LES',
+        'input_Currency' => 'LSL',
+        'input_CustomerMSISDN' => '26659073443', // replace with your phone number
+        'input_ServiceProviderCode' => '000000', // replace with your service provider code given by M-Pesa
+        'input_ThirdPartyConversationID' => 'rasderekf', // unique
+        'input_TransactionReference' => rand(), // unique
+        'input_PurchasedItemsDesc' => 'Test Item'
+    ]);
+
+    Log::info("Charge response: " . print_r($response, true));
+
+    return response()->json($response);
+});
 
 Route::post('/patala', [CpayController::class, 'makePayment'])->name('patala');
 Route::post('/otp', [CpayController::class, 'confirmPayment'])->name('otp');
@@ -33,6 +72,8 @@ Route::get('/email-monthly-schedule', [OwnerController::class, 'monthlyEmail']);
 Route::post('/mpesu', [MpesaController::class, 'mpesaTransaction'])->name('mpesu');
 Route::post('/login', [AuthController::class, 'login'])->name('api.login');
 
+Route::post('/mpesa/payment', [AndroidApiController::class, 'makePayment']);
+
 Route::middleware('auth:sanctum')
     ->get('/user', function (Request $request) {
         return $request->user();
@@ -40,6 +81,8 @@ Route::middleware('auth:sanctum')
     ->name('api.user');
 
 // Route::post('/v1/mpesa', [WebhookController::class, 'store']);
+Route::post('/v1/{useremail}', [AndroidApiController::class, 'store']);
+
 Route::post('/v1/{useremail}', [AndroidApiController::class, 'store']);
 
 Route::post('/v2/mpesa', [WebhookController::class, 'manualPay']);
@@ -131,3 +174,4 @@ Route::get('home', 'HomeController@index');
 Route::post('fileuploader/upload/{fieldname}', 'FileUploaderController@upload');
 Route::post('fileuploader/s3upload/{fieldname}', 'FileUploaderController@s3upload');
 Route::post('fileuploader/remove_temp_file', 'FileUploaderController@remove_temp_file');
+

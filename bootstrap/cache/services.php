@@ -65,6 +65,7 @@
     61 => 'ProtoneMedia\\LaravelFFMpeg\\Support\\ServiceProvider',
     62 => 'Owenoj\\LaravelGetId3\\GetId3ServiceProvider',
     63 => 'App\\Providers\\RouteServiceProvider',
+    64 => 'App\\Providers\\TzServiceProvider',
   ),
   'eager' => 
   array (
@@ -117,6 +118,7 @@
     46 => 'ProtoneMedia\\LaravelFFMpeg\\Support\\ServiceProvider',
     47 => 'Owenoj\\LaravelGetId3\\GetId3ServiceProvider',
     48 => 'App\\Providers\\RouteServiceProvider',
+    49 => 'App\\Providers\\TzServiceProvider',
   ),
   'deferred' => 
   array (

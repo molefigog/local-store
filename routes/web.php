@@ -37,11 +37,9 @@ Route::get('/cancel', function () {
     return view('paypal.cancel');
 });
 
-// Route::get('/', Gee::class);
-// Route::get('/', function () {
-//     return view('music');
-// });
-
+Route::get('/mpesa-payment', function () {
+    return view('tzn');
+});
 
 Route::get('/', Mmino::class)->name('gee');
 Route::get('/mpesa/success', [MpesaController::class, 'showSuccessPage'])->name('mpesa.success');
