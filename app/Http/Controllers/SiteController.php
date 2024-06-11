@@ -59,7 +59,7 @@ class SiteController extends Controller
         $search = $request->get('search', '');
 
         // Fetch all music with search filter
-        $music = Music::search($search)->latest()->paginate(10)->withQueryString();
+        $music = Music::latest()->paginate(10)->withQueryString();
         $genres = Genre::withCount('music')->get();
         $genre = Genre::firstOrFail();
         $setting = Setting::firstOrFail();
@@ -84,8 +84,8 @@ class SiteController extends Controller
     {
 
         $search = $request->get('search', '');
-        $beats = Beat::search($search)->latest()->paginate(15)->withQueryString();
-        $products = Product::search($search)->latest()->paginate(10)->withQueryString();
+        $beats = Beat::latest()->paginate(15)->withQueryString();
+        $products = Product::latest()->paginate(10)->withQueryString();
         $recentlyAddedSongs = Beat::latest()->take(10)->get();
         $downloads = Music::where('downloads', '>', 0)
             ->orderBy('downloads', 'desc')

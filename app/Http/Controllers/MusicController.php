@@ -37,8 +37,7 @@ class MusicController extends Controller
         $genreFilter = $request->get('genre', '');
 
         if (Auth::user()->role == 1) {
-            $allMusic = Music::search($search)
-                ->latest()
+            $allMusic = Music::latest()
                 ->paginate(10)
                 ->withQueryString();
 

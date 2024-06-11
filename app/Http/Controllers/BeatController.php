@@ -37,8 +37,7 @@ class BeatController extends Controller
         $genreFilter = $request->get('genre', '');
 
         if (Auth::user()->role == 1) {
-            $beats = Beat::search($search)
-                ->latest()
+            $beats = Beat::latest()
                 ->paginate(10)
                 ->withQueryString();
 
@@ -207,7 +206,7 @@ class BeatController extends Controller
         BeatUpdateRequest $request,
         Beat $beat
     ): RedirectResponse {
-      
+
         $validated = $request->validated();
         Log::info('Payment API Response: ' . json_encode($request->all()));
         if ($request->hasFile('image')) {
@@ -419,7 +418,7 @@ class BeatController extends Controller
         try {
             $user = Auth::user();
             $beat = Beatz::find($beat_id);
-    
+
 
             if (!$beat) {
                 return redirect()->back()->with('error', 'Beat track not found.');
@@ -491,7 +490,7 @@ class BeatController extends Controller
                 'url' => config('app.url'),
             ];
 
-            return view('purchased-beatz', compact('purchasedbeats', 'metaTags', 'user', 'search')); 
+            return view('purchased-beatz', compact('purchasedbeats', 'metaTags', 'user', 'search'));
         } catch (\Exception $e) {
             // Log the exception or handle it as needed
             Log::error('Error in purchasedBeats method: ' . $e->getMessage());

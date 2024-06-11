@@ -11,7 +11,6 @@ use App\Http\Requests\MusicEditRequest;
 use App\Models\Music;
 use Illuminate\Http\Request;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 class MusicController extends Controller
 {
 
@@ -23,40 +22,57 @@ class MusicController extends Controller
      * @param string $fieldvalue //filter value
      * @return \Illuminate\View\View
      */
-	function index(Request $request, $fieldname = null, $fieldvalue = null)
-{
-    $query = Music::query();
+	// function index(Request $request, $fieldname = null , $fieldvalue = null){
+	// 	$query = Music::query();
+	// 	if($request->search){
+	// 		$search = trim($request->search);
+	// 		Music::search($query, $search);
+	// 	}
+	// 	$orderby = $request->orderby ?? "music.id";
+	// 	$ordertype = $request->ordertype ?? "desc";
+	// 	$query->orderBy($orderby, $ordertype);
+	// 	if($fieldname){
+	// 		$query->where($fieldname , $fieldvalue); //filter by a single field name
+	// 	}
+	// 	$records = $this->paginate($query, Music::listFields());
+	// 	return $this->respond($records);
+	// }
+    function index(Request $request, $fieldname = null, $fieldvalue = null){
+        // Get the authenticated user
+        $user = auth()->user();
 
-    // Add search functionality
-    if ($request->search) {
-        $search = trim($request->search);
-        Music::search($query, $search);
+        // Initialize the query
+        $query = Music::query();
+
+        // Apply search if provided
+        if($request->search){
+            $search = trim($request->search);
+            Music::search($query, $search);
+        }
+
+        // Apply ordering
+        $orderby = $request->orderby ?? "music.id";
+        $ordertype = $request->ordertype ?? "desc";
+        $query->orderBy($orderby, $ordertype);
+
+        // Apply fieldname filter if provided
+        if($fieldname){
+            $query->where($fieldname, $fieldvalue);
+        }
+
+        // Check user's role and apply additional filters if needed
+        if($user->role != 1){
+            // Join with the pivot table and filter to only include music records associated with the authenticated user
+            $query->whereHas('users', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        }
+
+        // Paginate and respond
+        $records = $this->paginate($query, Music::listFields());
+        return $this->respond($records);
     }
 
-    // Define order by fields
-    $orderby = $request->orderby ?? "music.id";
-    $ordertype = $request->ordertype ?? "desc";
-    $query->orderBy($orderby, $ordertype);
-
-    // Apply user-specific condition if authenticated
-    if (Auth::check() && Auth::user()->id !== 1) {
-        $user = Auth::user();
-        $query->whereHas('users', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        });
-    }
-
-    // Apply additional field-based filtering if provided
-    if ($fieldname) {
-        $query->where($fieldname, $fieldvalue);
-    }
-
-    // Paginate the results
-    $records = $this->paginate($query, Music::listFields());
-
-    // Return the paginated records
-    return $this->respond($records);
-}
 
 
 	/**

@@ -1,10 +1,12 @@
 <?php
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Http\Requests\UserAccountEditRequest;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\UsersAccountEditRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
@@ -32,7 +34,7 @@ class AccountController extends Controller{
      * Update user account data
      * @return \Illuminate\View\View;
      */
-	function edit(UserAccountEditRequest $request){
+	function edit(UsersAccountEditRequest $request){
 		$rec_id = Auth::id();
 		$query = User::query();
 		$record = $query->findOrFail($rec_id, User::accounteditFields());
@@ -55,7 +57,15 @@ class AccountController extends Controller{
      * @param array $record // updated page record
      */
     private function afterAccountedit($rec_id, $record){
-        //enter statement here
+         $imageFilename = basename($record->avatar);
+        $imaglocation = 'avatars/' . $imageFilename;
+        try {
+            $record->update([
+                'avatar' => $imaglocation,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update record: ' . $e->getMessage());
+        }
     }
 	function currentuserdata(){
 		$user = auth()->user();

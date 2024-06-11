@@ -152,7 +152,12 @@ class TzController extends Controller
             'json' => $transData,
             'headers' => ['Authorization' => "Bearer {$token}"]
         ]);
-        return json_decode($response->getBody(), true);
+        $responseData = json_decode($response->getBody(), true);
+
+    // Log the response
+    \Log::info('Response from c2b API:', $responseData);
+
+    return $responseData;
     }
     public function charge()
     {

@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
-use App\Http\Requests\GenreAddRequest;
-use App\Http\Requests\GenreEditRequest;
+use App\Http\Requests\GenresAddRequest;
+use App\Http\Requests\GenresEditRequest;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 use Exception;
-use Illuminate\Support\Facades\Auth;
-class GenreController extends Controller
+use Illuminate\Support\Facades\Log;
+class GenresController extends Controller
 {
 
 
@@ -19,12 +20,13 @@ class GenreController extends Controller
      * @return \Illuminate\View\View
      */
 	function index(Request $request, $fieldname = null , $fieldvalue = null){
+
 		$query = Genre::query();
 		if($request->search){
 			$search = trim($request->search);
 			Genre::search($query, $search);
 		}
-		$orderby = $request->orderby ?? "Genre.id";
+		$orderby = $request->orderby ?? "genres.id";
 		$ordertype = $request->ordertype ?? "desc";
 		$query->orderBy($orderby, $ordertype);
 		if($fieldname){
@@ -51,7 +53,7 @@ class GenreController extends Controller
      * Save form record to the table
      * @return \Illuminate\Http\Response
      */
-	function add(GenreAddRequest $request){
+	function add(GenresAddRequest $request){
 		$modeldata = $request->validated();
 
 		if( array_key_exists("image", $modeldata) ){
@@ -60,11 +62,28 @@ class GenreController extends Controller
 			$modeldata['image'] = $fileInfo['filepath'];
 		}
 
-		//save Genre record
+		//save Genres record
 		$record = Genre::create($modeldata);
 		$rec_id = $record->id;
+		$this->afterAdd($record);
 		return $this->respond($record);
 	}
+    /**
+     * After new record created
+     * @param array $record // newly created record
+     */
+    private function afterAdd($record){
+        //enter statement here
+         $imageFilename2 = basename($record->image);
+         $imaglocation2  = 'images/' . $imageFilename2;
+        try {
+            $record->update([
+            'image' => $imaglocation2,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update record: ' . $e->getMessage());
+        }
+    }
 
 
 	/**
@@ -72,10 +91,12 @@ class GenreController extends Controller
 	 * @param string $rec_id //select record by table primary key
      * @return \Illuminate\View\View;
      */
-	function edit(GenreEditRequest $request, $rec_id = null){
+	function edit(GenresEditRequest $request, $rec_id = null){
+        $user = auth()->user();
 
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Forbidden Operation'], 403);
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
 		$query = Genre::query();
 		$record = $query->findOrFail($rec_id, Genre::editFields());
@@ -88,9 +109,27 @@ class GenreController extends Controller
 			$modeldata['image'] = $fileInfo['filepath'];
 		}
 			$record->update($modeldata);
+			$this->afterEdit($rec_id, $record);
 		}
 		return $this->respond($record);
 	}
+    /**
+     * After page record updated
+     * @param string $rec_id // updated record id
+     * @param array $record // updated page record
+     */
+    private function afterEdit($rec_id, $record){
+        //enter statement here
+        $imageFilename2 = basename($record->favicon);
+         $imaglocation2  = 'images/' . $imageFilename2;
+        try {
+            $record->update([
+            'image' => $imaglocation2,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update record: ' . $e->getMessage());
+        }
+    }
 
 
 	/**
@@ -101,9 +140,11 @@ class GenreController extends Controller
      * @return \Illuminate\Http\Response
      */
 	function delete(Request $request, $rec_id = null){
+        $user = auth()->user();
 
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
 		$arr_id = explode(",", $rec_id);
 		$query = Genre::query();

@@ -174,6 +174,14 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TzServiceProvider::class,
 
+        Laravel\Passport\PassportServiceProvider::class,
+		Maatwebsite\Excel\ExcelServiceProvider::class,
+		Intervention\Image\ImageServiceProvider::class,
+		OwenIt\Auditing\AuditingServiceProvider::class,
+		Barryvdh\DomPDF\ServiceProvider::class,
+		Mews\Captcha\CaptchaServiceProvider::class,
+
+
     ])->toArray(),
 
     /*
@@ -189,8 +197,11 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class
-
+        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+		'Image' => Intervention\Image\Facades\Image::class,
+		'PDF' => Barryvdh\DomPDF\Facade::class,
+		'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ])->toArray(),
 
 ];

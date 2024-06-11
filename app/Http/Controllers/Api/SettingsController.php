@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SettingAddRequest;
-use App\Http\Requests\SettingEditRequest;
+use App\Http\Requests\SettingsAddRequest;
+use App\Http\Requests\SettingsEditRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Exception;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 class SettingsController extends Controller
 {
 
@@ -19,9 +20,11 @@ class SettingsController extends Controller
      * @return \Illuminate\View\View
      */
 	function index(Request $request, $fieldname = null , $fieldvalue = null){
+        $user = auth()->user();
 
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
 		$query = Setting::query();
 		if($request->search){
@@ -45,6 +48,12 @@ class SettingsController extends Controller
      * @return \Illuminate\View\View
      */
 	function view($rec_id = null){
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
 		$query = Setting::query();
 		$record = $query->findOrFail($rec_id, Setting::viewFields());
 		return $this->respond($record);
@@ -55,12 +64,13 @@ class SettingsController extends Controller
      * Save form record to the table
      * @return \Illuminate\Http\Response
      */
-	function add(SettingAddRequest $request){
+	function add(SettingsAddRequest $request){
+        $user = auth()->user();
 
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
-
 		$modeldata = $request->validated();
 
 		if( array_key_exists("logo", $modeldata) ){
@@ -93,12 +103,14 @@ class SettingsController extends Controller
 	 * @param string $rec_id //select record by table primary key
      * @return \Illuminate\View\View;
      */
-	function edit(SettingEditRequest $request, $rec_id = null){
+	function edit(SettingsEditRequest $request, $rec_id = null){
 
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
-
 		$query = Setting::query();
 		$record = $query->findOrFail($rec_id, Setting::editFields());
 		if ($request->isMethod('post')) {
@@ -122,9 +134,33 @@ class SettingsController extends Controller
 			$modeldata['image'] = $fileInfo['filepath'];
 		}
 			$record->update($modeldata);
+			$this->afterEdit($rec_id, $record);
 		}
 		return $this->respond($record);
 	}
+    /**
+     * After page record updated
+     * @param string $rec_id // updated record id
+     * @param array $record // updated page record
+     */
+    private function afterEdit($rec_id, $record){
+        //enter statement here
+         $imageFilename = basename($record->logo);
+         $imaglocation  = 'images/' . $imageFilename;
+         $imageFilename1 = basename($record->favicon);
+         $imaglocation1  = 'images/' . $imageFilename1;
+         $imageFilename2 = basename($record->favicon);
+         $imaglocation2  = 'images/' . $imageFilename2;
+        try {
+            $record->update([
+            'logo' => $imaglocation,
+            'favicon' => $imaglocation1,
+            'image' => $imaglocation2,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update record: ' . $e->getMessage());
+        }
+    }
 
 
 	/**
@@ -135,6 +171,12 @@ class SettingsController extends Controller
      * @return \Illuminate\Http\Response
      */
 	function delete(Request $request, $rec_id = null){
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
 		$arr_id = explode(",", $rec_id);
 		$query = Setting::query();
 		$query->whereIn("id", $arr_id);

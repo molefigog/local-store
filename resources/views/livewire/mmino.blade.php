@@ -90,7 +90,11 @@
                 </div>
                 <div class="details-left">
 
+                    @if (Auth::check())
                     <p class="texts"><i class="icon-download"></i>&nbsp;{{ $music->downloads }}</p>
+                    @else
+                    <p class="texts"><i class="icon-photo_size_select_small"></i>&nbsp;{{ $music->size }} MB</p>
+                    @endif
                     <p class="texts"><i class="icon-clock-o"></i>&nbsp;{{ $music->duration }}</p>
                 </div>
             </div>

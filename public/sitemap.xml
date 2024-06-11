@@ -326,4 +326,19 @@
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
             </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/infinity-feat-leinad-wise</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/o-ka-ba-rata</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>https://www.gw-ent.co.za/msingle/zama-zama</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
 </urlset>

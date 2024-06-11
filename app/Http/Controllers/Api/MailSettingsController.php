@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MailSettingAddRequest;
-use App\Http\Requests\MailSettingEditRequest;
+use App\Http\Requests\MailSettingsAddRequest;
+use App\Http\Requests\MailSettingsEditRequest;
 use App\Models\MailSetting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Log;
 class MailSettingsController extends Controller
 {
 
@@ -19,10 +20,14 @@ class MailSettingsController extends Controller
      * @return \Illuminate\View\View
      */
 	function index(Request $request, $fieldname = null , $fieldvalue = null){
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
 		$query = MailSetting::query();
+
 		if($request->search){
 			$search = trim($request->search);
 			MailSetting::search($query, $search);
@@ -54,9 +59,12 @@ class MailSettingsController extends Controller
      * Save form record to the table
      * @return \Illuminate\Http\Response
      */
-	function add(MailSettingAddRequest $request){
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
+	function add(MailSettingsAddRequest $request){
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
         }
 		$modeldata = $request->validated();
 		$modeldata['mail_password'] = bcrypt($modeldata['mail_password']);
@@ -73,7 +81,13 @@ class MailSettingsController extends Controller
 	 * @param string $rec_id //select record by table primary key
      * @return \Illuminate\View\View;
      */
-	function edit(MailSettingEditRequest $request, $rec_id = null){
+	function edit(MailSettingsEditRequest $request, $rec_id = null){
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
 		$query = MailSetting::query();
 		$record = $query->findOrFail($rec_id, MailSetting::editFields());
 		if ($request->isMethod('post')) {
@@ -92,9 +106,6 @@ class MailSettingsController extends Controller
      * @return \Illuminate\Http\Response
      */
 	function delete(Request $request, $rec_id = null){
-        if (Auth::check() && Auth::user()->id !== 1) {
-            return response()->json(['error' => 'Unauthorized access'], 403);
-        }
 		$arr_id = explode(",", $rec_id);
 		$query = MailSetting::query();
 		$query->whereIn("id", $arr_id);

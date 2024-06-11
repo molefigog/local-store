@@ -1,14 +1,14 @@
 <?php
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 use App\Models\User;
-use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UsersRegisterRequest;
 use Exception;
 use App\Helpers\JWTHelper;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
@@ -54,7 +54,7 @@ class AuthController extends Controller{
      * Save new user record
      * @return \Illuminate\Http\Response
      */
-	function register(UserRegisterRequest $request){
+	function register(UsersRegisterRequest $request){
 		$modeldata = $request->validated();
 
 		if( array_key_exists("avatar", $modeldata) ){
@@ -76,15 +76,11 @@ class AuthController extends Controller{
      * @param array $record // newly created record
      */
     private function afterUserregister($record){
-
         $imageFilename = basename($record->avatar);
         $imaglocation = 'avatars/' . $imageFilename;
-
         try {
             $record->update([
-
                 'avatar' => $imaglocation,
-
             ]);
         } catch (\Exception $e) {
             Log::error('Failed to update record: ' . $e->getMessage());

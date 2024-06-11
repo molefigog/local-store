@@ -10,7 +10,8 @@ use App\Models\Scopes\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
@@ -76,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Music::class, 'music_user');
     }
-    
+
      public function beat()
     {
         return $this->belongsToMany(Beat::class, 'beat_user');
@@ -96,4 +97,174 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Items::class);
     }
+    public static function search($query, $text){
+		//search table record
+		$search_condition = '(
+				id LIKE ?  OR
+				name LIKE ?  OR
+				email LIKE ?  OR
+				mobile_number LIKE ?  OR
+				remember_token LIKE ?
+		)';
+		$search_params = [
+			"%$text%","%$text%","%$text%","%$text%","%$text%"
+		];
+		//setting search conditions
+		$query->whereRaw($search_condition, $search_params);
+	}
+
+
+	/**
+     * return list page fields of the model.
+     *
+     * @return array
+     */
+	public static function listFields(){
+		return [
+			"id",
+			"name",
+			"email",
+			"mobile_number",
+			"balance",
+			"role",
+			"avatar"
+		];
+	}
+
+
+	/**
+     * return exportList page fields of the model.
+     *
+     * @return array
+     */
+	public static function exportListFields(){
+		return [
+			"id",
+			"name",
+			"email",
+			"mobile_number",
+			"balance",
+			"role",
+			"avatar"
+		];
+	}
+
+
+	/**
+     * return view page fields of the model.
+     *
+     * @return array
+     */
+	public static function viewFields(){
+		return [
+			"name",
+			"email",
+			"mobile_number",
+			"balance",
+			"id"
+		];
+	}
+
+
+	/**
+     * return exportView page fields of the model.
+     *
+     * @return array
+     */
+	public static function exportViewFields(){
+		return [
+			"name",
+			"email",
+			"mobile_number",
+			"balance",
+			"id"
+		];
+	}
+
+
+	/**
+     * return accountedit page fields of the model.
+     *
+     * @return array
+     */
+	public static function accounteditFields(){
+		return [
+			"name",
+			"email",
+			"mobile_number",
+			"avatar",
+			"id"
+		];
+	}
+
+
+	/**
+     * return accountview page fields of the model.
+     *
+     * @return array
+     */
+	public static function accountviewFields(){
+		return [
+			"id",
+			"name",
+			"email",
+			"mobile_number",
+			"balance"
+		];
+	}
+
+
+	/**
+     * return exportAccountview page fields of the model.
+     *
+     * @return array
+     */
+	public static function exportAccountviewFields(){
+		return [
+			"id",
+			"name",
+			"email",
+			"mobile_number",
+			"balance"
+		];
+	}
+
+
+	/**
+     * return edit page fields of the model.
+     *
+     * @return array
+     */
+	public static function editFields(){
+		return [
+			"name",
+			"email",
+			"mobile_number",
+			"avatar",
+			"id"
+		];
+	}
+
+
+	/**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+	public $timestamps = true;
+	const CREATED_AT = 'created_at';
+	const UPDATED_AT = 'updated_at';
+
+
+	/**
+     * Get current user name
+     * @return string
+     */
+	public function UserName(){
+		return $this->name;
+	}
+
+    public function UserBalance(){
+		return $this->balance;
+	}
 }
