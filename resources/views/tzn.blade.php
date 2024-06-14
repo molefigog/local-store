@@ -1,35 +1,93 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mpesa Payment</title>
-</head>
-<body>
-    <h1>Make a Payment</h1>
-    <form action="{{ url('/api/mpesa/payment') }}" method="POST">
-        @csrf <!-- Laravel CSRF protection -->
-        <div>
-            <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" value="1000" required>
+
+@extends('layouts.master')
+@section('content')
+    <div class="container">
+        <h1 class="text-center">M-pesa</h1>
+        <div class="card">
+            <div class="card-body">
+                <form id="chargeForm" class="text-center" action="{{ url('api/charge') }}" method="get">
+                    @csrf <!-- CSRF protection is not necessary for GET requests but included for best practices -->
+
+                    <div class="mb-3">
+                        {{-- <label for="input_Amount">Amount:</label> --}}
+                        <input type="hidden" value="1" id="input_Amount" name="input_Amount" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="input_CustomerMSISDN" class="form-label">Customer MSISDN:</label>
+                        <input type="number" class="form-control" id="input_CustomerMSISDN" name="input_CustomerMSISDN" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="input_PurchasedItemsDesc" class="form-label">Purchased Items Description:</label>
+                        <input type="text" class="form-control" id="input_PurchasedItemsDesc" name="input_PurchasedItemsDesc" required>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" id="submitButton">
+                        <span id="buttonText">Submit</span>
+                        <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                    </button>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="msisdn">MSISDN:</label>
-            <input type="text" id="msisdn" name="msisdn" value="000000000001" required>
-        </div>
-        <div>
-            <label for="transactionid">Transaction ID:</label>
-            <input type="text" id="transactionid" name="transactionid" value="1234567890" required>
-        </div>
-        <div>
-            <label for="thirdpartyconversationID">Third Party Conversation ID:</label>
-            <input type="text" id="thirdpartyconversationID" name="thirdpartyconversationID" value="abc123" required>
-        </div>
-        <div>
-            <label for="transactionDescription">Transaction Description:</label>
-            <input type="text" id="transactionDescription" name="transactionDescription" value="Payment for services" required>
-        </div>
-        <div>
-            <button type="submit">Make Payment</button>
-        </div>
-    </form>
-</body>
-</html>
+
+
+    </div>
+
+    @endsection
+    @push('mpesa')
+    <script>
+        $(document).ready(function() {
+            $('#chargeForm').on('submit', function(event) {
+                event.preventDefault();
+
+                var $submitButton = $('#submitButton');
+                var $buttonText = $('#buttonText');
+                var $spinner = $('#spinner');
+
+                // Show the spinner and change button text to "Processing..."
+                $buttonText.text('Processing...');
+                $spinner.show();
+                $submitButton.prop('disabled', true);
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        console.log(response); // Log the response for debugging
+
+                        if (response.code === 'INS-0') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.description
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.description
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText); // Log the error response for debugging
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred. Please try again.'
+                        });
+                    },
+                    complete: function() {
+                        // Hide the spinner and revert button text to "Submit"
+                        $buttonText.text('Submit');
+                        $spinner.hide();
+                        $submitButton.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+
+@endpush

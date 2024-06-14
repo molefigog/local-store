@@ -21,6 +21,12 @@ class UsersController extends Controller
      * @return \Illuminate\View\View
      */
 	function index(Request $request, $fieldname = null , $fieldvalue = null){
+        $user = auth()->user();
+
+        // Check if the user has role 1
+        if ($user->role != 1) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
 		$query = User::query();
 		if($request->search){
 			$search = trim($request->search);
