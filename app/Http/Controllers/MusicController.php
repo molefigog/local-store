@@ -28,9 +28,7 @@ use Exception;
 
 class MusicController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request): View
     {
         $search = $request->get('search', '');
@@ -40,8 +38,7 @@ class MusicController extends Controller
             $allMusic = Music::latest()
                 ->paginate(10)
                 ->withQueryString();
-
-            $userMusic = collect(); // Define an empty collection for role 2 users
+            $userMusic = collect();
         } else {
             $user = Auth::user();
             $userMusic = $user->music()
@@ -49,30 +46,21 @@ class MusicController extends Controller
                 ->paginate(10)
                 ->withQueryString();
 
-            $allMusic = collect(); // Define an empty collection for role 1 users
+            $allMusic = collect();
         }
-
         // Fetch distinct genres from the Music model
         $genres = Music::distinct('genre')->pluck('genre_id')->toArray();
         // $recentlyAddedSongs = Music::latest()->take(10)->get();
         // $downloads = Music::orderBy('downloads', 'desc')->take(10)->distinct()->get();
-
         return view('all_music.index', compact('allMusic', 'userMusic', 'search', 'genres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request): View
     {
         $genres = genre::all();
-
         return view('all_music.create', compact('genres'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(MusicStoreRequest $request)
     {
         try {
@@ -103,7 +91,6 @@ class MusicController extends Controller
                 $sizeInBytes = $musicInfo['filesize'];
 
                 $sizeInMB = round($sizeInBytes / (1024 * 1024), 2);
-
                 // Add duration and size to the validated data
                 $validated['duration'] = $duration;
                 $validated['size'] = $sizeInMB;
@@ -115,25 +102,19 @@ class MusicController extends Controller
 
                 $demoPath = 'public/' . $demoName;
                 Storage::put($demoPath, file_get_contents($demoFilePath));
-
                 // Add demo file path to validated data
                 $validated['demo'] = $demoPath;
-
                 // Clean up temporary demo file
                 unlink($demoFilePath);
             }
-
             // Delete the input file after processing
             if (file_exists(Storage::path($inputFilePath))) {
                 unlink(Storage::path($inputFilePath));
             }
-
-
             // Save the music
             $user = Auth::user(); // Get the logged-in user
             $music = new Music($validated);
             $user->music()->save($music);
-
             // Return a success response
             return response()->json(['status' => 'success', 'msg' => 'MP3 uploaded successfully']);
         } catch (\Exception $e) {
@@ -144,8 +125,6 @@ class MusicController extends Controller
             return response()->json(['status' => 'error', 'msg' => 'An error occurred while processing the request. Please try again later.'], 500);
         }
     }
-
-    // slug
 
     public function showBySlug($slug)
     {
@@ -159,14 +138,11 @@ class MusicController extends Controller
         $description = $music->description;
         $baseUrl = 'https://www.gw-ent.co.za';
         $url = "{$baseUrl}/msingle/{$music->slug}";
-
         // Generate social share buttons
         $shareButtons = \Share::page($url, 'Check out this music: ' . $music->title)
             ->facebook()
             ->twitter()
             ->whatsapp();
-
-        // Store the intended URL in the session
         $intendedUrl = route('msingle.slug', ['slug' => $slug]);
         Session::put('intended_url', $intendedUrl);
 
@@ -181,20 +157,16 @@ class MusicController extends Controller
             'title' => $title,
             'image' => $image,
             'description' => $description,
-            'keywords' => $artist . ', ' . $title, // Separate keywords with a comma
+            'keywords' => $artist . ', ' . $title,
             'url' => $url,
         ];
-
-
         return view('msingle', compact('music', 'metaTags',  'shareButtons', 'userId', 'Paypal', 'PAYPAL_ID', 'currency'));
     }
 
     private function generateMetaTags(Music $music)
     {
-        // Replace with your logic to generate title, image, and description
         $title = $music->title;
         $image = url($music->image ? Storage::url($music->image) : '');
-
         $description = $music->description;
 
         return [
@@ -204,10 +176,6 @@ class MusicController extends Controller
         ];
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Request $request, Music $music): View
     {
         $genres = genre::all();
@@ -215,21 +183,16 @@ class MusicController extends Controller
         return view('all_music.edit', compact('music', 'genres'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(
         MusicUpdateRequest $request,
         Music $music
     ): RedirectResponse {
-
 
         $validated = $request->validated();
         if ($request->hasFile('image')) {
             if ($music->image) {
                 Storage::delete($music->image);
             }
-
 
             $imageFile = $request->file('image');
             $imageName = $imageFile->getClientOriginalName();
@@ -260,15 +223,10 @@ class MusicController extends Controller
             $duration = $musicInfo['playtime_string'];
             $sizeInBytes = $musicInfo['filesize'];
 
-            // Convert file size to megabytes
             $sizeInMB = round($sizeInBytes / (1024 * 1024), 2);
-
-            // Add duration and size to the validated data
             $validated['duration'] = $duration;
             $validated['size'] = $sizeInMB;
         }
-
-
         $music->update($validated);
 
         return redirect()
@@ -276,9 +234,6 @@ class MusicController extends Controller
             ->withSuccess(__('saved'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request, Music $music): RedirectResponse
     {
 
@@ -347,8 +302,6 @@ class MusicController extends Controller
         return view('songs_by_genre', compact('musicCollection', 'genre', 'recentlyAddedSongs', 'metaTags', 'recipeData', 'siteData'));
     }
 
-
-
     public function genre(Request $request): View
     {
         $search = $request->get('search', '');
@@ -382,7 +335,6 @@ class MusicController extends Controller
             'recentlyAddedSongs'
         ));
     }
-
 
     public function buyMusic(Request $request)
     {
@@ -461,7 +413,6 @@ class MusicController extends Controller
         }
     }
 
-
     public function downloadMusic($musicId)
     {
         $user = Auth::user();
@@ -485,8 +436,6 @@ class MusicController extends Controller
         return Storage::download($musicFilePath, $music->title . '.mp3');
     }
 
-
-
     public function clearDownloadLink(Request $request)
     {
         $request->session()->forget('downloadLink');
@@ -507,8 +456,6 @@ class MusicController extends Controller
         return view('purchased-musics', compact('purchasedMusics','user', 'search'));
     }
 
-
-
     public function showPurchasedMusic()
     {
         try {
@@ -527,9 +474,6 @@ class MusicController extends Controller
             return "An error occurred: " . $e->getMessage();
         }
     }
-
-
-
 
     public function search(Request $request)
     {

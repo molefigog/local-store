@@ -178,3 +178,4 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('fileuploader/upload/{fieldname}', [FileUploaderController::class, 'upload']);
     Route::post('fileuploader/s3upload/{fieldname}', [FileUploaderController::class, 's3upload']);
     Route::post('fileuploader/remove_temp_file', [FileUploaderController::class, 'remove_temp_file']);
+    Route::post('/get_data', [MusicController::class, 'getMusicData']);

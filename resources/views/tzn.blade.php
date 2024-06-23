@@ -1,38 +1,40 @@
-
 @extends('layouts.master')
 @section('content')
-    <div class="container">
-        <h1 class="text-center">M-pesa</h1>
-        <div class="card">
-            <div class="card-body">
-                <form id="chargeForm" class="text-center" action="{{ url('api/charge') }}" method="get">
-                    @csrf <!-- CSRF protection is not necessary for GET requests but included for best practices -->
 
-                    <div class="mb-3">
-                        {{-- <label for="input_Amount">Amount:</label> --}}
-                        <input type="hidden" value="1" id="input_Amount" name="input_Amount" required>
+        <div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
+            <div class="text-center">
+                <h6 class="text-muted">M-pesa OpenApi</h6>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <form id="chargeForm" action="{{ url('api/charge') }}" method="get">
+                            @csrf <!-- CSRF protection is not necessary for GET requests but included for best practices -->
+
+                            <div class="mb-3">
+                                {{-- <label for="input_Amount">Amount:</label> --}}
+                                <input type="hidden" value="1" id="input_Amount" name="input_Amount" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="input_CustomerMSISDN" class="form-label">MSISDN:</label>
+                                <input type="number" class="form-control" id="input_CustomerMSISDN" name="input_CustomerMSISDN" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="input_PurchasedItemsDesc" class="form-label">Purchased Items Description:</label>
+                                <input type="text" class="form-control" id="input_PurchasedItemsDesc" name="input_PurchasedItemsDesc" required>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit" id="submitButton">
+                                <span id="buttonText">Submit</span>
+                                <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                            </button>
+                        </form>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="input_CustomerMSISDN" class="form-label">Customer MSISDN:</label>
-                        <input type="number" class="form-control" id="input_CustomerMSISDN" name="input_CustomerMSISDN" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="input_PurchasedItemsDesc" class="form-label">Purchased Items Description:</label>
-                        <input type="text" class="form-control" id="input_PurchasedItemsDesc" name="input_PurchasedItemsDesc" required>
-                    </div>
-
-                    <button class="btn btn-primary" type="submit" id="submitButton">
-                        <span id="buttonText">Submit</span>
-                        <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
 
 
-    </div>
 
     @endsection
     @push('mpesa')

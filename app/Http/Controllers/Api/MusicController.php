@@ -13,53 +13,24 @@ use Illuminate\Http\Request;
 use Exception;
 class MusicController extends Controller
 {
-
-
-	/**
-     * List table records
-	 * @param  \Illuminate\Http\Request
-     * @param string $fieldname //filter records by a table field
-     * @param string $fieldvalue //filter value
-     * @return \Illuminate\View\View
-     */
-	// function index(Request $request, $fieldname = null , $fieldvalue = null){
-	// 	$query = Music::query();
-	// 	if($request->search){
-	// 		$search = trim($request->search);
-	// 		Music::search($query, $search);
-	// 	}
-	// 	$orderby = $request->orderby ?? "music.id";
-	// 	$ordertype = $request->ordertype ?? "desc";
-	// 	$query->orderBy($orderby, $ordertype);
-	// 	if($fieldname){
-	// 		$query->where($fieldname , $fieldvalue); //filter by a single field name
-	// 	}
-	// 	$records = $this->paginate($query, Music::listFields());
-	// 	return $this->respond($records);
-	// }
     function index(Request $request, $fieldname = null, $fieldvalue = null){
         // Get the authenticated user
         $user = auth()->user();
-
         // Initialize the query
         $query = Music::query();
-
         // Apply search if provided
         if($request->search){
             $search = trim($request->search);
             Music::search($query, $search);
         }
-
         // Apply ordering
         $orderby = $request->orderby ?? "music.id";
         $ordertype = $request->ordertype ?? "desc";
         $query->orderBy($orderby, $ordertype);
-
         // Apply fieldname filter if provided
         if($fieldname){
             $query->where($fieldname, $fieldvalue);
         }
-
         // Check user's role and apply additional filters if needed
         if($user->role != 1){
             // Join with the pivot table and filter to only include music records associated with the authenticated user
@@ -67,14 +38,10 @@ class MusicController extends Controller
                 $q->where('user_id', $user->id);
             });
         }
-
         // Paginate and respond
         $records = $this->paginate($query, Music::listFields());
         return $this->respond($records);
     }
-
-
-
 	/**
      * Select table record by ID
 	 * @param string $rec_id
@@ -85,7 +52,6 @@ class MusicController extends Controller
 		$record = $query->findOrFail($rec_id, Music::viewFields());
 		return $this->respond($record);
 	}
-
 
 	/**
      * Save form record to the table
@@ -105,15 +71,12 @@ class MusicController extends Controller
             $fileInfo = $this->moveUploadedFiles($modeldata['file'], "file");
             $modeldata['file'] = $fileInfo['filepath'];
         }
-
         // Save Music record
         $user = auth()->user();
         $record = $user->musics()->create($modeldata);
         $this->afterAdd($record);
         return $this->respond($record);
     }
-
-
     /**
      * After new record created
      * @param array $record // newly created record
@@ -148,8 +111,6 @@ class MusicController extends Controller
             Log::error('Failed to update record: ' . $e->getMessage());
         }
     }
-
-
 	/**
      * Update table record with form data
 	 * @param string $rec_id //select record by table primary key
@@ -176,8 +137,6 @@ class MusicController extends Controller
 		}
 		return $this->respond($record);
 	}
-
-
 	/**
      * Delete record from the database
 	 * Support multi delete by separating record id by comma.
@@ -197,4 +156,19 @@ class MusicController extends Controller
 		}
 		return $this->respond($arr_id);
 	}
+
+    public function getMusicData(Request $request)
+    {
+        $music = Music::find($request->id);
+        if ($music) {
+            return response()->json([
+                'demo' => asset('storage/demos/' . $music->demo),
+                'image' => asset('storage/' . $music->image),
+                'title' => $music->title ?? '-',
+                'artist' => $music->artist ?? '-',
+            ]);
+        }
+
+        return response()->json(['error' => 'Music not found'], 404);
+    }
 }
